@@ -70,6 +70,15 @@ public class PlayerControl : MonoBehaviour
 
     private void HandleAttackAnimation()
     {
+        if(attackState == AttackState.Attack2)
+        {
+            if(Input.GetKeyUp(KeyCode.Mouse1))
+            {
+                ResetAttackState();
+            }
+        }
+
+
         if(attackState != AttackState.None) return;
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -81,6 +90,9 @@ public class PlayerControl : MonoBehaviour
         { 
             attackState = AttackState.Attack2;
         }
+
+
+        
 
         _animator.SetInteger("AttackState",(int)attackState);
     }
