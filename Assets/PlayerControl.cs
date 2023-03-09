@@ -43,7 +43,7 @@ public class PlayerControl : MonoBehaviour
         _animator.SetFloat("y",vertical);
 
 
-        if (Input.GetAxis("Jump") > 0.1f)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _animator.SetTrigger("Attack1Trigger");
         }
