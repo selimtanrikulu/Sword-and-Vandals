@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using Zenject;
 
 
 public class PlayerControl : MonoBehaviour
@@ -16,6 +16,15 @@ public class PlayerControl : MonoBehaviour
 
 
     [SerializeField] private float rotationSpeed;
+    private ITestManager _testManager;
+
+
+    [Inject]
+    void Inject(ITestManager testManager)
+    {
+        _testManager = testManager;
+    }
+    
     
 
     // Start is called before the first frame update
@@ -23,6 +32,14 @@ public class PlayerControl : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        
+        Debug.Log(_testManager.GetValue());
+        _testManager.SetValue(10);
+        Debug.Log(_testManager.GetValue());
+        _testManager.IncreaseValue(3);
+        Debug.Log(_testManager.GetValue());
+        _testManager.IncrementValue();
+        Debug.Log(_testManager.GetValue());
     }
 
     // Update is called once per frame
