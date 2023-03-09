@@ -43,7 +43,7 @@ public class PlayerControl : MonoBehaviour
         _animator.SetFloat("y",vertical);
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             _animator.SetTrigger("Attack1Trigger");
         }
