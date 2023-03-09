@@ -1,5 +1,17 @@
+using System;
 using UnityEngine;
-using Zenject;
+
+
+
+public enum AttackState
+{
+    None = 0,
+    Attack1 = 1,
+    Attack2 = 2,
+
+
+
+}
 
 
 public class PlayerControl : MonoBehaviour
@@ -10,21 +22,13 @@ public class PlayerControl : MonoBehaviour
 
     private Animator _animator;
 
-
     private float horizontal;
     private float vertical;
 
 
     [SerializeField] private float rotationSpeed;
-    private ITestManager _testManager;
 
-
-    [Inject]
-    void Inject(ITestManager testManager)
-    {
-        _testManager = testManager;
-    }
-    
+    AttackState attackState;
     
 
     // Start is called before the first frame update
@@ -32,14 +36,6 @@ public class PlayerControl : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
-        
-        Debug.Log(_testManager.GetValue());
-        _testManager.SetValue(10);
-        Debug.Log(_testManager.GetValue());
-        _testManager.IncreaseValue(3);
-        Debug.Log(_testManager.GetValue());
-        _testManager.IncrementValue();
-        Debug.Log(_testManager.GetValue());
     }
 
     // Update is called once per frame
@@ -60,10 +56,7 @@ public class PlayerControl : MonoBehaviour
         _animator.SetFloat("y",vertical);
 
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            _animator.SetTrigger("Attack1Trigger");
-        }
+        
 
 
         if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.1f)
@@ -71,13 +64,48 @@ public class PlayerControl : MonoBehaviour
             transform.Rotate(Vector3.up,rotationSpeed * Time.deltaTime * Input.GetAxis("Mouse X"));
         }
         
+        HandleAttackAnimation();
+        
+    }
+
+    private void HandleAttackAnimation()
+    {
+        if(attackState == AttackState.Attack2)
+        {
+            if(Input.GetKeyUp(KeyCode.Mouse1))
+            {
+                ResetAttackState();
+            }
+        }
+
+
+        if(attackState != AttackState.None) return;
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            attackState = AttackState.Attack1;
+        }
+
+        else if(Input.GetKeyDown(KeyCode.Mouse1))
+        { 
+            attackState = AttackState.Attack2;
+        }
+
+
+        
+
+        _animator.SetInteger("AttackState",(int)attackState);
+    }
+
+    public void AttackOccurred()
+    {
+        //TODO
         
     }
 
 
-
-    public void AttacOccurred()
+    public void ResetAttackState()
     {
-        
+        attackState = AttackState.None;
     }
 }
