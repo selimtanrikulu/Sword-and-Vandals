@@ -94828,7 +94828,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 1
     messageOptions: 0
-  - time: 0.7
+  - time: 0.6666667
     functionName: DodgeDone
     data: 
     objectReferenceParameter: {fileID: 0}

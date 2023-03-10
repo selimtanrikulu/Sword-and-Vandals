@@ -1,17 +1,15 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 
 
 public enum AttackState
 {
     None = 0,
-    Attack1 = 1,
-    Block = 2,
-
-
-
+    Attack1_1 = 11,
+    Attack1_2 = 12,
+    Attack1_3 = 13,
+    Attack2 = 3,
+    Block = -1,
 }
 
 
@@ -24,10 +22,13 @@ public enum MovementState
     RollRight = 3,
     RollLeft = 4,
     Stunned = 5,
-    JumpStart = 6,
-    Fall = 7,
-    JumpEnd = 8,
-    
+}
+
+public enum JumpState
+{
+    Grounded = 0,
+    JumpStart = 1,
+    Fall = 2,
 }
 
 
@@ -48,6 +49,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float dodgingMovementSpeed;
     [SerializeField] private float runningMovementSpeed;
 
+
+    private float _movementSpeed;
+    
     
     [SerializeField] private float jumpStartVelocity;
     [SerializeField] private float gravity;
@@ -61,17 +65,21 @@ public class PlayerControl : MonoBehaviour
 
 
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private float fallStartYVelocity;
 
     private AttackState _attackState;
     private MovementState _movementState;
+    private JumpState _jumpState;
+    private AttackState _waitingAttack;
+
 
     // Start is called before the first frame update
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
-        
-        
+
+        _movementSpeed = runningMovementSpeed;
     }
 
     // Update is called once per frame
@@ -81,6 +89,7 @@ public class PlayerControl : MonoBehaviour
         HandleRotation();
         HandleAttackAnimation();
         HandleMovementAnimation();
+        HandleJumpAnimation();
     }
 
     private void HandleRotation()
@@ -105,37 +114,31 @@ public class PlayerControl : MonoBehaviour
     {
         Vector3 moveDist = new Vector3();
 
-
         switch (_movementState)
         {
-
-                
-            case MovementState.Move or MovementState.Fall or MovementState.JumpStart or MovementState.JumpEnd:
+            case MovementState.Move:
                 _horizontal = Input.GetAxis("Horizontal");
                 _vertical =Input.GetAxis("Vertical");
                 Transform myTransform = transform;
                 Vector3 verticalMove = myTransform.forward * (_vertical * runningMovementSpeed * Time.deltaTime);
                 Vector3 horizontalMove = myTransform.right * (_horizontal * runningMovementSpeed * Time.deltaTime);
                 moveDist = verticalMove + horizontalMove;
-
                 break;
             
-            
-            
             case MovementState.RollForward:
-                moveDist =  transform.forward * (dodgingMovementSpeed * Time.deltaTime);
+                moveDist =  transform.forward * (_movementSpeed * Time.deltaTime);
                 break;
             
             case MovementState.RollBackward:
-                moveDist = -transform.forward * (dodgingMovementSpeed * Time.deltaTime);
+                moveDist = -transform.forward * (_movementSpeed * Time.deltaTime);
                 break;
             
             case MovementState.RollRight:
-                moveDist = transform.right * (dodgingMovementSpeed * Time.deltaTime);
+                moveDist = transform.right * (_movementSpeed * Time.deltaTime);
                 break;
             
             case MovementState.RollLeft:
-                moveDist = -transform.right * (dodgingMovementSpeed * Time.deltaTime) ;
+                moveDist = -transform.right * (_movementSpeed * Time.deltaTime) ;
                 break;
             
             
@@ -163,10 +166,12 @@ public class PlayerControl : MonoBehaviour
     private void DodgeDone()
     {
         _movementState = MovementState.Move;
+        _movementSpeed = runningMovementSpeed;
     }
 
     private void DodgeStarted(DodgeType dodgeType)
     {
+        _movementSpeed = dodgingMovementSpeed;
         return;
         switch (dodgeType)
         {
@@ -188,16 +193,43 @@ public class PlayerControl : MonoBehaviour
     }
     private void HandleAttackAnimation()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && _movementState == MovementState.Move)
+        if (_movementState != MovementState.Move)
         {
-            _attackState = AttackState.Attack1;
+            _attackState = AttackState.None;
+            return;
         }
-
         
         
-        if(Input.GetKey(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (_attackState == AttackState.None)
+            {
+                _attackState = AttackState.Attack1_1;
+            }
+            else if (_attackState == AttackState.Attack1_1)
+            {
+                _waitingAttack = AttackState.Attack1_2;
+            }
+            else if (_attackState == AttackState.Attack1_2)
+            {
+                _waitingAttack = AttackState.Attack1_3;
+            }
+        }
+        
+        
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (_attackState == AttackState.None)
+            {
+                _attackState = AttackState.Attack2;
+            }
+        }
+        
+        
+        
+         if(Input.GetKey(KeyCode.Mouse1))
         { 
-            if(_movementState == MovementState.Move)
+            if(_movementState == MovementState.Move && _attackState == AttackState.None)
             {
                 _attackState = AttackState.Block;
             }
@@ -209,26 +241,39 @@ public class PlayerControl : MonoBehaviour
                 _attackState = AttackState.None;
             }
         }
+        
+        
+        
 
         _animator.SetInteger("AttackState",(int)_attackState);
     }
 
-    private void JumpStartFinished()
+    private void HandleJumpAnimation()
     {
         if (_characterController.isGrounded)
         {
-            _movementState = MovementState.JumpEnd;
+            _jumpState = JumpState.Grounded;
+            
+            
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                if (_attackState == AttackState.None && _movementState == MovementState.Move)
+                {
+                    _jumpState = JumpState.JumpStart;
+                    _yVelocity = jumpStartVelocity;
+                }
+            }
         }
         else
         {
-            _movementState = MovementState.Fall;
+            if (fallStartYVelocity > _characterController.velocity.y)
+            {
+                _jumpState = JumpState.Fall;
+            }
         }
-    }
 
-
-    private void JumpEndFinished()
-    {
-        _movementState = MovementState.Move;
+        _animator.SetInteger("JumpState",(int)_jumpState);
+            
     }
     
     private void HandleMovementAnimation()
@@ -237,54 +282,37 @@ public class PlayerControl : MonoBehaviour
         {
             if (_movementState != MovementState.Stunned)
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (Input.GetKeyDown(KeyCode.LeftShift) && _movementState == MovementState.Move)
                 {
-                    if (Input.GetAxisRaw("Vertical") > 0.9f)
+                    if (Input.GetAxisRaw("Vertical") > 0.3f)
                     {
                         _movementState = MovementState.RollForward;
                     }
-                    else if(Input.GetAxisRaw("Vertical") < -0.9f)
-                    {
-                        _movementState = MovementState.RollBackward;
-                    }
-                    else if(Input.GetAxisRaw("Horizontal") > 0.9f)
+                    else if(Input.GetAxisRaw("Horizontal") > 0.3f)
                     {
                         _movementState = MovementState.RollRight;
                     }
-                    else if(Input.GetAxisRaw("Horizontal") < -0.9f)
+                    else if(Input.GetAxisRaw("Horizontal") < -0.3f)
                     {
                         _movementState = MovementState.RollLeft;
                     }
+                    else if(Input.GetAxisRaw("Vertical") < -0.3f)
+                    {
+                        _movementState = MovementState.RollBackward;
+                    }
+                    else
+                    {
+                        _movementState = MovementState.RollForward;
+                    }
+                    
                     _attackState = AttackState.None;
                 }
                 
-                else if(Input.GetKeyDown(KeyCode.Space))
-                {
-
-                    _movementState = MovementState.JumpStart;
-                    _yVelocity = jumpStartVelocity;
-                    _attackState = AttackState.None;
-                    
-                }
-                else if(_movementState == MovementState.Fall)
-                {
-                    _movementState = MovementState.JumpEnd;
-                }
-                else if(_movementState == MovementState.JumpStart)
-                {
-                    _movementState = MovementState.JumpEnd;
-                }
+                
             }
             
         }
-        else
-        {
-            if (_movementState != MovementState.JumpStart)
-            {
-                _movementState = MovementState.Fall;
-            }
-        }
-        
+
 
         //for test
         if (Input.GetKeyDown(KeyCode.RightShift))
@@ -299,9 +327,6 @@ public class PlayerControl : MonoBehaviour
         
         
         
-        
-        
-        
         _animator.SetInteger("MovementState",(int)_movementState);
         //used for blend tree
         _animator.SetFloat("x",_horizontal);
@@ -311,6 +336,7 @@ public class PlayerControl : MonoBehaviour
     
     private void AttackFinished()
     {
-        _attackState = AttackState.None;
+        _attackState = _waitingAttack;
+        _waitingAttack = AttackState.None;
     }
 }

@@ -1002,11 +1002,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936a044e8eb42cf489d33afbe33a1ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dodgingMovementSpeed: 5
-  runningMovementSpeed: 2.5
-  gravity: -9.81
-  jumpStartVelocity: 3
+  dodgingMovementSpeed: 7
+  runningMovementSpeed: 3
+  jumpStartVelocity: 5
+  gravity: -12
   rotationSpeed: 200
+  fallStartYVelocity: -6
 --- !u!1 &2819683610472696078
 GameObject:
   m_ObjectHideFlags: 0
