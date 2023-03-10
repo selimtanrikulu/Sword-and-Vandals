@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -43,10 +41,10 @@ public enum DodgeType
     Right,
 }
 
-public class PlayerStateController : MonoBehaviour
+public class CharacterStateController : MonoBehaviour
 {
-    public AttackState attackState { get; set; }
-    public JumpState jumpState { get; set; }
-    public AttackState waitingAttackState { get; set; }
-    public MovementState movementState { get; set; }
+    public AttackState AttackState { get; set; }
+    public JumpState JumpState { get; set; }
+    public AttackState WaitingAttackState { get; set; }
+    public MovementState MovementState { get; set; }
 }
