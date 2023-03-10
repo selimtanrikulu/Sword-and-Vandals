@@ -97,33 +97,33 @@ public class PlayerControl : MonoBehaviour
             _horizontal = Input.GetAxis("Horizontal");
             _vertical =Input.GetAxis("Vertical");
             Transform myTransform = transform;
-            Vector3 verticalMove = myTransform.forward * (_vertical * Time.deltaTime * runningMovementSpeed);
-            Vector3 horizontalMove = myTransform.right * (_horizontal * Time.deltaTime * runningMovementSpeed);
-            _characterController.Move(verticalMove + horizontalMove);
+            Vector3 verticalMove = myTransform.forward * (_vertical * runningMovementSpeed);
+            Vector3 horizontalMove = myTransform.right * (_horizontal * runningMovementSpeed);
+            _characterController.SimpleMove(verticalMove + horizontalMove);
         }
         else if(_movementState == MovementState.RollForward)
         {
             Vector3 moveDir = transform.forward;
-            Vector3 moveDist = moveDir * (Time.deltaTime * dodgingMovementSpeed);
-            _characterController.Move(moveDist);
+            Vector3 moveDist = moveDir * dodgingMovementSpeed;
+            _characterController.SimpleMove(moveDist);
         }
         else if (_movementState == MovementState.RollBackward)
         {
             Vector3 moveDir = transform.forward * -1;
-            Vector3 moveDist = moveDir * (Time.deltaTime * dodgingMovementSpeed);
-            _characterController.Move(moveDist);
+            Vector3 moveDist = moveDir * dodgingMovementSpeed;
+            _characterController.SimpleMove(moveDist);
         }
         else if(_movementState == MovementState.RollRight)
         {
             Vector3 moveDir = transform.right;
-            Vector3 moveDist = moveDir * (Time.deltaTime * dodgingMovementSpeed);
-            _characterController.Move(moveDist);
+            Vector3 moveDist = moveDir * dodgingMovementSpeed;
+            _characterController.SimpleMove(moveDist);
         }
         else if (_movementState == MovementState.RollLeft)
         {
             Vector3 moveDir = transform.right * -1;
-            Vector3 moveDist = moveDir * (Time.deltaTime * dodgingMovementSpeed);
-            _characterController.Move(moveDist);
+            Vector3 moveDist = moveDir * dodgingMovementSpeed;
+            _characterController.SimpleMove(moveDist);
         }
         else if(_movementState == MovementState.Stunned)
         {
