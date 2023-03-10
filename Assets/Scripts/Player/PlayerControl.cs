@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 
@@ -23,6 +24,10 @@ public enum MovementState
     RollRight = 3,
     RollLeft = 4,
     Stunned = 5,
+    JumpStart = 6,
+    Fall = 7,
+    JumpEnd = 8,
+    
 }
 
 
@@ -42,6 +47,12 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] private float dodgingMovementSpeed;
     [SerializeField] private float runningMovementSpeed;
+
+    
+    [SerializeField] private float jumpStartVelocity;
+    [SerializeField] private float gravity;
+
+    private float _yVelocity;
     
     private Animator _animator;
 
@@ -89,51 +100,64 @@ public class PlayerControl : MonoBehaviour
         _movementState = MovementState.Stunned;
         _attackState = AttackState.None;
     }
-
+    
     private void Move()
     {
-        if (_movementState == MovementState.Move)
+        Vector3 moveDist = new Vector3();
+
+
+        switch (_movementState)
         {
-            _horizontal = Input.GetAxis("Horizontal");
-            _vertical =Input.GetAxis("Vertical");
-            Transform myTransform = transform;
-            Vector3 verticalMove = myTransform.forward * (_vertical * runningMovementSpeed);
-            Vector3 horizontalMove = myTransform.right * (_horizontal * runningMovementSpeed);
-            _characterController.SimpleMove(verticalMove + horizontalMove);
-        }
-        else if(_movementState == MovementState.RollForward)
-        {
-            Vector3 moveDir = transform.forward;
-            Vector3 moveDist = moveDir * dodgingMovementSpeed;
-            _characterController.SimpleMove(moveDist);
-        }
-        else if (_movementState == MovementState.RollBackward)
-        {
-            Vector3 moveDir = transform.forward * -1;
-            Vector3 moveDist = moveDir * dodgingMovementSpeed;
-            _characterController.SimpleMove(moveDist);
-        }
-        else if(_movementState == MovementState.RollRight)
-        {
-            Vector3 moveDir = transform.right;
-            Vector3 moveDist = moveDir * dodgingMovementSpeed;
-            _characterController.SimpleMove(moveDist);
-        }
-        else if (_movementState == MovementState.RollLeft)
-        {
-            Vector3 moveDir = transform.right * -1;
-            Vector3 moveDist = moveDir * dodgingMovementSpeed;
-            _characterController.SimpleMove(moveDist);
-        }
-        else if(_movementState == MovementState.Stunned)
-        {
-            //nothing
+
+                
+            case MovementState.Move or MovementState.Fall or MovementState.JumpStart or MovementState.JumpEnd:
+                _horizontal = Input.GetAxis("Horizontal");
+                _vertical =Input.GetAxis("Vertical");
+                Transform myTransform = transform;
+                Vector3 verticalMove = myTransform.forward * (_vertical * runningMovementSpeed * Time.deltaTime);
+                Vector3 horizontalMove = myTransform.right * (_horizontal * runningMovementSpeed * Time.deltaTime);
+                moveDist = verticalMove + horizontalMove;
+
+                break;
+            
+            
+            
+            case MovementState.RollForward:
+                moveDist =  transform.forward * (dodgingMovementSpeed * Time.deltaTime);
+                break;
+            
+            case MovementState.RollBackward:
+                moveDist = -transform.forward * (dodgingMovementSpeed * Time.deltaTime);
+                break;
+            
+            case MovementState.RollRight:
+                moveDist = transform.right * (dodgingMovementSpeed * Time.deltaTime);
+                break;
+            
+            case MovementState.RollLeft:
+                moveDist = -transform.right * (dodgingMovementSpeed * Time.deltaTime) ;
+                break;
+            
+            
+            case MovementState.Stunned:
+                //nothing
+                break;
+            
         }
 
+        //Apply gravity
+        if (!_characterController.isGrounded)
+        {
+            _yVelocity += gravity * Time.deltaTime;
+        }
+        
+        
+        
+        moveDist += Vector3.up * (Time.deltaTime * _yVelocity);
+
+        _characterController.Move(moveDist);
 
     }
-
-   
 
 
     private void DodgeDone()
@@ -188,53 +212,103 @@ public class PlayerControl : MonoBehaviour
 
         _animator.SetInteger("AttackState",(int)_attackState);
     }
+
+    private void JumpStartFinished()
+    {
+        if (_characterController.isGrounded)
+        {
+            _movementState = MovementState.JumpEnd;
+        }
+        else
+        {
+            _movementState = MovementState.Fall;
+        }
+    }
+
+
+    private void JumpEndFinished()
+    {
+        _movementState = MovementState.Move;
+    }
     
     private void HandleMovementAnimation()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _movementState != MovementState.Stunned)
+        if (_characterController.isGrounded)
         {
-            if (Input.GetAxisRaw("Vertical") > 0.9f)
+            if (_movementState != MovementState.Stunned)
             {
-                _movementState = MovementState.RollForward;
-            }
-            else if(Input.GetAxisRaw("Vertical") < -0.9f)
-            {
-                _movementState = MovementState.RollBackward;
-            }
-            else if(Input.GetAxisRaw("Horizontal") > 0.9f)
-            {
-                _movementState = MovementState.RollRight;
-            }
-            else if(Input.GetAxisRaw("Horizontal") < -0.9f)
-            {
-                _movementState = MovementState.RollLeft;
-            }
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    if (Input.GetAxisRaw("Vertical") > 0.9f)
+                    {
+                        _movementState = MovementState.RollForward;
+                    }
+                    else if(Input.GetAxisRaw("Vertical") < -0.9f)
+                    {
+                        _movementState = MovementState.RollBackward;
+                    }
+                    else if(Input.GetAxisRaw("Horizontal") > 0.9f)
+                    {
+                        _movementState = MovementState.RollRight;
+                    }
+                    else if(Input.GetAxisRaw("Horizontal") < -0.9f)
+                    {
+                        _movementState = MovementState.RollLeft;
+                    }
+                    _attackState = AttackState.None;
+                }
+                
+                else if(Input.GetKeyDown(KeyCode.Space))
+                {
 
-
-            _attackState = AttackState.None;
+                    _movementState = MovementState.JumpStart;
+                    _yVelocity = jumpStartVelocity;
+                    _attackState = AttackState.None;
+                    
+                }
+                else if(_movementState == MovementState.Fall)
+                {
+                    _movementState = MovementState.JumpEnd;
+                }
+                else if(_movementState == MovementState.JumpStart)
+                {
+                    _movementState = MovementState.JumpEnd;
+                }
+            }
+            
+        }
+        else
+        {
+            if (_movementState != MovementState.JumpStart)
+            {
+                _movementState = MovementState.Fall;
+            }
         }
         
-        //for tes
-        else if (Input.GetKeyDown(KeyCode.Space))
+
+        //for test
+        if (Input.GetKeyDown(KeyCode.RightShift))
         {
             GetStunned();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             _movementState = MovementState.Move;
         }
+        //-----
+        
+        
+        
+        
+        
         
         _animator.SetInteger("MovementState",(int)_movementState);
-        
-        
         //used for blend tree
         _animator.SetFloat("x",_horizontal);
         _animator.SetFloat("y",_vertical);
     }
 
     
-
-
     private void AttackFinished()
     {
         _attackState = AttackState.None;
