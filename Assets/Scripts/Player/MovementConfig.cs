@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public static class MovementConfig
 {
     public const float DodgingMovementSpeed = 7.0f;
