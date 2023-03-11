@@ -9,16 +9,22 @@ public enum MovementState
     RollBackward = 2,
     RollRight = 3,
     RollLeft = 4,
-    Stunned = 5,
+    RollForwardLeft = 5,
+    RollForwardRight = 6,
+    RollBackwardLeft = 7,
+    RollBackwardRight = 8,
+    Stunned = -1
 }
 
 public enum AttackState
 {
     None = 0,
-    Attack1_1 = 11,
-    Attack1_2 = 12,
-    Attack1_3 = 13,
-    Attack2 = 3,
+    Triple1 = 31,
+    Triple2 = 32,
+    Triple3 = 33,
+    Double1 = 21,
+    Double2 = 22,
+    Single = 1,
     Block = -1,
 }
 

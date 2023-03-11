@@ -13,8 +13,15 @@ public abstract class ControllerBase : MonoBehaviour
     #region Inputs
     public float Horizontal { get; set; }
     public float Vertical { get; set; }
-    public bool Attack1Input { get; set; }
-    public bool Attack2Input { get; set; }
+    
+    public float HorizontalRaw { get; set; }
+    public float VerticalRaw { get; set; }
+    
+    public bool BasicAttackInput { get; set; }
+    public bool Skill1Input { get; set; }
+    public bool Skill2Input { get; set; }
+    
+    public bool Skill3Input { get; set; }
     public bool BlockInput { get; set; }
     public bool RollInput { get; set; }
     public bool GetStunInputTest { get; set; }
@@ -47,6 +54,7 @@ public abstract class ControllerBase : MonoBehaviour
     
     private void HandleRotation()
     {
+        if(Enemy == null) return;
         Vector3 lookAt = (Enemy.transform.position - transform.position);
         lookAt.y = 0;
         lookAt.Normalize();
@@ -58,6 +66,8 @@ public abstract class ControllerBase : MonoBehaviour
 
     private void Move()
     {
+        if(StateController.MovementState == MovementState.Stunned) return;
+        
         Vector3 moveDist = new Vector3();
 
         switch (StateController.MovementState)
@@ -87,13 +97,32 @@ public abstract class ControllerBase : MonoBehaviour
             case MovementState.RollLeft:
                 moveDist = -transform.right * (MovementSpeed * Time.deltaTime);
                 break;
+            
+            
+            case MovementState.RollForwardRight:
+                moveDist = (Quaternion.AngleAxis(45, Vector3.up) * transform.forward)  * (MovementSpeed * Time.deltaTime);
+                break;
+
+            case MovementState.RollForwardLeft:
+                moveDist = (Quaternion.AngleAxis(-45, Vector3.up) * transform.forward) * (MovementSpeed * Time.deltaTime);
+                break;
+
+            case MovementState.RollBackwardRight:
+                moveDist = (Quaternion.AngleAxis(135, Vector3.up) * transform.forward) * (MovementSpeed * Time.deltaTime);
+                break;
+
+            case MovementState.RollBackwardLeft:
+                moveDist = (Quaternion.AngleAxis(-135, Vector3.up) * transform.forward) * (MovementSpeed * Time.deltaTime);
+                break;
 
 
             case MovementState.Stunned:
                 //nothing
                 break;
         }
-
+        
+        
+        
         //Apply gravity
         if (!CharacterController.isGrounded)
         {

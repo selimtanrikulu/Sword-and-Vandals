@@ -1,11 +1,18 @@
 using System.Linq;
 using UnityEditor.Animations;
 using UnityEngine;
+using Zenject;
 
 
 public class CharacterAnimationController : MonoBehaviour
 {
-    [SerializeField] private Skill skill;
+    private Skill _basicSkill;
+    private Skill _skill1;
+    private Skill _skill2;
+    private Skill _skill3;
+    
+    //currently using skill
+    private Skill _activeSkill;
 
     private CharacterController _characterController;
     private ControllerBase _controllerBase;
@@ -13,8 +20,23 @@ public class CharacterAnimationController : MonoBehaviour
     private Animator _animator;
 
     [SerializeField] private GameObject rightHandWeaponHitLocation;
+    [SerializeField] private ParticleSystem weaponTrail;
+    private ISkillManager _skillManager;
+
+    [Inject]
+    private void Inject(ISkillManager skillManager)
+    {
+        _skillManager = skillManager;
+    }
+
+    
     void Start()
     {
+        _basicSkill = _skillManager.GetSkillByIndex(0);
+        _skill1 = _skillManager.GetSkillByIndex(1);
+        _skill2 = _skillManager.GetSkillByIndex(2);
+        _skill3 = _skillManager.GetSkillByIndex(3);
+        
         _characterController = GetComponent<CharacterController>();
         _controllerBase = GetComponent<ControllerBase>();
         _stateController = GetComponent<CharacterStateController>();
@@ -32,7 +54,7 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void PlayImpactAnimation()
     {
-        _animator.Play("GetImpact", 2, 0f);
+        _animator.Play("GetImpact", 1, 0f);
     }
 
 
@@ -42,13 +64,23 @@ public class CharacterAnimationController : MonoBehaviour
         _controllerBase.MovementSpeed = MovementConfig.DodgingMovementSpeed;
     }
 
+    // notifier calls
+    public void StartWeaponTrail()
+    {
+        weaponTrail.Play();
+    }
+    // notifier calls
+    public void StopWeaponTrail()
+    {
+        weaponTrail.Stop();
+    }
 
     // notifier calls
     private void AttackOccurred()
     {
         if(rightHandWeaponHitLocation == null) return;
         
-        GameObject skillImpactGameObject = Instantiate(skill.skillImpact,rightHandWeaponHitLocation.transform.position,Quaternion.identity);
+        GameObject skillImpactGameObject = Instantiate(_activeSkill.GetCurrentImpact(),rightHandWeaponHitLocation.transform.position,Quaternion.identity);
         skillImpactGameObject.GetComponent<SkillImpact>().creator = _controllerBase;
     }
 
@@ -74,6 +106,104 @@ public class CharacterAnimationController : MonoBehaviour
         return null;
     }
 
+    private void SetActiveSkill(Skill activeSkill)
+    {
+        _activeSkill = activeSkill;
+        if(_activeSkill == null) return;
+        
+        
+        if (activeSkill is TripleSkill tripleSkill)
+        {
+            AnimatorState triple1 = GetAnimatorState("Triple-1");
+            if (triple1)
+            {
+                triple1.motion = tripleSkill.attackAnimation1;
+            }
+            
+            AnimatorState triple2 = GetAnimatorState("Triple-2");
+            if (triple2)
+            {
+                triple2.motion = tripleSkill.attackAnimation2;
+            }
+            
+            AnimatorState triple3 = GetAnimatorState("Triple-3");
+            if (triple3)
+            {
+                triple3.motion = tripleSkill.attackAnimation3;
+            }
+            
+        }
+        
+        else if (activeSkill is DoubleSkill doubleSkill)
+        {
+            AnimatorState double1 = GetAnimatorState("Double-1");
+            if (double1)
+            {
+                double1.motion = doubleSkill.attackAnimation1;
+            }
+            
+            AnimatorState double2 = GetAnimatorState("Double-2");
+            if (double2)
+            {
+                double2.motion = doubleSkill.attackAnimation2;
+            }
+        }
+        
+        else if (activeSkill is SingleSkill singleSkill)
+        {
+            AnimatorState single = GetAnimatorState("Single");
+            if (single)
+            {
+                single.motion = singleSkill.attackAnimation;
+            }
+        }
+        else
+        {
+            Debug.LogError("Unknown skill type !");
+        }
+    }
+    
+    private void SkillInputArrived(Skill skill)
+    {
+        if(skill != _activeSkill && _activeSkill != null) return;
+
+        SetActiveSkill(skill);
+
+        if (skill is TripleSkill tripleSkill)
+        {
+            if (_stateController.AttackState == AttackState.None)
+            {
+                _stateController.AttackState = AttackState.Triple1;
+            }
+            else if (_stateController.AttackState == AttackState.Triple1)
+            {
+                _stateController.WaitingAttackState = AttackState.Triple2;
+            }
+            else if (_stateController.AttackState == AttackState.Triple2)
+            {
+                _stateController.WaitingAttackState = AttackState.Triple3;
+            }
+        }
+        else if (skill is DoubleSkill doubleSkill)
+        {
+            if (_stateController.AttackState == AttackState.None)
+            {
+                _stateController.AttackState = AttackState.Double1;
+            }
+            else if (_stateController.AttackState == AttackState.Double1)
+            {
+                _stateController.WaitingAttackState = AttackState.Double2;
+            }
+        }
+        else if (skill is SingleSkill singleSkill)
+        {
+            if (_stateController.AttackState == AttackState.None)
+            {
+                _stateController.AttackState = AttackState.Single;
+            }
+        }
+    }
+    
     private void HandleAttackAnimation()
     {
         if (_stateController.MovementState != MovementState.Move)
@@ -82,32 +212,21 @@ public class CharacterAnimationController : MonoBehaviour
             return;
         }
 
-        if (_controllerBase.Attack1Input)
+        if (_controllerBase.BasicAttackInput)
         {
-            if (_stateController.AttackState == AttackState.None)
-            {
-                _stateController.AttackState = AttackState.Attack1_1;
-            }
-            else if (_stateController.AttackState == AttackState.Attack1_1)
-            {
-                _stateController.WaitingAttackState = AttackState.Attack1_2;
-            }
-            else if (_stateController.AttackState == AttackState.Attack1_2)
-            {
-                _stateController.WaitingAttackState = AttackState.Attack1_3;
-            }
+            SkillInputArrived(_basicSkill);
         }
-        else if (_controllerBase.Attack2Input)
+        else if (_controllerBase.Skill1Input)
         {
-            AnimatorState state = GetAnimatorState("SingleAttack");
-            if (state)
-            {
-                state.motion = skill.attackAnimation;
-                if (_stateController.AttackState == AttackState.None)
-                {
-                    _stateController.AttackState = AttackState.Attack2;
-                }
-            }
+            SkillInputArrived(_skill1);   
+        }
+        else if (_controllerBase.Skill2Input)
+        {
+            SkillInputArrived(_skill2);
+        }
+        else if (_controllerBase.Skill3Input)
+        {
+            SkillInputArrived(_skill3);
         }
 
         if (_controllerBase.BlockInput)
@@ -170,26 +289,52 @@ public class CharacterAnimationController : MonoBehaviour
             _stateController.MovementState != MovementState.Stunned &&
             _stateController.MovementState == MovementState.Move)
         {
-            if (_controllerBase.Vertical > 0.3f)
+            if (_controllerBase.VerticalRaw > 0.99f)
             {
-                _stateController.MovementState = MovementState.RollForward;
+                if (_controllerBase.HorizontalRaw > 0.99f)
+                {
+                    _stateController.MovementState = MovementState.RollForwardRight;
+                }
+                else if (_controllerBase.HorizontalRaw < -0.99f)
+                {
+                    _stateController.MovementState = MovementState.RollForwardLeft;
+                }
+                else
+                {
+                    _stateController.MovementState = MovementState.RollForward;
+                }
             }
-            else if (_controllerBase.Horizontal > 0.3f)
+            else if (_controllerBase.VerticalRaw < -0.99f)
             {
-                _stateController.MovementState = MovementState.RollRight;
-            }
-            else if (_controllerBase.Horizontal < -0.3f)
-            {
-                _stateController.MovementState = MovementState.RollLeft;
-            }
-            else if (_controllerBase.Vertical < -0.3f)
-            {
-                _stateController.MovementState = MovementState.RollBackward;
+                if (_controllerBase.HorizontalRaw > 0.99f)
+                {
+                    _stateController.MovementState = MovementState.RollBackwardRight;
+                }
+                else if (_controllerBase.HorizontalRaw < -0.99f)
+                {
+                    _stateController.MovementState = MovementState.RollBackwardLeft;
+                }
+                else
+                {
+                    _stateController.MovementState = MovementState.RollBackward;
+                }
             }
             else
             {
-                _stateController.MovementState = MovementState.RollForward;
+                if (_controllerBase.HorizontalRaw > 0.99f)
+                {
+                    _stateController.MovementState = MovementState.RollRight;
+                }
+                else if (_controllerBase.HorizontalRaw < -0.99f)
+                {
+                    _stateController.MovementState = MovementState.RollLeft;
+                }
+                else
+                {
+                    _stateController.MovementState = MovementState.RollForward;
+                }
             }
+            
 
             _stateController.AttackState = AttackState.None;
         }
@@ -210,6 +355,18 @@ public class CharacterAnimationController : MonoBehaviour
         //used for blend tree
         _animator.SetFloat("x", _controllerBase.Horizontal);
         _animator.SetFloat("y", _controllerBase.Vertical);
+
+
+
+
+
+
+        if (_stateController.MovementState == MovementState.RollForward)
+        {
+            AnimatorState animatorState = GetAnimatorState("RollForward");
+
+        }
+        
     }
 
     public void GetStunned()
@@ -221,10 +378,18 @@ public class CharacterAnimationController : MonoBehaviour
         _stateController.AttackState = AttackState.None;
     }
 
+
+
     // notifier calls
     private void AttackFinished()
     {
         _stateController.AttackState = _stateController.WaitingAttackState;
         _stateController.WaitingAttackState = AttackState.None;
+
+
+        if (_stateController.AttackState == AttackState.None)
+        {
+            SetActiveSkill(null);
+        }
     }
 }

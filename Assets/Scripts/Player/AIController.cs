@@ -30,12 +30,12 @@ public class AIController : ControllerBase
         if (GetDistanceToPlayer() > 1)
         {
             Vertical = 0.5f;
-            Attack1Input = false;
+            BasicAttackInput = false;
         }
         else
         {
             Vertical = 0;
-            Attack1Input = true;
+            BasicAttackInput = true;
         }
     }
 
