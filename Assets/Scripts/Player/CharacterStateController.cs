@@ -32,15 +32,6 @@ public enum JumpState
 }
 
 
-[Serializable]
-public enum DodgeType
-{
-    Forward,
-    Backward,
-    Left,
-    Right,
-}
-
 public class CharacterStateController : MonoBehaviour
 {
     public AttackState AttackState { get; set; }
