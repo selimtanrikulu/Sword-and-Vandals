@@ -4,13 +4,12 @@ using UnityEngine;
 
 public static class MovementConfig
 {
-    public static float dodgingMovementSpeed = 7.0f;
-    public static float runningMovementSpeed = 3.0f;
+    public const float DodgingMovementSpeed = 7.0f;
+    public const float RunningMovementSpeed = 3.0f;
 
-    public static float jumpStartVelocity = 5.0f;
-    public static float gravity = -12.0f;
+    public const float JumpStartVelocity = 5.0f;
+    public const float Gravity = -12.0f;
 
-    public static float rotationSpeed = 500.0f;
-    public static float fallStartYVelocity = -6.0f;
-
+    public const float RotationSpeed = 50.0f;
+    public const float FallStartYVelocity = -6.0f;
 }

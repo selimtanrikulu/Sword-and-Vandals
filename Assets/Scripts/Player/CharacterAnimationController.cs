@@ -31,7 +31,7 @@ public class CharacterAnimationController : MonoBehaviour
     // notifier calls
     private void DodgeStarted(DodgeType dodgeType)
     {
-        _controllerBase.MovementSpeed = MovementConfig.dodgingMovementSpeed;
+        _controllerBase.MovementSpeed = MovementConfig.DodgingMovementSpeed;
         return;
         switch (dodgeType)
         {
@@ -142,13 +142,13 @@ public class CharacterAnimationController : MonoBehaviour
                     _stateController.MovementState == MovementState.Move)
                 {
                     _stateController.JumpState = JumpState.JumpStart;
-                    _controllerBase.YVelocity = MovementConfig.jumpStartVelocity;
+                    _controllerBase.YVelocity = MovementConfig.JumpStartVelocity;
                 }
             }
         }
         else
         {
-            if (MovementConfig.fallStartYVelocity > _characterController.velocity.y)
+            if (MovementConfig.FallStartYVelocity > _characterController.velocity.y)
             {
                 _stateController.JumpState = JumpState.Fall;
             }
@@ -161,7 +161,7 @@ public class CharacterAnimationController : MonoBehaviour
     private void DodgeDone()
     {
         _stateController.MovementState = MovementState.Move;
-        _controllerBase.MovementSpeed = MovementConfig.runningMovementSpeed;
+        _controllerBase.MovementSpeed = MovementConfig.RunningMovementSpeed;
     }
 
     private void HandleMovementAnimation()

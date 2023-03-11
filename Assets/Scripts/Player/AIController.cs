@@ -5,7 +5,7 @@ public class AIController : ControllerBase
 
     public override void GetInputs()
     {
-        Horizontal = 1;
+        Attack1Input = true;
     }
     private new void Update()
     {
