@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public abstract class ControllerBase : MonoBehaviour
@@ -30,11 +31,16 @@ public abstract class ControllerBase : MonoBehaviour
     public abstract void GetInputs();
 
 
+    private ControllerBase _enemy;
+    private float _userRotation;
+
     void Start()
     {
         CharacterController = GetComponent<CharacterController>();
         StateController = GetComponent<CharacterStateController>();
-        MovementSpeed = MovementConfig.runningMovementSpeed;
+        MovementSpeed = MovementConfig.RunningMovementSpeed;
+        
+        _enemy = FindObjectsOfType<ControllerBase>().FirstOrDefault(x=>x != this);
     }
     
     protected virtual void Update()
@@ -46,10 +52,13 @@ public abstract class ControllerBase : MonoBehaviour
     
     private void HandleRotation()
     {
-        if (Mathf.Abs(RotationInput) > 0.1f)
-        {
-            transform.Rotate(Vector3.up, MovementConfig.rotationSpeed * Time.deltaTime * RotationInput);
-        }
+        Vector3 lookAt = (_enemy.transform.position - transform.position);
+        lookAt.y = 0;
+        lookAt.Normalize();
+        float rotY = Mathf.Atan2(lookAt.x, lookAt.z) * Mathf.Rad2Deg;
+        transform.eulerAngles = new Vector3(0, rotY + _userRotation, 0);
+        //_userRotation += MovementConfig.RotationSpeed * Time.deltaTime * RotationInput;
+        //_userRotation = Mathf.Clamp(_userRotation, -30, 30);
     }
 
     
@@ -64,9 +73,9 @@ public abstract class ControllerBase : MonoBehaviour
                 
                 Transform myTransform = transform;
                 Vector3 verticalMove = myTransform.forward *
-                                       (Vertical * MovementConfig.runningMovementSpeed * Time.deltaTime);
+                                       (Vertical * MovementConfig.RunningMovementSpeed * Time.deltaTime);
                 Vector3 horizontalMove = myTransform.right *
-                                         (Horizontal * MovementConfig.runningMovementSpeed * Time.deltaTime);
+                                         (Horizontal * MovementConfig.RunningMovementSpeed * Time.deltaTime);
                 moveDist = verticalMove + horizontalMove;
                 break;
 
@@ -95,7 +104,7 @@ public abstract class ControllerBase : MonoBehaviour
         //Apply gravity
         if (!CharacterController.isGrounded)
         {
-            YVelocity += MovementConfig.gravity * Time.deltaTime;
+            YVelocity += MovementConfig.Gravity * Time.deltaTime;
         }
 
 

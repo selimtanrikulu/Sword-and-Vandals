@@ -12,6 +12,7 @@ public class CharacterAnimationController : MonoBehaviour
     private CharacterStateController _stateController;
     private Animator _animator;
 
+    [SerializeField] private GameObject rightHandWeaponHitLocation;
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
@@ -29,27 +30,19 @@ public class CharacterAnimationController : MonoBehaviour
 
 
     // notifier calls
-    private void DodgeStarted(DodgeType dodgeType)
+    private void DodgeStarted()
     {
-        _controllerBase.MovementSpeed = MovementConfig.dodgingMovementSpeed;
-        return;
-        switch (dodgeType)
-        {
-            case DodgeType.Forward:
-                _stateController.MovementState = MovementState.RollForward;
-                break;
-
-            case DodgeType.Backward:
-                _stateController.MovementState = MovementState.RollBackward;
-                break;
-        }
+        _controllerBase.MovementSpeed = MovementConfig.DodgingMovementSpeed;
     }
 
 
     // notifier calls
     private void AttackOccurred()
     {
-        //TODO
+        if(rightHandWeaponHitLocation == null) return;
+        
+        GameObject skillImpactGameObject = Instantiate(skill.skillImpact,rightHandWeaponHitLocation.transform.position,Quaternion.identity);
+        skillImpactGameObject.GetComponent<SkillImpact>().creator = _controllerBase;
     }
 
     private AnimatorState GetAnimatorState(string stateName)
@@ -142,13 +135,13 @@ public class CharacterAnimationController : MonoBehaviour
                     _stateController.MovementState == MovementState.Move)
                 {
                     _stateController.JumpState = JumpState.JumpStart;
-                    _controllerBase.YVelocity = MovementConfig.jumpStartVelocity;
+                    _controllerBase.YVelocity = MovementConfig.JumpStartVelocity;
                 }
             }
         }
         else
         {
-            if (MovementConfig.fallStartYVelocity > _characterController.velocity.y)
+            if (MovementConfig.FallStartYVelocity > _characterController.velocity.y)
             {
                 _stateController.JumpState = JumpState.Fall;
             }
@@ -161,7 +154,7 @@ public class CharacterAnimationController : MonoBehaviour
     private void DodgeDone()
     {
         _stateController.MovementState = MovementState.Move;
-        _controllerBase.MovementSpeed = MovementConfig.runningMovementSpeed;
+        _controllerBase.MovementSpeed = MovementConfig.RunningMovementSpeed;
     }
 
     private void HandleMovementAnimation()
