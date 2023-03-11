@@ -16,10 +16,12 @@ public interface ICollider
 public class CharacterHitController : MonoBehaviour
 {
     private ControllerBase _controllerBase;
+    private CharacterStateController _stateController;
 
     private void Start()
     {
         _controllerBase = GetComponent<ControllerBase>();
+        _stateController = GetComponent<CharacterStateController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,12 +30,13 @@ public class CharacterHitController : MonoBehaviour
         {
             if (skillImpact.creator == null)
             {
-                Debug.LogError("Creator could not assign self");
+                Debug.LogError("Creator is not assigned !");
             }
             
             if (skillImpact.creator != null && skillImpact.creator != _controllerBase)
             {
                 skillImpact.collisionHitEffect.Play();
+                _stateController.ImpactState = ImpactState.Impact;
             }
         }
     }
