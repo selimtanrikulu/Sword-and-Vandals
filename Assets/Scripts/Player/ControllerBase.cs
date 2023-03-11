@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class ControllerBase : MonoBehaviour
 {
@@ -25,40 +26,34 @@ public abstract class ControllerBase : MonoBehaviour
 
     #endregion
     
-    
-    
-    
-    public abstract void GetInputs();
+ 
 
 
-    private ControllerBase _enemy;
+    protected ControllerBase Enemy;
     private float _userRotation;
 
-    void Start()
+    private void Start()
     {
         CharacterController = GetComponent<CharacterController>();
         StateController = GetComponent<CharacterStateController>();
         MovementSpeed = MovementConfig.RunningMovementSpeed;
         
-        _enemy = FindObjectsOfType<ControllerBase>().FirstOrDefault(x=>x != this);
+        Enemy = FindObjectsOfType<ControllerBase>().FirstOrDefault(x=>x != this);
     }
     
     protected virtual void Update()
     {
-        GetInputs();
         Move();
         HandleRotation();
     }
     
     private void HandleRotation()
     {
-        Vector3 lookAt = (_enemy.transform.position - transform.position);
+        Vector3 lookAt = (Enemy.transform.position - transform.position);
         lookAt.y = 0;
         lookAt.Normalize();
         float rotY = Mathf.Atan2(lookAt.x, lookAt.z) * Mathf.Rad2Deg;
         transform.eulerAngles = new Vector3(0, rotY + _userRotation, 0);
-        //_userRotation += MovementConfig.RotationSpeed * Time.deltaTime * RotationInput;
-        //_userRotation = Mathf.Clamp(_userRotation, -30, 30);
     }
 
     

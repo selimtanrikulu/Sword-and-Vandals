@@ -1,10 +1,15 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class PlayerControl : ControllerBase
 {
-    
-    public override void GetInputs()
+    private new void Update()
+    {
+        base.Update();
+        GetInputs();
+    }
+    public void GetInputs()
     {
         Attack1Input = Input.GetKeyDown(KeyCode.Mouse0);
         Attack2Input = Input.GetKeyDown(KeyCode.Q);

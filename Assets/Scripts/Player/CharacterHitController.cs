@@ -17,11 +17,13 @@ public class CharacterHitController : MonoBehaviour
 {
     private ControllerBase _controllerBase;
     private CharacterStateController _stateController;
+    private CharacterAnimationController _animationController;
 
     private void Start()
     {
         _controllerBase = GetComponent<ControllerBase>();
         _stateController = GetComponent<CharacterStateController>();
+        _animationController = GetComponent<CharacterAnimationController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,7 +38,7 @@ public class CharacterHitController : MonoBehaviour
             if (skillImpact.creator != null && skillImpact.creator != _controllerBase)
             {
                 skillImpact.collisionHitEffect.Play();
-                _stateController.ImpactState = ImpactState.Impact;
+                _animationController.PlayImpactAnimation();
             }
         }
     }

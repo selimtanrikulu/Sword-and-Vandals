@@ -31,11 +31,7 @@ public enum JumpState
     Fall = 2,
 }
 
-public enum ImpactState
-{
-    None = 0,
-    Impact = 1,
-}
+
 
 public class CharacterStateController : MonoBehaviour
 {
@@ -44,5 +40,4 @@ public class CharacterStateController : MonoBehaviour
     public AttackState WaitingAttackState { get; set; }
     public MovementState MovementState { get; set; }
 
-    public ImpactState ImpactState { get; set; }
 }

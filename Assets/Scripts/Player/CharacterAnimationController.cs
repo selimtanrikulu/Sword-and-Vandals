@@ -26,19 +26,13 @@ public class CharacterAnimationController : MonoBehaviour
         HandleAttackAnimation();
         HandleMovementAnimation();
         HandleJumpAnimation();
-        HandleImpactAnimation();
     }
 
-    
-    //notifier calls
-    private void ImpactAnimationFinished()
+
+
+    public void PlayImpactAnimation()
     {
-        _stateController.ImpactState = ImpactState.None;
-    }
-    
-    private void HandleImpactAnimation()
-    {
-        _animator.SetInteger("ImpactState",(int)_stateController.ImpactState);
+        _animator.Play("GetImpact", 2, 0f);
     }
 
 
