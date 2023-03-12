@@ -51,6 +51,7 @@ MonoBehaviour:
   creator: {fileID: 0}
   lifeTime: 0.3
   collisionHitEffect: {fileID: 7793865869615940917}
+  baseDamage: 3
 --- !u!135 &5421769267452951215
 SphereCollider:
   m_ObjectHideFlags: 0
