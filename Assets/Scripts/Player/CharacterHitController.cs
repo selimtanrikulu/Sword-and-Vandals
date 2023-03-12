@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 
 public enum ColliderType
@@ -45,7 +44,7 @@ public class CharacterHitController : MonoBehaviour
                 {
                     skillImpact.collisionHitEffect.Play();
                     _animationController.PlayImpactAnimation();
-                    _stateController.ChangeHp(-10);
+                    _stateController.ChangeHp(-30);
                 }
             }
         }

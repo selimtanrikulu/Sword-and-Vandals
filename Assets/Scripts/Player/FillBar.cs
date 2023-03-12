@@ -1,13 +1,24 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class FillBar : MonoBehaviour
 {
-    [SerializeField] private GameObject pivotBar;
+    [SerializeField] private GameObject fillBar;
+    [SerializeField] private GameObject gradientBar;
+    
+    
+    [SerializeField] private float changeDuration;
+    
     
     public void UpdateBar(float currentValue, float maxValue)
     {
-        Vector3 localScale = pivotBar.transform.localScale;
-        localScale.y = currentValue / maxValue;
-        pivotBar.transform.localScale = localScale;
+        float endValue = currentValue / maxValue;
+        
+        Vector3 localScale = fillBar.transform.localScale;
+        localScale.y = endValue + 0.01f;
+        fillBar.transform.localScale = localScale;
+        
+        gradientBar.transform.DOKill();
+        gradientBar.transform.DOScaleY(endValue-0.01f,changeDuration);
     }
 }

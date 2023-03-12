@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 
@@ -10,9 +11,7 @@ public class CharacterAnimationController : MonoBehaviour
     private Skill _skill1;
     private Skill _skill2;
     private Skill _skill3;
-    
-    //currently using skill
-    private Skill _activeSkill;
+
 
     private CharacterController _characterController;
     private ControllerBase _controllerBase;
@@ -78,9 +77,9 @@ public class CharacterAnimationController : MonoBehaviour
     // notifier calls
     private void AttackOccurred()
     {
-        if(rightHandWeaponHitLocation == null) return;
+        if(rightHandWeaponHitLocation == null || _stateController.ActiveSkill == null) return;
         
-        GameObject skillImpactGameObject = Instantiate(_activeSkill.GetCurrentImpact(),rightHandWeaponHitLocation.transform.position,Quaternion.identity);
+        GameObject skillImpactGameObject = Instantiate(_stateController.ActiveSkill.GetCurrentImpact(),rightHandWeaponHitLocation.transform.position,Quaternion.identity);
         skillImpactGameObject.GetComponent<SkillImpact>().creator = _controllerBase;
     }
 
@@ -106,13 +105,9 @@ public class CharacterAnimationController : MonoBehaviour
         return null;
     }
 
-    private void SetActiveSkill(Skill activeSkill)
+    private void FillAnimatorAnimations(Skill skill)
     {
-        _activeSkill = activeSkill;
-        if(_activeSkill == null) return;
-        
-        
-        if (activeSkill is TripleSkill tripleSkill)
+        if (skill is TripleSkill tripleSkill)
         {
             AnimatorState triple1 = GetAnimatorState("Triple-1");
             if (triple1)
@@ -134,7 +129,7 @@ public class CharacterAnimationController : MonoBehaviour
             
         }
         
-        else if (activeSkill is DoubleSkill doubleSkill)
+        else if (skill is DoubleSkill doubleSkill)
         {
             AnimatorState double1 = GetAnimatorState("Double-1");
             if (double1)
@@ -149,7 +144,7 @@ public class CharacterAnimationController : MonoBehaviour
             }
         }
         
-        else if (activeSkill is SingleSkill singleSkill)
+        else if (skill is SingleSkill singleSkill)
         {
             AnimatorState single = GetAnimatorState("Single");
             if (single)
@@ -165,15 +160,16 @@ public class CharacterAnimationController : MonoBehaviour
     
     private void SkillInputArrived(Skill skill)
     {
-        if(skill != _activeSkill && _activeSkill != null) return;
+        if(_stateController.ActiveSkill != null && _stateController.ActiveSkill != skill)return;
 
-        SetActiveSkill(skill);
 
         if (skill is TripleSkill tripleSkill)
         {
             if (_stateController.AttackState == AttackState.None)
             {
-                _stateController.SetAttackState(AttackState.Triple1);
+                _stateController.ActiveSkill = skill;
+                FillAnimatorAnimations(skill);
+                _stateController.AttackState = AttackState.Triple1;
             }
             else if (_stateController.AttackState == AttackState.Triple1)
             {
@@ -188,7 +184,9 @@ public class CharacterAnimationController : MonoBehaviour
         {
             if (_stateController.AttackState == AttackState.None)
             {
-                _stateController.SetAttackState(AttackState.Double1);
+                _stateController.ActiveSkill = skill;
+                FillAnimatorAnimations(skill);
+                _stateController.AttackState = AttackState.Double1;
             }
             else if (_stateController.AttackState == AttackState.Double1)
             {
@@ -199,7 +197,9 @@ public class CharacterAnimationController : MonoBehaviour
         {
             if (_stateController.AttackState == AttackState.None)
             {
-                _stateController.SetAttackState(AttackState.Single);
+                _stateController.ActiveSkill = skill;
+                FillAnimatorAnimations(skill);
+                _stateController.AttackState = AttackState.Single;
             }
         }
     }
@@ -208,7 +208,7 @@ public class CharacterAnimationController : MonoBehaviour
     {
         if (_stateController.MovementState != MovementState.Move)
         {
-            _stateController.SetAttackState(AttackState.None);
+            _stateController.AttackState = AttackState.None;
             return;
         }
 
@@ -234,18 +234,16 @@ public class CharacterAnimationController : MonoBehaviour
             if (_stateController.MovementState == MovementState.Move &&
                 _stateController.AttackState == AttackState.None)
             {
-                _stateController.SetAttackState(AttackState.Block);
+                _stateController.AttackState = AttackState.Block;
             }
         }
         else
         {
             if (_stateController.AttackState == AttackState.Block)
             {
-                _stateController.SetAttackState(AttackState.None);
+                _stateController.AttackState = AttackState.None;
             }
         }
-
-        //_animator.SetInteger("AttackState", (int)_stateController.AttackState);
     }
 
     private void HandleJumpAnimation()
@@ -336,7 +334,7 @@ public class CharacterAnimationController : MonoBehaviour
             }
             
 
-            _stateController.SetAttackState(AttackState.None);
+            _stateController.AttackState = AttackState.None;
             _stateController.WaitingAttackState = AttackState.None;
         }
 
@@ -376,7 +374,7 @@ public class CharacterAnimationController : MonoBehaviour
             or MovementState.RollRight or MovementState.RollLeft) return;
 
         _stateController.MovementState = MovementState.Stunned;
-        _stateController.SetAttackState(AttackState.None);
+        _stateController.AttackState = AttackState.None;
     }
 
 
@@ -384,13 +382,9 @@ public class CharacterAnimationController : MonoBehaviour
     // notifier calls
     private void AttackFinished()
     {
-        _stateController.SetAttackState(_stateController.WaitingAttackState);
+
+        _stateController.AttackState = _stateController.WaitingAttackState;
         _stateController.WaitingAttackState = AttackState.None;
-
-
-        if (_stateController.AttackState == AttackState.None)
-        {
-            SetActiveSkill(null);
-        }
+        
     }
 }

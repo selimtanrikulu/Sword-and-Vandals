@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -43,11 +46,13 @@ public enum JumpState
 public class CharacterStateController : MonoBehaviour
 {
     private Animator _animator;
-    
+
+    private CharacterAnimationController _animationController;
     
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _animationController = GetComponent<CharacterAnimationController>();
         
         _hpBar = GetComponentInChildren<FillBar>();
         _maxHp = 100;
@@ -55,8 +60,27 @@ public class CharacterStateController : MonoBehaviour
         _hpBar.UpdateBar(_hp,_maxHp);
     }
 
+
     private AttackState _attackState;
-    public AttackState AttackState => _attackState;
+    public AttackState AttackState 
+    {
+        get { return _attackState; }
+        set
+        {
+            _attackState = value;
+            Debug.Log("attack state set to" + _attackState);
+            if (_attackState == AttackState.None)
+            {
+                ActiveSkill = null;
+                _animationController.StopWeaponTrail();
+            }
+        }
+    }
+
+
+
+    public Skill ActiveSkill { get; set; }
+
     public JumpState JumpState { get; set; }
     public AttackState WaitingAttackState { get; set; }
     public MovementState MovementState { get; set; }
@@ -94,11 +118,12 @@ public class CharacterStateController : MonoBehaviour
             MovementState.RollForwardLeft;
     }
 
-    public void SetAttackState(AttackState attackState)
+
+
+    private void Update()
     {
-        _attackState = attackState;
-        _animator.SetInteger("AttackState",(int)attackState);
+        _animator.SetInteger("AttackState",(int)AttackState);
     }
     
-    
+
 }
