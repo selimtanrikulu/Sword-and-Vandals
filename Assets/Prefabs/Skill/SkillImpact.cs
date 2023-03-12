@@ -2,10 +2,14 @@ using UnityEngine;
 
 public class SkillImpact : MonoBehaviour,ICollider
 {
-    public ControllerBase creator;
+    
+    [HideInInspector] public ControllerBase creator;
     [SerializeField] private float lifeTime;
     [SerializeField] public ParticleSystem collisionHitEffect;
 
+
+    [SerializeField] public float baseDamage = 3;
+    
     private void Update()
     {
         if (lifeTime < 0)

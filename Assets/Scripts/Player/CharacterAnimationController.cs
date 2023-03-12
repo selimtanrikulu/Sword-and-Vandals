@@ -77,9 +77,66 @@ public class CharacterAnimationController : MonoBehaviour
     {
         if(rightHandWeaponHitLocation == null || _stateController.ActiveSkill == null) return;
         
-        GameObject skillImpactGameObject = Instantiate(_stateController.ActiveSkill.GetCurrentImpact(),rightHandWeaponHitLocation.transform.position,Quaternion.identity);
+
+        GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),rightHandWeaponHitLocation.transform.position,Quaternion.identity);
         skillImpactGameObject.GetComponent<SkillImpact>().creator = _controllerBase;
     }
+
+
+    private GameObject GetCurrentImpact()
+    {
+        if (_stateController.ActiveSkill is TripleSkill tripleSkill)
+        {
+            if (_stateController.AttackState == AttackState.Triple1)
+            {
+                return tripleSkill.skillImpact1;
+            }
+
+            if (_stateController.AttackState == AttackState.Triple2)
+            {
+                return tripleSkill.skillImpact2;
+            }
+
+            if(_stateController.AttackState == AttackState.Triple3)
+            {
+                return tripleSkill.skillImpact3;
+            }
+
+            Debug.LogError("Active skill and attack state is not matching");
+            return null;
+        }
+
+        if (_stateController.ActiveSkill is DoubleSkill doubleSkill)
+        {
+            if (_stateController.AttackState == AttackState.Double1)
+            {
+                return doubleSkill.skillImpact1;
+            }
+
+            if (_stateController.AttackState == AttackState.Double2)
+            {
+                return doubleSkill.skillImpact2;
+            }
+
+            Debug.LogError("Active skill and attack state is not matching");
+            return null;
+        }
+
+        if (_stateController.ActiveSkill is SingleSkill singleSkill)
+        {
+            if (_stateController.AttackState == AttackState.Single)
+            {
+                return singleSkill.skillImpact;
+            }
+
+            Debug.LogError("Active skill and attack state is not matching");
+            return null;
+        }
+
+        Debug.LogError("There is no active skill");
+        return null;
+    }
+    
 
     private AnimatorState GetAnimatorState(string stateName)
     {
