@@ -16,10 +16,10 @@ public class PlayerControl : ControllerBase
     }
     public void GetInputs()
     {
-        BasicAttackInput = Input.GetKeyDown(KeyCode.Mouse0);
-        Skill1Input = Input.GetKeyDown(KeyCode.Q);
-        Skill2Input = Input.GetKeyDown(KeyCode.E);
-        Skill3Input = Input.GetKeyDown(KeyCode.R);
+        BasicAttackInput = Input.GetKey(KeyCode.Mouse0);
+        Skill1Input = Input.GetKey(KeyCode.Q);
+        Skill2Input = Input.GetKey(KeyCode.E);
+        Skill3Input = Input.GetKey(KeyCode.R);
         JumpInput = Input.GetKeyDown(KeyCode.Space);
         GetStunInputTest = Input.GetKeyDown(KeyCode.RightShift);
         BreakStunInputTest = Input.GetKeyDown(KeyCode.Escape);

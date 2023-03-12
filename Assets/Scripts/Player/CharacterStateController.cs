@@ -64,6 +64,7 @@ public class CharacterStateController : MonoBehaviour
         set
         {
             _attackState = value;
+            _animator.SetInteger("AttackState",(int)AttackState);
             if (_attackState == AttackState.None)
             {
                 ActiveSkill = null;

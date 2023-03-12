@@ -1,6 +1,6 @@
 using System.Linq;
-using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 
@@ -19,8 +19,9 @@ public class CharacterAnimationController : MonoBehaviour
 
     [SerializeField] private GameObject rightHandWeaponHitLocation;
     [SerializeField] private ParticleSystem weaponTrail;
+    private AnimatorOverrider _animatorOverrider;
     private ISkillManager _skillManager;
-
+    
     [Inject]
     private void Inject(ISkillManager skillManager)
     {
@@ -37,6 +38,7 @@ public class CharacterAnimationController : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         _controllerBase = GetComponent<ControllerBase>();
         _stateController = GetComponent<CharacterStateController>();
+        _animatorOverrider = GetComponent<AnimatorOverrider>();
         _animator = GetComponent<Animator>();
     }
 
@@ -137,75 +139,28 @@ public class CharacterAnimationController : MonoBehaviour
         return null;
     }
     
-
-    private AnimatorState GetAnimatorState(string stateName)
-    {
-        AnimatorController animatorController = _animator.runtimeAnimatorController as AnimatorController;
-        if (animatorController != null)
-        {
-            AnimatorControllerLayer[] acLayers =animatorController.layers;
-            AnimatorControllerLayer layer = acLayers.FirstOrDefault(x => x.name == "AttackLayer");
-            if (layer != null)
-            {
-                ChildAnimatorState[] animStates = layer.stateMachine.states;
-                foreach (ChildAnimatorState j in animStates)
-                {
-                    if (j.state.name == stateName)
-                    {
-                        return j.state;
-                    }
-                }
-            }
-        }
-        return null;
-    }
+    
 
     private void FillAnimatorAnimations(Skill skill)
     {
+        _stateController.ActiveSkill = skill;
+        
         if (skill is TripleSkill tripleSkill)
         {
-            AnimatorState triple1 = GetAnimatorState("Triple-1");
-            if (triple1)
-            {
-                triple1.motion = tripleSkill.attackAnimation1;
-            }
-            
-            AnimatorState triple2 = GetAnimatorState("Triple-2");
-            if (triple2)
-            {
-                triple2.motion = tripleSkill.attackAnimation2;
-            }
-            
-            AnimatorState triple3 = GetAnimatorState("Triple-3");
-            if (triple3)
-            {
-                triple3.motion = tripleSkill.attackAnimation3;
-            }
-            
+            _animatorOverrider.SetAnimation("Triple-1",tripleSkill.attackAnimation1);
+            _animatorOverrider.SetAnimation("Triple-2",tripleSkill.attackAnimation2);
+            _animatorOverrider.SetAnimation("Triple-3",tripleSkill.attackAnimation3);
         }
         
         else if (skill is DoubleSkill doubleSkill)
         {
-            AnimatorState double1 = GetAnimatorState("Double-1");
-            if (double1)
-            {
-                double1.motion = doubleSkill.attackAnimation1;
-            }
-            
-            AnimatorState double2 = GetAnimatorState("Double-2");
-            if (double2)
-            {
-                double2.motion = doubleSkill.attackAnimation2;
-            }
+            _animatorOverrider.SetAnimation("Double-1",doubleSkill.attackAnimation1);
+            _animatorOverrider.SetAnimation("Double-2",doubleSkill.attackAnimation2);
         }
         
         else if (skill is SingleSkill singleSkill)
         {
-            AnimatorState single = GetAnimatorState("Single");
-            if (single)
-            {
-                single.motion = singleSkill.attackAnimation;
-            }
+            _animatorOverrider.SetAnimation("Single",singleSkill.attackAnimation);
         }
         else
         {
@@ -222,7 +177,6 @@ public class CharacterAnimationController : MonoBehaviour
         {
             if (_stateController.AttackState == AttackState.None)
             {
-                _stateController.ActiveSkill = skill;
                 FillAnimatorAnimations(skill);
                 _stateController.AttackState = AttackState.Triple1;
             }
@@ -239,7 +193,6 @@ public class CharacterAnimationController : MonoBehaviour
         {
             if (_stateController.AttackState == AttackState.None)
             {
-                _stateController.ActiveSkill = skill;
                 FillAnimatorAnimations(skill);
                 _stateController.AttackState = AttackState.Double1;
             }
@@ -252,7 +205,6 @@ public class CharacterAnimationController : MonoBehaviour
         {
             if (_stateController.AttackState == AttackState.None)
             {
-                _stateController.ActiveSkill = skill;
                 FillAnimatorAnimations(skill);
                 _stateController.AttackState = AttackState.Single;
             }
@@ -406,19 +358,9 @@ public class CharacterAnimationController : MonoBehaviour
         //used for blend tree
         _animator.SetFloat("x", _controllerBase.Horizontal);
         _animator.SetFloat("y", _controllerBase.Vertical);
-
-
-
-
-
-
-        if (_stateController.MovementState == MovementState.RollForward)
-        {
-            AnimatorState animatorState = GetAnimatorState("RollForward");
-
-        }
         
     }
+    
 
     public void GetStunned()
     {
@@ -434,7 +376,7 @@ public class CharacterAnimationController : MonoBehaviour
     // notifier calls
     private void AttackFinished()
     {
-
+        Debug.Log(gameObject.ToString());
         _stateController.AttackState = _stateController.WaitingAttackState;
         _stateController.WaitingAttackState = AttackState.None;
         
