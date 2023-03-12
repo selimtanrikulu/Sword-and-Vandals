@@ -78,8 +78,8 @@ public class CharacterAnimationController : MonoBehaviour
     private void AttackOccurred()
     {
         if(rightHandWeaponHitLocation == null || _stateController.ActiveSkill == null) return;
-        
 
+        _stateController.AttackIntervalState = AttackIntervalState.Occured;
         GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),rightHandWeaponHitLocation.transform.position,Quaternion.identity);
         skillImpactGameObject.GetComponent<SkillImpact>().creator = _controllerBase;
     }
@@ -170,7 +170,10 @@ public class CharacterAnimationController : MonoBehaviour
     
     private void SkillInputArrived(Skill skill)
     {
-        if(_stateController.ActiveSkill != null && _stateController.ActiveSkill != skill)return;
+        if (_stateController.ActiveSkill != null && _stateController.ActiveSkill != skill)
+        {
+            return;
+        }
 
 
         if (skill is TripleSkill tripleSkill)
@@ -180,13 +183,16 @@ public class CharacterAnimationController : MonoBehaviour
                 FillAnimatorAnimations(skill);
                 _stateController.AttackState = AttackState.Triple1;
             }
-            else if (_stateController.AttackState == AttackState.Triple1)
+            else if (_stateController.AttackIntervalState == AttackIntervalState.Occured)
             {
-                _stateController.WaitingAttackState = AttackState.Triple2;
-            }
-            else if (_stateController.AttackState == AttackState.Triple2)
-            {
-                _stateController.WaitingAttackState = AttackState.Triple3;
+                if (_stateController.AttackState == AttackState.Triple1)
+                {
+                    _stateController.WaitingAttackState = AttackState.Triple2;
+                }
+                else if (_stateController.AttackState == AttackState.Triple2)
+                {
+                    _stateController.WaitingAttackState = AttackState.Triple3;
+                }
             }
         }
         else if (skill is DoubleSkill doubleSkill)
@@ -196,9 +202,13 @@ public class CharacterAnimationController : MonoBehaviour
                 FillAnimatorAnimations(skill);
                 _stateController.AttackState = AttackState.Double1;
             }
-            else if (_stateController.AttackState == AttackState.Double1)
+
+            else if (_stateController.AttackIntervalState == AttackIntervalState.Occured)
             {
-                _stateController.WaitingAttackState = AttackState.Double2;
+                if (_stateController.AttackState == AttackState.Double1)
+                {
+                    _stateController.WaitingAttackState = AttackState.Double2;
+                }
             }
         }
         else if (skill is SingleSkill singleSkill)
@@ -376,9 +386,7 @@ public class CharacterAnimationController : MonoBehaviour
     // notifier calls
     private void AttackFinished()
     {
-        Debug.Log(gameObject.ToString());
         _stateController.AttackState = _stateController.WaitingAttackState;
         _stateController.WaitingAttackState = AttackState.None;
-        
     }
 }
