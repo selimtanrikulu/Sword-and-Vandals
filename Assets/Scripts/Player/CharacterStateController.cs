@@ -13,7 +13,8 @@ public enum MovementState
     RollForwardRight = 6,
     RollBackwardLeft = 7,
     RollBackwardRight = 8,
-    Stunned = -1
+    Stunned = -1,
+    Died = -2,
 }
 
 public enum AttackState
@@ -40,9 +41,84 @@ public enum JumpState
 
 public class CharacterStateController : MonoBehaviour
 {
-    public AttackState AttackState { get; set; }
+    private Animator _animator;
+
+    private CharacterAnimationController _animationController;
+    
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+        _animationController = GetComponent<CharacterAnimationController>();
+        
+        _hpBar = GetComponentInChildren<FillBar>();
+        _maxHp = 100;
+        _hp = _maxHp;
+        _hpBar.UpdateBar(_hp,_maxHp);
+    }
+
+
+    private AttackState _attackState;
+    public AttackState AttackState 
+    {
+        get { return _attackState; }
+        set
+        {
+            _attackState = value;
+            if (_attackState == AttackState.None)
+            {
+                ActiveSkill = null;
+                _animationController.StopWeaponTrail();
+            }
+        }
+    }
+
+
+
+    public Skill ActiveSkill { get; set; }
+
     public JumpState JumpState { get; set; }
     public AttackState WaitingAttackState { get; set; }
     public MovementState MovementState { get; set; }
+
+
+    private float _maxHp;
+    private float _hp;
+
+
+    private FillBar _hpBar;
+
+    public void ChangeHp(float amount)
+    {
+        _hp = Mathf.Max(0, _hp + amount);
+        if(_hpBar)_hpBar.UpdateBar(_hp,_maxHp);
+
+
+        //Character died
+        if (_hp < 0.01f)
+        {
+            MovementState = MovementState.Died;
+        }
+    }
+
+    public bool IsRolling()
+    {
+        return MovementState is
+            MovementState.RollForward or
+            MovementState.RollBackward or
+            MovementState.RollLeft or
+            MovementState.RollRight or
+            MovementState.RollBackwardLeft or
+            MovementState.RollBackwardRight or
+            MovementState.RollForwardRight or
+            MovementState.RollForwardLeft;
+    }
+
+
+
+    private void Update()
+    {
+        _animator.SetInteger("AttackState",(int)AttackState);
+    }
+    
 
 }

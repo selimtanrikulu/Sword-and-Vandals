@@ -1,3 +1,4 @@
+using CartoonFX;
 using UnityEngine;
 
 
@@ -36,11 +37,38 @@ public class CharacterHitController : MonoBehaviour
             
             if (skillImpact.creator != null && skillImpact.creator != _controllerBase)
             {
-                skillImpact.collisionHitEffect.Play();
-                _animationController.PlayImpactAnimation();
+                if (_stateController.IsRolling())
+                {
+                    //player dodged attack
+                }
+                else
+                {
+                    HandleCameraShake(skillImpact);
+                    skillImpact.collisionHitEffect.gameObject.SetActive(true);
+                    skillImpact.collisionHitEffect.Play();
+                    _animationController.PlayImpactAnimation();
+                    _stateController.ChangeHp(-skillImpact.baseDamage);
+                }
             }
         }
     }
+
+
+    private void HandleCameraShake(SkillImpact skillImpact)
+    {
+        if (skillImpact.collisionHitEffect.TryGetComponent(out CFXR_Effect effect))
+        {
+            if (skillImpact.creator is AIController)
+            {
+                effect.cameraShake.enabled = false;
+            }
+            else if(skillImpact.creator is PlayerControl)
+            {
+                effect.cameraShake.enabled = true;
+            }
+        }
+    }
+    
 
     
 }

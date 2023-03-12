@@ -34,7 +34,7 @@ public abstract class ControllerBase : MonoBehaviour
  
 
 
-    protected ControllerBase Enemy;
+    protected CharacterStateController Enemy;
     private float _userRotation;
 
     private void Start()
@@ -43,7 +43,7 @@ public abstract class ControllerBase : MonoBehaviour
         StateController = GetComponent<CharacterStateController>();
         MovementSpeed = MovementConfig.RunningMovementSpeed;
         
-        Enemy = FindObjectsOfType<ControllerBase>().FirstOrDefault(x=>x != this);
+        Enemy = FindObjectsOfType<CharacterStateController>().FirstOrDefault(x=>x != StateController);
     }
     
     protected virtual void Update()
@@ -54,7 +54,7 @@ public abstract class ControllerBase : MonoBehaviour
     
     private void HandleRotation()
     {
-        if(Enemy == null) return;
+        if(Enemy == null || StateController.MovementState == MovementState.Died) return;
         Vector3 lookAt = (Enemy.transform.position - transform.position);
         lookAt.y = 0;
         lookAt.Normalize();

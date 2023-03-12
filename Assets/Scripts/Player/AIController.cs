@@ -27,7 +27,7 @@ public class AIController : ControllerBase
 
     private void Decide()
     {
-        if (GetDistanceToPlayer() > 1)
+        if (GetDistanceToPlayer() > 2)
         {
             Vertical = 0.5f;
             BasicAttackInput = false;
@@ -35,7 +35,14 @@ public class AIController : ControllerBase
         else
         {
             Vertical = 0;
-            BasicAttackInput = true;
+            if (Enemy.MovementState == MovementState.Died)
+            {
+                BasicAttackInput = false;
+            }
+            else
+            {
+                BasicAttackInput = true;
+            }
         }
     }
 
