@@ -173,7 +173,7 @@ public class CharacterAnimationController : MonoBehaviour
         {
             if (_stateController.AttackState == AttackState.None)
             {
-                _stateController.AttackState = AttackState.Triple1;
+                _stateController.SetAttackState(AttackState.Triple1);
             }
             else if (_stateController.AttackState == AttackState.Triple1)
             {
@@ -188,7 +188,7 @@ public class CharacterAnimationController : MonoBehaviour
         {
             if (_stateController.AttackState == AttackState.None)
             {
-                _stateController.AttackState = AttackState.Double1;
+                _stateController.SetAttackState(AttackState.Double1);
             }
             else if (_stateController.AttackState == AttackState.Double1)
             {
@@ -199,7 +199,7 @@ public class CharacterAnimationController : MonoBehaviour
         {
             if (_stateController.AttackState == AttackState.None)
             {
-                _stateController.AttackState = AttackState.Single;
+                _stateController.SetAttackState(AttackState.Single);
             }
         }
     }
@@ -208,7 +208,7 @@ public class CharacterAnimationController : MonoBehaviour
     {
         if (_stateController.MovementState != MovementState.Move)
         {
-            _stateController.AttackState = AttackState.None;
+            _stateController.SetAttackState(AttackState.None);
             return;
         }
 
@@ -234,18 +234,18 @@ public class CharacterAnimationController : MonoBehaviour
             if (_stateController.MovementState == MovementState.Move &&
                 _stateController.AttackState == AttackState.None)
             {
-                _stateController.AttackState = AttackState.Block;
+                _stateController.SetAttackState(AttackState.Block);
             }
         }
         else
         {
             if (_stateController.AttackState == AttackState.Block)
             {
-                _stateController.AttackState = AttackState.None;
+                _stateController.SetAttackState(AttackState.None);
             }
         }
 
-        _animator.SetInteger("AttackState", (int)_stateController.AttackState);
+        //_animator.SetInteger("AttackState", (int)_stateController.AttackState);
     }
 
     private void HandleJumpAnimation()
@@ -336,7 +336,7 @@ public class CharacterAnimationController : MonoBehaviour
             }
             
 
-            _stateController.AttackState = AttackState.None;
+            _stateController.SetAttackState(AttackState.None);
             _stateController.WaitingAttackState = AttackState.None;
         }
 
@@ -376,7 +376,7 @@ public class CharacterAnimationController : MonoBehaviour
             or MovementState.RollRight or MovementState.RollLeft) return;
 
         _stateController.MovementState = MovementState.Stunned;
-        _stateController.AttackState = AttackState.None;
+        _stateController.SetAttackState(AttackState.None);
     }
 
 
@@ -384,7 +384,7 @@ public class CharacterAnimationController : MonoBehaviour
     // notifier calls
     private void AttackFinished()
     {
-        _stateController.AttackState = _stateController.WaitingAttackState;
+        _stateController.SetAttackState(_stateController.WaitingAttackState);
         _stateController.WaitingAttackState = AttackState.None;
 
 

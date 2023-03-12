@@ -55,7 +55,8 @@ public class CharacterStateController : MonoBehaviour
         _hpBar.UpdateBar(_hp,_maxHp);
     }
 
-    public AttackState AttackState { get; set; }
+    private AttackState _attackState;
+    public AttackState AttackState => _attackState;
     public JumpState JumpState { get; set; }
     public AttackState WaitingAttackState { get; set; }
     public MovementState MovementState { get; set; }
@@ -95,8 +96,9 @@ public class CharacterStateController : MonoBehaviour
 
     public void SetAttackState(AttackState attackState)
     {
-        AttackState = attackState;
-        
+        _attackState = attackState;
+        _animator.SetInteger("AttackState",(int)attackState);
     }
-
+    
+    
 }
