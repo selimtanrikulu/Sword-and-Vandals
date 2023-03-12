@@ -337,6 +337,7 @@ public class CharacterAnimationController : MonoBehaviour
             
 
             _stateController.AttackState = AttackState.None;
+            _stateController.WaitingAttackState = AttackState.None;
         }
 
         //for test

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public enum ColliderType
@@ -36,8 +37,16 @@ public class CharacterHitController : MonoBehaviour
             
             if (skillImpact.creator != null && skillImpact.creator != _controllerBase)
             {
-                skillImpact.collisionHitEffect.Play();
-                _animationController.PlayImpactAnimation();
+                if (_stateController.IsRolling())
+                {
+                    //player dodged attack
+                }
+                else
+                {
+                    skillImpact.collisionHitEffect.Play();
+                    _animationController.PlayImpactAnimation();
+                    _stateController.ChangeHp(-10);
+                }
             }
         }
     }

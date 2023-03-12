@@ -35,7 +35,14 @@ public class AIController : ControllerBase
         else
         {
             Vertical = 0;
-            BasicAttackInput = true;
+            if (Enemy.MovementState == MovementState.Died)
+            {
+                BasicAttackInput = false;
+            }
+            else
+            {
+                BasicAttackInput = true;
+            }
         }
     }
 
