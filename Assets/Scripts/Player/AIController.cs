@@ -27,7 +27,7 @@ public class AIController : ControllerBase
 
     private void Decide()
     {
-        if (GetDistanceToPlayer() > 1)
+        if (GetDistanceToPlayer() > 2)
         {
             Vertical = 0.5f;
             BasicAttackInput = false;

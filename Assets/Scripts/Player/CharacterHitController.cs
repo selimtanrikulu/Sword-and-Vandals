@@ -44,7 +44,7 @@ public class CharacterHitController : MonoBehaviour
                 {
                     skillImpact.collisionHitEffect.Play();
                     _animationController.PlayImpactAnimation();
-                    _stateController.ChangeHp(-30);
+                    _stateController.ChangeHp(-10);
                 }
             }
         }

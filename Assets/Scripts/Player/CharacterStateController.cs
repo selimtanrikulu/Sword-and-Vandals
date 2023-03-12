@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 
@@ -68,7 +64,6 @@ public class CharacterStateController : MonoBehaviour
         set
         {
             _attackState = value;
-            Debug.Log("attack state set to" + _attackState);
             if (_attackState == AttackState.None)
             {
                 ActiveSkill = null;

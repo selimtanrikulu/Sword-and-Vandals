@@ -1,7 +1,6 @@
 using System.Linq;
 using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 
@@ -10,7 +9,7 @@ public class CharacterAnimationController : MonoBehaviour
     private Skill _basicSkill;
     private Skill _skill1;
     private Skill _skill2;
-    private Skill _skill3;
+
 
 
     private CharacterController _characterController;
@@ -34,8 +33,7 @@ public class CharacterAnimationController : MonoBehaviour
         _basicSkill = _skillManager.GetSkillByIndex(0);
         _skill1 = _skillManager.GetSkillByIndex(1);
         _skill2 = _skillManager.GetSkillByIndex(2);
-        _skill3 = _skillManager.GetSkillByIndex(3);
-        
+
         _characterController = GetComponent<CharacterController>();
         _controllerBase = GetComponent<ControllerBase>();
         _stateController = GetComponent<CharacterStateController>();
@@ -224,10 +222,7 @@ public class CharacterAnimationController : MonoBehaviour
         {
             SkillInputArrived(_skill2);
         }
-        else if (_controllerBase.Skill3Input)
-        {
-            SkillInputArrived(_skill3);
-        }
+
 
         if (_controllerBase.BlockInput)
         {

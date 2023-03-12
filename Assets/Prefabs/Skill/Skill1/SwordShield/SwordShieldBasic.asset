@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32af0c600fd51b1468df9499a6c8152b, type: 3}
-  m_Name: TripleSkill1
+  m_Name: SwordShieldBasic
   m_EditorClassIdentifier: 
   phase: 1
   attackAnimation1: {fileID: 7400000, guid: 4292a2ba3a47b43408c77411307a5250, type: 2}
   skillImpact1: {fileID: 5421769267452951212, guid: 4c9fb7c74e0c61142a11282d717e2adf, type: 3}
-  attackAnimation2: {fileID: 7400000, guid: 7ba41255d14b1db44ab84017adbe2f39, type: 2}
+  attackAnimation2: {fileID: 7400000, guid: bed052086e5427f48929dd308938d0ab, type: 2}
   skillImpact2: {fileID: 5421769267452951212, guid: 4c9fb7c74e0c61142a11282d717e2adf, type: 3}
-  attackAnimation3: {fileID: 7400000, guid: 30a7288e1e0232c4da12bcf2b165e97f, type: 2}
+  attackAnimation3: {fileID: 7400000, guid: 954ad0fa31816ca47bf0f1248d8118e1, type: 2}
   skillImpact3: {fileID: 5421769267452951212, guid: 4c9fb7c74e0c61142a11282d717e2adf, type: 3}
