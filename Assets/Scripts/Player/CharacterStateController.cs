@@ -37,6 +37,12 @@ public enum JumpState
     Fall = 2,
 }
 
+public enum AttackIntervalState
+{
+    None, //Not attacking
+    PreOccurrence, //in attack animation, but impact not created yet
+    Occured, //in attach animation, impact occurred, animation did not finish yet
+}
 
 
 public class CharacterStateController : MonoBehaviour
@@ -67,16 +73,21 @@ public class CharacterStateController : MonoBehaviour
             _animator.SetInteger("AttackState",(int)AttackState);
             if (_attackState == AttackState.None)
             {
+                AttackIntervalState = AttackIntervalState.None;
                 ActiveSkill = null;
                 _animationController.StopWeaponTrail();
+            }
+            else
+            {
+                AttackIntervalState = AttackIntervalState.PreOccurrence;
             }
         }
     }
 
-
+    public AttackIntervalState AttackIntervalState{ get; set; }
 
     public Skill ActiveSkill { get; set; }
-
+    
     public JumpState JumpState { get; set; }
     public AttackState WaitingAttackState { get; set; }
     public MovementState MovementState { get; set; }
