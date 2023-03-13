@@ -14,7 +14,8 @@ public class PlayerControl : ControllerBase
         GetInputs();
 
     }
-    public void GetInputs()
+
+    private void GetInputs()
     {
         BasicAttackInput = Input.GetKey(KeyCode.Mouse0);
         Skill1Input = Input.GetKey(KeyCode.Q);

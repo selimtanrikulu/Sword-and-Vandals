@@ -3,8 +3,8 @@ using UnityEngine;
 
 public abstract class ControllerBase : MonoBehaviour
 {
-    protected CharacterController CharacterController;
-    protected CharacterStateController StateController;
+    private CharacterController _characterController;
+    private CharacterStateController _stateController;
 
     public float MovementSpeed { get; set; }
 
@@ -39,11 +39,11 @@ public abstract class ControllerBase : MonoBehaviour
 
     private void Start()
     {
-        CharacterController = GetComponent<CharacterController>();
-        StateController = GetComponent<CharacterStateController>();
+        _characterController = GetComponent<CharacterController>();
+        _stateController = GetComponent<CharacterStateController>();
         MovementSpeed = MovementConfig.RunningMovementSpeed;
         
-        Enemy = FindObjectsOfType<CharacterStateController>().FirstOrDefault(x=>x != StateController);
+        Enemy = FindObjectsOfType<CharacterStateController>().FirstOrDefault(x=>x != _stateController);
     }
     
     protected virtual void Update()
@@ -54,7 +54,7 @@ public abstract class ControllerBase : MonoBehaviour
     
     private void HandleRotation()
     {
-        if(Enemy == null || StateController.MovementState == MovementState.Died) return;
+        if(Enemy == null || _stateController.MovementState == MovementState.Died) return;
         Vector3 lookAt = (Enemy.transform.position - transform.position);
         lookAt.y = 0;
         lookAt.Normalize();
@@ -66,11 +66,11 @@ public abstract class ControllerBase : MonoBehaviour
 
     private void Move()
     {
-        if(StateController.MovementState == MovementState.Stunned) return;
+        if(_stateController.MovementState == MovementState.Stunned) return;
         
         Vector3 moveDist = new Vector3();
 
-        switch (StateController.MovementState)
+        switch (_stateController.MovementState)
         {
             case MovementState.Move:
                 
@@ -124,7 +124,7 @@ public abstract class ControllerBase : MonoBehaviour
         
         
         //Apply gravity
-        if (!CharacterController.isGrounded)
+        if (!_characterController.isGrounded)
         {
             YVelocity += MovementConfig.Gravity * Time.deltaTime;
         }
@@ -132,7 +132,7 @@ public abstract class ControllerBase : MonoBehaviour
 
         moveDist += Vector3.up * (Time.deltaTime * YVelocity);
 
-        CharacterController.Move(moveDist);
+        _characterController.Move(moveDist);
     }
     
 }
