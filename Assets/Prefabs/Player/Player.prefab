@@ -6076,6 +6076,7 @@ GameObject:
   - component: {fileID: 4119308926601568814}
   - component: {fileID: 6609622743183736520}
   - component: {fileID: 1892843978}
+  - component: {fileID: 1567359265}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6169,7 +6170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e379b377aa9bd4e7f8921bb1573d9c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackStateChangeDelay: 0.1
+  attackStateChangeDelay: 0.01
 --- !u!114 &4119308926601568814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6208,6 +6209,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3452c7916cf8429c73191e1becf2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1567359265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819682127119496752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f04751b0c060bb419b615465ded11d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterWearings:
+    weaponSocket: {fileID: 2996214105471279000}
 --- !u!1 &2819683610472696078
 GameObject:
   m_ObjectHideFlags: 0
@@ -13256,7 +13271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7987141247029563894}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: WeaponSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13766,6 +13781,10 @@ PrefabInstance:
     - target: {fileID: 355312524381552382, guid: b84d7ca3927758646a65731cc107aa76, type: 3}
       propertyPath: m_Name
       value: Sword_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 355312524381552382, guid: b84d7ca3927758646a65731cc107aa76, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1127450730860520516, guid: b84d7ca3927758646a65731cc107aa76, type: 3}
       propertyPath: m_RootOrder

@@ -4,40 +4,41 @@ using Zenject;
 
 public class CharacterAnimationController : MonoBehaviour
 {
-    private Skill _basicSkill;
-    private Skill _skill1;
-    private Skill _skill2;
-
 
 
     private CharacterController _characterController;
     private ControllerBase _controllerBase;
     private CharacterStateController _stateController;
+    private CharacterWearer _characterWearer;
     private Animator _animator;
 
-    [SerializeField] private GameObject rightHandWeaponHitLocation;
-    [SerializeField] private ParticleSystem weaponTrail;
+    private GameObject _rightHandWeaponHitLocation;
+    private ParticleSystem _weaponTrail;
     private AnimatorOverrider _animatorOverrider;
     private ISkillManager _skillManager;
-    
+    private IItemManager _itemManager;
+
     [Inject]
-    private void Inject(ISkillManager skillManager)
+    private void Inject(ISkillManager skillManager,IItemManager itemManager)
     {
+        _itemManager = itemManager;
         _skillManager = skillManager;
     }
 
     
     void Start()
     {
-        _basicSkill = _skillManager.GetSkillByIndex(0);
-        _skill1 = _skillManager.GetSkillByIndex(1);
-        _skill2 = _skillManager.GetSkillByIndex(2);
-
         _characterController = GetComponent<CharacterController>();
         _controllerBase = GetComponent<ControllerBase>();
         _stateController = GetComponent<CharacterStateController>();
         _animatorOverrider = GetComponent<AnimatorOverrider>();
         _animator = GetComponent<Animator>();
+        _characterWearer = GetComponent<CharacterWearer>();
+
+
+        _weaponTrail = _characterWearer.weaponGameObject.GetComponentInChildren<ParticleSystem>();
+        _rightHandWeaponHitLocation = _characterWearer.weaponGameObject.transform.Find("HitLocation").gameObject;
+
     }
 
     void Update()
@@ -64,21 +65,21 @@ public class CharacterAnimationController : MonoBehaviour
     // notifier calls
     public void StartWeaponTrail()
     {
-        weaponTrail.Play();
+        _weaponTrail.Play();
     }
     // notifier calls
     public void StopWeaponTrail()
     {
-        weaponTrail.Stop();
+        _weaponTrail.Stop();
     }
 
     // notifier calls
     private void AttackOccurred()
     {
-        if(rightHandWeaponHitLocation == null || _stateController.ActiveSkill == null) return;
+        if(_rightHandWeaponHitLocation == null || _stateController.ActiveSkill == null) return;
 
         _stateController.AttackIntervalState = AttackIntervalState.Occured;
-        GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),rightHandWeaponHitLocation.transform.position,Quaternion.identity);
+        GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),_rightHandWeaponHitLocation.transform.position,Quaternion.identity);
         skillImpactGameObject.GetComponent<SkillImpact>().creator = _controllerBase;
     }
 
@@ -229,15 +230,15 @@ public class CharacterAnimationController : MonoBehaviour
 
         if (_controllerBase.BasicAttackInput)
         {
-            SkillInputArrived(_basicSkill);
+            SkillInputArrived(_skillManager.GetSkill(_itemManager.GetWearedWeapon().weaponType,SkillType.Basic));
         }
         else if (_controllerBase.Skill1Input)
         {
-            SkillInputArrived(_skill1);   
+            SkillInputArrived(_skillManager.GetSkill(_itemManager.GetWearedWeapon().weaponType,SkillType.Skill1));   
         }
         else if (_controllerBase.Skill2Input)
         {
-            SkillInputArrived(_skill2);
+            SkillInputArrived(_skillManager.GetSkill(_itemManager.GetWearedWeapon().weaponType,SkillType.Skill2));
         }
 
 

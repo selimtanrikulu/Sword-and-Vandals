@@ -1,10 +1,20 @@
 using UnityEngine;
 
+
+public enum SkillType
+{
+    Basic,
+    Skill1,
+    Skill2,
+}
+
+
+
 public interface ISkillManager
 {
-    Skill GetRandomSkill();
 
-    Skill GetSkillByIndex(int index);
+
+    Skill GetSkill(WeaponType weaponType, SkillType skillType);
 
 }
 
@@ -20,19 +30,43 @@ public class SkillManager : ISkillManager
     }
 
 
-    public Skill GetRandomSkill()
+
+    public Skill GetSkill(WeaponType weaponType, SkillType skillType)
     {
-        int rand = Random.Range(0, _skillPack.skills.Count);
-        return _skillPack.skills[rand];
+        switch (weaponType)
+        {
+            case WeaponType.OneHandedSword:
+                return GetSkillBySkillType(_skillPack.swordShieldSkillSet, skillType);
+
+            case WeaponType.TwoHandedSword:
+                return GetSkillBySkillType(_skillPack.twoHandedSwordSkillSet, skillType);
+
+            default:
+                Debug.LogError("Unknown weapon type !");
+                return null;
+
+        }
     }
 
-    public Skill GetSkillByIndex(int index)
+    
+    //for internal usage
+    private Skill GetSkillBySkillType(SkillSet skillSet, SkillType skillType)
     {
-        if (index > _skillPack.skills.Count - 1)
+        switch (skillType)
         {
-            Debug.LogError("Out of index");
-            return null;
+            case SkillType.Basic:
+                return skillSet.basicAttack;
+            
+            case SkillType.Skill1:
+                return skillSet.skill1;
+            
+            case SkillType.Skill2:
+                return skillSet.skill2;
+            
+            default:
+                Debug.LogError("Unknown skill type");
+                return null;
         }
-        return _skillPack.skills[index];
     }
+    
 }
