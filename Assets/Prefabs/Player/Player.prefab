@@ -1305,8 +1305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a3452c7916cf8429c73191e1becf2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatorOverrideController: {fileID: 22100000, guid: 37ddfc7ce0c66af408af25baba1fe4fb, type: 2}
-  tempClip: {fileID: 7400000, guid: 617602c1ef3620943ab8c2bdf0d44ffe, type: 2}
 --- !u!1 &2819683610472696078
 GameObject:
   m_ObjectHideFlags: 0
@@ -3584,7 +3582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 150774, guid: a7b97d24ba2370040ba159577de7b931, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 479192, guid: a7b97d24ba2370040ba159577de7b931, type: 3}
       propertyPath: m_RootOrder
