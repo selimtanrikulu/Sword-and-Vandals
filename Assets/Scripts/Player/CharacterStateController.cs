@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public enum MovementState
@@ -62,6 +64,7 @@ public class CharacterStateController : MonoBehaviour
         _hpBar.UpdateBar(_hp,_maxHp);
     }
 
+    
 
     private AttackState _attackState;
     public AttackState AttackState 
@@ -71,6 +74,9 @@ public class CharacterStateController : MonoBehaviour
         {
             _attackState = value;
             _animator.SetInteger("AttackState",(int)AttackState);
+            
+            Debug.Log("Attack state to : " +_attackState);
+            
             if (_attackState == AttackState.None)
             {
                 AttackIntervalState = AttackIntervalState.None;
@@ -124,13 +130,5 @@ public class CharacterStateController : MonoBehaviour
             MovementState.RollForwardRight or
             MovementState.RollForwardLeft;
     }
-
-
-
-    private void Update()
-    {
-        _animator.SetInteger("AttackState",(int)AttackState);
-    }
-    
 
 }
