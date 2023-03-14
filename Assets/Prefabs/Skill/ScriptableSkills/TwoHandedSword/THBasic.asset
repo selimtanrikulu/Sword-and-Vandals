@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4761aed463ce8c4cb2bdd91d4ed002f, type: 3}
   m_Name: THBasic
   m_EditorClassIdentifier: 
-  attackAnimation: {fileID: 7400000, guid: 0b3d91d02db87a8469cdfec033fb767c, type: 2}
+  attackAnimation: {fileID: 7400000, guid: 57a5656cf60c3a14f86ada4dfd7ae56e, type: 2}
   skillImpact: {fileID: 5421769267452951212, guid: 4c9fb7c74e0c61142a11282d717e2adf, type: 3}
