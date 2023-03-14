@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 
@@ -23,20 +24,20 @@ public struct SkillSet
 
 
 [Serializable]
-public struct WeaponPack
+public struct HeldItemPack
 {
-    public List<Weapon> weapons;
+    public List<HeldItem> heldItems;
 }
 
 public class GameInstaller : MonoInstaller
 {
 
     [SerializeField] private SkillPack skillPack;
-    [SerializeField] private WeaponPack weaponPack;
+    [SerializeField] private HeldItemPack heldItemPack;
     public override void InstallBindings()
     {
         Container.BindInstance(skillPack);
-        Container.BindInstance(weaponPack);
+        Container.BindInstance(heldItemPack);
         
         
         Container.Bind<ITestManager>().To<TestManager>().AsSingle();

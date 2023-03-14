@@ -14,41 +14,44 @@ public interface ISkillManager
 {
 
 
-    Skill GetSkill(WeaponType weaponType, SkillType skillType);
+    Skill GetSkill(SkillType skillType);
 
 }
+
+
 
 
 public class SkillManager : ISkillManager
 {
     private SkillPack _skillPack;
-    
-    
-    SkillManager(SkillPack skillPack)
+    private readonly IItemManager _itemManager;
+
+
+    SkillManager(SkillPack skillPack,IItemManager itemManager)
     {
+        _itemManager = itemManager;
         _skillPack = skillPack;
     }
 
 
 
-    public Skill GetSkill(WeaponType weaponType, SkillType skillType)
+    public Skill GetSkill(SkillType skillType)
     {
-        switch (weaponType)
-        {
-            case WeaponType.OneHandedSword:
-                return GetSkillBySkillType(_skillPack.swordShieldSkillSet, skillType);
-
-            case WeaponType.TwoHandedSword:
-                return GetSkillBySkillType(_skillPack.twoHandedSwordSkillSet, skillType);
-            
-            case WeaponType.Bow:
-                return GetSkillBySkillType(_skillPack.archerSkillSet, skillType);
-
-            default:
-                Debug.LogError("Unknown weapon type !");
-                return null;
-
-        }
+        switch (_itemManager.GetCombatClass())
+         {
+             case CombatClass.OneHandShield:
+                 return GetSkillBySkillType(_skillPack.swordShieldSkillSet, skillType);
+ 
+             case CombatClass.TwoHandedSword:
+                 return GetSkillBySkillType(_skillPack.twoHandedSwordSkillSet, skillType);
+             
+             case CombatClass.Archer:
+                 return GetSkillBySkillType(_skillPack.archerSkillSet, skillType);
+ 
+             default:
+                 Debug.LogError("Unknown weapon type !");
+                 return null;
+         }
     }
 
     

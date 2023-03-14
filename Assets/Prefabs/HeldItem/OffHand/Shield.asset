@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7abcbb95115bb6d4b99508e12f78a466, type: 3}
-  m_Name: Bow
+  m_Script: {fileID: 11500000, guid: 1bf20f21b3a5f9c44b24785d3f585f41, type: 3}
+  m_Name: Shield
   m_EditorClassIdentifier: 
-  weaponType: 2
-  weaponPrefab: {fileID: 3317823749142253822, guid: d4958227484245e4592c41ab2c02ad22, type: 3}
-  damage: 10
+  heldItemPrefab: {fileID: 106904, guid: 72e068cb4d9875a4d912ca446ea74cd8, type: 3}

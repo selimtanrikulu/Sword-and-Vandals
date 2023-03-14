@@ -30,18 +30,18 @@ public class AIController : ControllerBase
         if (GetDistanceToPlayer() > 2)
         {
             Vertical = 0.5f;
-            Skill2Input = false;
+            BasicAttackInput = false;
         }
         else
         {
             Vertical = 0;
             if (enemy.MovementState == MovementState.Died)
             {
-                Skill2Input = false;
+                BasicAttackInput = false;
             }
             else
             {
-                Skill2Input = true;
+                BasicAttackInput = true;
             }
         }
     }

@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7abcbb95115bb6d4b99508e12f78a466, type: 3}
-  m_Name: OHS2
+  m_Script: {fileID: 11500000, guid: 7b1b47c302434d74a8c697d47d9cf78a, type: 3}
+  m_Name: Bow1
   m_EditorClassIdentifier: 
-  weaponType: 0
-  holdHand: 1
-  weaponPrefab: {fileID: 8203073568141072114, guid: 6cd1ac9652a50da4485a86492f47c63d, type: 3}
-  damage: 10
+  heldItemPrefab: {fileID: 3317823749142253822, guid: d4958227484245e4592c41ab2c02ad22, type: 3}
+  baseDamage: 5
