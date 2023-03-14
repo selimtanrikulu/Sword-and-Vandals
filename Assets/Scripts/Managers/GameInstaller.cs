@@ -9,6 +9,7 @@ public struct SkillPack
 {
     public SkillSet swordShieldSkillSet;
     public SkillSet twoHandedSwordSkillSet;
+    public SkillSet archerSkillSet;
 }
 
 

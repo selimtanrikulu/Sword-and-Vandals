@@ -48,6 +48,12 @@ public class CharacterHitController : MonoBehaviour
                     skillImpact.collisionHitEffect.Play();
                     _animationController.PlayImpactAnimation();
                     _stateController.ChangeHp(-skillImpact.baseDamage);
+
+                    if (skillImpact is Projectile projectile)
+                    {
+                        projectile.ResetSpeed();
+                    }
+                    
                 }
             }
         }

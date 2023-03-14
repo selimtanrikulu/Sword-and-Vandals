@@ -13,6 +13,9 @@ public class CharacterAnimationController : MonoBehaviour
     private Animator _animator;
 
     private GameObject _rightHandWeaponHitLocation;
+    private GameObject _leftHandWeaponHitLocation;
+    
+    
     private ParticleSystem _weaponTrail;
     private AnimatorOverrider _animatorOverrider;
     private ISkillManager _skillManager;
@@ -36,8 +39,18 @@ public class CharacterAnimationController : MonoBehaviour
         _characterWearer = GetComponent<CharacterWearer>();
 
 
-        _weaponTrail = _characterWearer.weaponGameObject.GetComponentInChildren<ParticleSystem>();
-        _rightHandWeaponHitLocation = _characterWearer.weaponGameObject.transform.Find("HitLocation").gameObject;
+        _weaponTrail = _characterWearer.leftHandWeaponGameObject.GetComponentInChildren<ParticleSystem>();
+        if (_characterWearer.leftHandWeaponGameObject)
+        {
+            _leftHandWeaponHitLocation = _characterWearer.leftHandWeaponGameObject.transform.Find("HitLocation").gameObject;
+        }
+
+        if (_characterWearer.rightHandWeaponGameObject)
+        {
+            _rightHandWeaponHitLocation = _characterWearer.rightHandWeaponGameObject.transform.Find("HitLocation").gameObject;
+        }
+       
+        
 
     }
 
@@ -76,11 +89,31 @@ public class CharacterAnimationController : MonoBehaviour
     // notifier calls
     private void AttackOccurred()
     {
-        if(_rightHandWeaponHitLocation == null || _stateController.ActiveSkill == null) return;
+        if((_rightHandWeaponHitLocation == null && _leftHandWeaponHitLocation == null) || _stateController.ActiveSkill == null) return;
 
         _stateController.AttackIntervalState = AttackIntervalState.Occured;
-        GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),_rightHandWeaponHitLocation.transform.position,Quaternion.identity);
-        skillImpactGameObject.GetComponent<SkillImpact>().creator = _controllerBase;
+
+        
+        Vector3 hitLocation;
+        if (_itemManager.GetWearedWeapon().holdHand == HoldHand.Right)
+        {
+            hitLocation = _rightHandWeaponHitLocation.transform.position;
+        }
+        else
+        {
+            hitLocation = _leftHandWeaponHitLocation.transform.position;
+        }
+        
+        GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),hitLocation, transform.rotation);
+        
+        SkillImpact skillImpact = skillImpactGameObject.GetComponent<SkillImpact>();
+        skillImpact.creator = _controllerBase;
+
+        if (skillImpact is Projectile projectile)
+        {
+            projectile.dir = (_controllerBase.enemy.transform.position - transform.position).normalized;
+        }
+        
     }
 
 

@@ -10,7 +10,7 @@ public class SkillImpact : MonoBehaviour,ICollider
 
     [SerializeField] public float baseDamage = 3;
     
-    private void Update()
+    protected virtual void Update()
     {
         if (lifeTime < 0)
         {

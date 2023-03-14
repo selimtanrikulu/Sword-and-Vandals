@@ -40,6 +40,9 @@ public class SkillManager : ISkillManager
 
             case WeaponType.TwoHandedSword:
                 return GetSkillBySkillType(_skillPack.twoHandedSwordSkillSet, skillType);
+            
+            case WeaponType.Bow:
+                return GetSkillBySkillType(_skillPack.archerSkillSet, skillType);
 
             default:
                 Debug.LogError("Unknown weapon type !");

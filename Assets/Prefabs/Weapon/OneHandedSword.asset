@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: OneHandedSword
   m_EditorClassIdentifier: 
   weaponType: 0
+  holdHand: 1
   weaponPrefab: {fileID: 3418011884731919454, guid: 29b475577bd142043a2ccad80f84455f, type: 3}
   damage: 5

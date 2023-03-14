@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7abcbb95115bb6d4b99508e12f78a466, type: 3}
-  m_Name: TwoHandedSword
+  m_Name: OHS2
   m_EditorClassIdentifier: 
-  weaponType: 1
+  weaponType: 0
   holdHand: 1
-  weaponPrefab: {fileID: 355312524381552382, guid: b84d7ca3927758646a65731cc107aa76, type: 3}
-  damage: 5
+  weaponPrefab: {fileID: 8203073568141072114, guid: 6cd1ac9652a50da4485a86492f47c63d, type: 3}
+  damage: 10

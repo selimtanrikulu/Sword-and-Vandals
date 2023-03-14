@@ -35,7 +35,7 @@ public class AIController : ControllerBase
         else
         {
             Vertical = 0;
-            if (Enemy.MovementState == MovementState.Died)
+            if (enemy.MovementState == MovementState.Died)
             {
                 Skill2Input = false;
             }
@@ -49,7 +49,7 @@ public class AIController : ControllerBase
     private float GetDistanceToPlayer()
     {
         Vector3 pos = transform.position;
-        Vector3 enemyPos = Enemy.transform.position;
+        Vector3 enemyPos = enemy.transform.position;
         return (pos - enemyPos).magnitude;
     }
     

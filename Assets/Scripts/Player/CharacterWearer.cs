@@ -7,7 +7,8 @@ using Zenject;
 [Serializable]
 public struct CharacterWearings
 {
-    public GameObject weaponSocket;
+    public GameObject rightHandWeaponSocket;
+    public GameObject leftHandWeaponSocket;
 }
 
 
@@ -18,7 +19,8 @@ public class CharacterWearer : MonoBehaviour
     private IItemManager _itemManager;
 
 
-    public GameObject weaponGameObject;
+    [HideInInspector]public GameObject rightHandWeaponGameObject;
+    [HideInInspector]public GameObject leftHandWeaponGameObject;
 
     [Inject]
     void Inject(IItemManager itemManager)
@@ -39,7 +41,17 @@ public class CharacterWearer : MonoBehaviour
 
     private void WearWearings()
     {
-        weaponGameObject = Instantiate(_itemManager.GetWearedWeapon().weaponPrefab, characterWearings.weaponSocket.transform);
+        Weapon weapon = _itemManager.GetWearedWeapon();
+
+        if (weapon.holdHand == HoldHand.Right)
+        {
+            rightHandWeaponGameObject = Instantiate(_itemManager.GetWearedWeapon().weaponPrefab, characterWearings.rightHandWeaponSocket.transform);
+        }
+        else
+        {
+            leftHandWeaponGameObject = Instantiate(_itemManager.GetWearedWeapon().weaponPrefab, characterWearings.leftHandWeaponSocket.transform);
+        }
+        
     }
 
 

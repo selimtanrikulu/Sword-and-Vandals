@@ -83,7 +83,13 @@ MonoBehaviour:
       basicAttack: {fileID: 0}
       skill1: {fileID: 0}
       skill2: {fileID: 0}
+    archerSkillSet:
+      basicAttack: {fileID: 11400000, guid: 027fac9dfee7144459982d179e4573e5, type: 2}
+      skill1: {fileID: 0}
+      skill2: {fileID: 0}
   weaponPack:
     weapons:
+    - {fileID: 11400000, guid: b1d3621adeba80d48ad21febe0901d6a, type: 2}
+    - {fileID: 11400000, guid: fa355288da1784549abcfa7d6bbd95d9, type: 2}
     - {fileID: 11400000, guid: 62b1201bfeb90104da5d06083afdaa36, type: 2}
     - {fileID: 11400000, guid: 42495379192e7fb489ea6c079a3f59e0, type: 2}

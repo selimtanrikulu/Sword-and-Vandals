@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7abcbb95115bb6d4b99508e12f78a466, type: 3}
-  m_Name: TwoHandedSword
+  m_Script: {fileID: 11500000, guid: f4761aed463ce8c4cb2bdd91d4ed002f, type: 3}
+  m_Name: BowBasic
   m_EditorClassIdentifier: 
-  weaponType: 1
-  holdHand: 1
-  weaponPrefab: {fileID: 355312524381552382, guid: b84d7ca3927758646a65731cc107aa76, type: 3}
-  damage: 5
+  attackAnimation: {fileID: 7400000, guid: 5382c8895c18a1244888ad7cfba240fd, type: 2}
+  skillImpact: {fileID: 5421769267452951212, guid: ec0816a58c2c59c44b9f62fdd79f7e75, type: 3}
