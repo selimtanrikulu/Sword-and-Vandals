@@ -80,8 +80,8 @@ MonoBehaviour:
       skill1: {fileID: 11400000, guid: d2e1464f2ff060d4badac3b8a0c1ca25, type: 2}
       skill2: {fileID: 11400000, guid: 7ab7027c5ba51234eb7cc67e47cd129b, type: 2}
     berserkerSkillSet:
-      basicAttack: {fileID: 0}
-      skill1: {fileID: 0}
+      basicAttack: {fileID: 11400000, guid: 4fa616a48ee8792438ef5dbca99ad3a8, type: 2}
+      skill1: {fileID: 11400000, guid: 4cace24368570b74aa923f3c4b2340b0, type: 2}
       skill2: {fileID: 0}
     battleMageSkillSet:
       basicAttack: {fileID: 0}
