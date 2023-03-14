@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &121065917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 121065918}
+  m_Layer: 0
+  m_Name: HitTargetLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &121065918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121065917}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.305, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2825120028676666192}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &415097273
 GameObject:
   m_ObjectHideFlags: 0
@@ -6070,12 +6101,12 @@ GameObject:
   - component: {fileID: 2825120028676666192}
   - component: {fileID: 2771583953977945554}
   - component: {fileID: 2820409506958776589}
-  - component: {fileID: 2820409506958776588}
   - component: {fileID: 9143529681839213205}
   - component: {fileID: 4119308926601568814}
   - component: {fileID: 6609622743183736520}
   - component: {fileID: 1892843978}
   - component: {fileID: 1567359265}
+  - component: {fileID: 3475901823131857846}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6104,6 +6135,7 @@ Transform:
   - {fileID: 1134841705}
   - {fileID: 7169803993184211475}
   - {fileID: 415097274}
+  - {fileID: 121065918}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6145,19 +6177,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.98, z: 0}
---- !u!114 &2820409506958776588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2819682127119496752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 936a044e8eb42cf489d33afbe33a1ff6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
 --- !u!114 &9143529681839213205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6170,6 +6189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e379b377aa9bd4e7f8921bb1573d9c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitTargetLocation: {fileID: 121065917}
   attackStateChangeDelay: 0.01
 --- !u!114 &4119308926601568814
 MonoBehaviour:
@@ -6224,6 +6244,19 @@ MonoBehaviour:
     leftHandWeaponSocket: {fileID: 6788415074290395579}
   rightHandHeldItemGameObject: {fileID: 0}
   leftHandHeldItemGameObject: {fileID: 0}
+--- !u!114 &3475901823131857846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819682127119496752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 936a044e8eb42cf489d33afbe33a1ff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
 --- !u!1 &2819683610472696078
 GameObject:
   m_ObjectHideFlags: 0
@@ -13797,6 +13830,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3317823749142253822, guid: d4958227484245e4592c41ab2c02ad22, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366871878821540098, guid: d4958227484245e4592c41ab2c02ad22, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

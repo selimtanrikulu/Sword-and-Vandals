@@ -108,9 +108,9 @@ MonoBehaviour:
       skill1: {fileID: 0}
       skill2: {fileID: 0}
     mageSkillSet:
-      basicAttack: {fileID: 0}
-      skill1: {fileID: 0}
-      skill2: {fileID: 0}
+      basicAttack: {fileID: 11400000, guid: 78e661dcdff7605458f92cf764ccfa3e, type: 2}
+      skill1: {fileID: 11400000, guid: 10971f09845b235488cd09c481e95f42, type: 2}
+      skill2: {fileID: 11400000, guid: 9b3cba9bfd649d049a0cd0eb84eed78a, type: 2}
     priestSkillSet:
       basicAttack: {fileID: 0}
       skill1: {fileID: 0}
@@ -121,3 +121,5 @@ MonoBehaviour:
     - {fileID: 11400000, guid: b1d3621adeba80d48ad21febe0901d6a, type: 2}
     - {fileID: 11400000, guid: 42495379192e7fb489ea6c079a3f59e0, type: 2}
     - {fileID: 11400000, guid: 3fc8ac59d7fbdda459d0553065bfe50a, type: 2}
+    - {fileID: 11400000, guid: 5c89480c09a7e204b8207e79cb6676cd, type: 2}
+    - {fileID: 11400000, guid: 7d3460c9684e0a748a0c34ca2caa5a8a, type: 2}

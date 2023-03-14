@@ -20,6 +20,8 @@ public class CharacterAnimationController : MonoBehaviour
     private AnimatorOverrider _animatorOverrider;
     private ISkillManager _skillManager;
     private IItemManager _itemManager;
+    
+    
 
     [Inject]
     private void Inject(ISkillManager skillManager,IItemManager itemManager)
@@ -104,7 +106,7 @@ public class CharacterAnimationController : MonoBehaviour
 
         if (skillImpact is Projectile projectile)
         {
-            projectile.dir = (_controllerBase.enemy.transform.position - transform.position).normalized;
+            projectile.dir = (_controllerBase.enemy.hitTargetLocation.transform.position - skillImpactGameObject.transform.position).normalized;
         }
         
         

@@ -21,6 +21,8 @@ public class CharacterWearer : MonoBehaviour
     [HideInInspector]public GameObject rightHandHeldItemGameObject;
     [HideInInspector]public GameObject leftHandHeldItemGameObject;
 
+    
+
     [Inject]
     void Inject(IItemManager itemManager)
     {

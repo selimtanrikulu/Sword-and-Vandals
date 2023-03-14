@@ -54,6 +54,8 @@ public class CharacterStateController : MonoBehaviour
 
     private CharacterAnimationController _animationController;
     
+    public GameObject hitTargetLocation;
+    
     private void Start()
     {
         _animator = GetComponent<Animator>();

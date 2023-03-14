@@ -1776,10 +1776,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2131315988122506683, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2819682127119496752, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
       propertyPath: m_Name
       value: AI
@@ -1828,19 +1824,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7765085073913246791, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 9143529681839213205, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
+      propertyPath: hitTargetLocation
+      value: 
+      objectReference: {fileID: 342715302}
     m_RemovedComponents:
-    - {fileID: 2820409506958776588, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
+    - {fileID: 3475901823131857846, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
 --- !u!1 &342715300 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2819682127119496752, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
   m_PrefabInstance: {fileID: 342715299}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &342715310
+--- !u!114 &342715301
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1854,6 +1850,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
   decisionDelay: 0
+--- !u!1 &342715302 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 121065917, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
+  m_PrefabInstance: {fileID: 342715299}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &348571069
 GameObject:
   m_ObjectHideFlags: 0
