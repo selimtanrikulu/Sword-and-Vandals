@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/OneHandSword")]
+[CreateAssetMenu(menuName = "ScriptableObjects/HeldItem/Weapon/OneHanded/Sword")]
 public class Sword : OneHanded
 {
     

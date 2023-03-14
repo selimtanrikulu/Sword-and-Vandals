@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Shield")]
+[CreateAssetMenu(menuName = "ScriptableObjects/HeldItem/OffHand/Shield")]
 public class Shield : OffHand
 {
     

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Dagger")]
+[CreateAssetMenu(menuName = "ScriptableObjects/HeldItem/Weapon/Dagger")]
 public class Dagger : Weapon
 {
     

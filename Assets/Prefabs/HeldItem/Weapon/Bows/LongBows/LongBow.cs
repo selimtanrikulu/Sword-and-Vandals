@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-[CreateAssetMenu(menuName = "ScriptableObjects/LongBow")]
+[CreateAssetMenu(menuName = "ScriptableObjects/HeldItem/Weapon/Bow/LongBow")]
 public class LongBow : Bow
 {
    

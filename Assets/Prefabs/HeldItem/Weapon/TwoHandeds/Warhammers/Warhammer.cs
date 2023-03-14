@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Warhammer")]
+[CreateAssetMenu(menuName = "ScriptableObjects/HeldItem/Weapon/TwoHanded/Warhammer")]
 public class Warhammer : TwoHanded
 {
     

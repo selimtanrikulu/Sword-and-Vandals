@@ -108,8 +108,8 @@ public class ItemManager : IItemManager
         if (_wearedLeftHandHeldItem is SpellBook && _wearedRightHandHeldItem is OneHanded) return CombatClass.BattleMage;
         if (_wearedLeftHandHeldItem is HolySymbol && _wearedRightHandHeldItem is OneHanded) return CombatClass.Priest;
         if (_wearedLeftHandHeldItem is Bow && _wearedRightHandHeldItem is null) return CombatClass.Archer;
-        if (_wearedLeftHandHeldItem is Wand && _wearedRightHandHeldItem is SpellBook or null) return CombatClass.Mage;
-        if (_wearedLeftHandHeldItem is Wand && _wearedRightHandHeldItem is HolySymbol) return CombatClass.Priest;
+        if (_wearedLeftHandHeldItem is SpellBook or null && _wearedRightHandHeldItem is Wand) return CombatClass.Mage;
+        if (_wearedLeftHandHeldItem is HolySymbol && _wearedRightHandHeldItem is Wand) return CombatClass.Priest;
       
         return CombatClass.Error;
 

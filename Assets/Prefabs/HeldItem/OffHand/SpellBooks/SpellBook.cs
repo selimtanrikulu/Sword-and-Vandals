@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/SpellBook")]
+[CreateAssetMenu(menuName = "ScriptableObjects/HeldItem/OffHand/SpellBook")]
 public class SpellBook : OffHand
 {
     

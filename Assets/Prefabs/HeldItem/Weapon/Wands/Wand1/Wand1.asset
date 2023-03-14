@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3d3b58657b1fb48888ebec3c1a9a7e, type: 3}
   m_Name: Wand1
   m_EditorClassIdentifier: 
-  heldItemPrefab: {fileID: 0}
+  heldItemPrefab: {fileID: 1740108275163239903, guid: e247a845428a1a549b427d0a4b780626, type: 3}
   baseDamage: 0

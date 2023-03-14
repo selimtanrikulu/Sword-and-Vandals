@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Crossbow")]
+[CreateAssetMenu(menuName = "ScriptableObjects/HeldItem/Weapon/Crossbow")]
 public class Crossbow : Weapon
 {
     

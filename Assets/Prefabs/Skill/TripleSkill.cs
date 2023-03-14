@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "ScriptableObjects/TripleSkill")]
+[CreateAssetMenu(menuName = "ScriptableObjects/Skill/TripleSkill")]
 public class TripleSkill : Skill
 {
     [SerializeField] public AnimationClip attackAnimation1;
