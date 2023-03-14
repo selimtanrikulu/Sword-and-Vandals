@@ -6157,6 +6157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936a044e8eb42cf489d33afbe33a1ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
 --- !u!114 &9143529681839213205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6221,8 +6222,8 @@ MonoBehaviour:
   characterWearings:
     rightHandWeaponSocket: {fileID: 2996214105471279000}
     leftHandWeaponSocket: {fileID: 6788415074290395579}
-  rightHandWeaponGameObject: {fileID: 0}
-  leftHandWeaponGameObject: {fileID: 0}
+  rightHandHeldItemGameObject: {fileID: 0}
+  leftHandHeldItemGameObject: {fileID: 0}
 --- !u!1 &2819683610472696078
 GameObject:
   m_ObjectHideFlags: 0
@@ -13794,6 +13795,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bow_01
       objectReference: {fileID: 0}
+    - target: {fileID: 3317823749142253822, guid: d4958227484245e4592c41ab2c02ad22, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4958227484245e4592c41ab2c02ad22, type: 3}
 --- !u!4 &1646105477120478977 stripped
@@ -13888,7 +13893,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355312524381552382, guid: b84d7ca3927758646a65731cc107aa76, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1127450730860520516, guid: b84d7ca3927758646a65731cc107aa76, type: 3}
       propertyPath: m_RootOrder
