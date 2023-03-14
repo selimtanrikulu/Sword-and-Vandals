@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TwoHandedSword
   m_EditorClassIdentifier: 
   heldItemPrefab: {fileID: 355312524381552382, guid: b84d7ca3927758646a65731cc107aa76, type: 3}
-  baseDamage: 0
+  baseDamage: 5

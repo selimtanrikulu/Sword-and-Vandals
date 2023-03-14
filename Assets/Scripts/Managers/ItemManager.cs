@@ -55,8 +55,8 @@ public class ItemManager : IItemManager
     ItemManager(HeldItemPack heldItemPack)
     {
         _heldItemPack = heldItemPack;
-        SetWearedLeftHandItem(heldItemPack.heldItems[0]);
-        //SetWearedRightHandItem(heldItemPack.heldItems[1]);
+        //SetWearedLeftHandItem(heldItemPack.heldItems[0]);
+        SetWearedRightHandItem(heldItemPack.heldItems[3]);
     }
 
 

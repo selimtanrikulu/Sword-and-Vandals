@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4761aed463ce8c4cb2bdd91d4ed002f, type: 3}
   m_Name: SSSkill1
   m_EditorClassIdentifier: 
-  attackAnimation: {fileID: 7400000, guid: 47a8f44d5211c674fb96f9b57dbae828, type: 2}
+  attackAnimation: {fileID: 7400000, guid: 7ba41255d14b1db44ab84017adbe2f39, type: 2}
   skillImpact: {fileID: 5421769267452951212, guid: 4c9fb7c74e0c61142a11282d717e2adf, type: 3}
