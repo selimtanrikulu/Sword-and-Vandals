@@ -4883,9 +4883,9 @@ GameObject:
   - component: {fileID: 5421769267452951215}
   - component: {fileID: 429291408940310794}
   - component: {fileID: 8894924461838142341}
-  - component: {fileID: 2063121577719371027}
+  - component: {fileID: 1148936561369403305}
   m_Layer: 0
-  m_Name: BowBasicImpact
+  m_Name: BowSkill1Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4972,7 +4972,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5421769267452951212}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2063121577719371027
+--- !u!114 &1148936561369403305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4981,15 +4981,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5421769267452951212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9ac40799c35a504aae45aa52a24481e, type: 3}
+  m_Script: {fileID: 11500000, guid: c73bd19803f4ff94ea13cfcaa154f83e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   creator: {fileID: 0}
-  lifeTime: 0.3
+  lifeTime: 1
   collisionHitEffect: {fileID: 7793865869615940917}
-  baseDamage: 1
-  dir: {x: 0, y: 0, z: 0}
-  projectileSpeed: 100
+  baseDamage: 3
+  deltaHeight: 3
+  targetPosition: {x: 0, y: 0, z: 0}
+  projectileSpeed: 3
 --- !u!1001 &2810493099287776909
 PrefabInstance:
   m_ObjectHideFlags: 0

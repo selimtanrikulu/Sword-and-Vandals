@@ -106,9 +106,13 @@ public class CharacterAnimationController : MonoBehaviour
 
         if (skillImpact is Projectile projectile)
         {
-            projectile.dir = (_controllerBase.enemy.hitTargetLocation.transform.position - skillImpactGameObject.transform.position).normalized;
+            projectile.targetPosition = _controllerBase.enemy.hitTargetLocation.transform.position;
         }
-        
+        else if (skillImpact is Arc arc)
+        {
+            arc.targetPosition = _controllerBase.enemy.hitTargetLocation.transform.position;
+        }
+
         
         _stateController.AttackIntervalState = AttackIntervalState.Occured;
     }

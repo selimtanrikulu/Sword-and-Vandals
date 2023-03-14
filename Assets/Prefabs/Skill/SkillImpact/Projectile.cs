@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Projectile : SkillImpact
@@ -6,22 +5,21 @@ public class Projectile : SkillImpact
     
 
 
-    [HideInInspector] public Vector3 dir;
+    
+
+    [HideInInspector] public Vector3 targetPosition;
     [SerializeField] private float projectileSpeed;
     
     new void Update()
     {
         base.Update();
-        var myTransform = transform;
+        Transform myTransform = transform;
         Vector3 pos = myTransform.position;
+
+        Vector3 dir = (targetPosition - pos).normalized;
         pos += dir * (Time.deltaTime * projectileSpeed);
         myTransform.position = pos;
     }
-
-
-    public void ResetSpeed()
-    {
-        projectileSpeed = 0;
-    }
+    
     
 }
