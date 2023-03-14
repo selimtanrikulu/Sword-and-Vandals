@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MageBasicAttack
   m_EditorClassIdentifier: 
   attackAnimation: {fileID: 7400000, guid: 57a5656cf60c3a14f86ada4dfd7ae56e, type: 2}
-  skillImpact: {fileID: 5421769267452951212, guid: ec0816a58c2c59c44b9f62fdd79f7e75, type: 3}
+  skillImpact: {fileID: 5421769267452951212, guid: f2040a44b0cef044d8742e9b15256ff8, type: 3}

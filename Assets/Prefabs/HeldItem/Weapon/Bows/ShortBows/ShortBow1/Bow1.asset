@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Bow1
   m_EditorClassIdentifier: 
   heldItemPrefab: {fileID: 3317823749142253822, guid: d4958227484245e4592c41ab2c02ad22, type: 3}
-  baseDamage: 5
+  baseDamage: 30

@@ -4987,7 +4987,7 @@ MonoBehaviour:
   creator: {fileID: 0}
   lifeTime: 0.3
   collisionHitEffect: {fileID: 7793865869615940917}
-  baseDamage: 3
+  baseDamage: 30
   dir: {x: 0, y: 0, z: 0}
   projectileSpeed: 100
 --- !u!1001 &2810493099287776909

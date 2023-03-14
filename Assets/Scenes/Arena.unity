@@ -1776,6 +1776,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2771583953977945554, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: b46a9dfd7afd2bd42a9a14af99e8e4d7, type: 2}
     - target: {fileID: 2819682127119496752, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
       propertyPath: m_Name
       value: AI
@@ -1849,7 +1853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
-  decisionDelay: 0
+  decisionDelay: 1
 --- !u!1 &342715302 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 121065917, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}
