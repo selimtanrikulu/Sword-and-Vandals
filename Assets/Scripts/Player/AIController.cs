@@ -30,18 +30,18 @@ public class AIController : ControllerBase
         if (GetDistanceToPlayer() > 2)
         {
             Vertical = 0.5f;
-            Skill2Input = false;
+            BasicAttackInput = false;
         }
         else
         {
             Vertical = 0;
-            if (Enemy.MovementState == MovementState.Died)
+            if (enemy.MovementState == MovementState.Died)
             {
-                Skill2Input = false;
+                BasicAttackInput = false;
             }
             else
             {
-                Skill2Input = true;
+                BasicAttackInput = true;
             }
         }
     }
@@ -49,7 +49,7 @@ public class AIController : ControllerBase
     private float GetDistanceToPlayer()
     {
         Vector3 pos = transform.position;
-        Vector3 enemyPos = Enemy.transform.position;
+        Vector3 enemyPos = enemy.transform.position;
         return (pos - enemyPos).magnitude;
     }
     

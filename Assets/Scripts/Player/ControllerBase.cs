@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class ControllerBase : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public abstract class ControllerBase : MonoBehaviour
  
 
 
-    protected CharacterStateController Enemy;
+    [HideInInspector] public CharacterStateController enemy;
     private float _userRotation;
 
     private void Start()
@@ -43,7 +44,7 @@ public abstract class ControllerBase : MonoBehaviour
         _stateController = GetComponent<CharacterStateController>();
         MovementSpeed = MovementConfig.RunningMovementSpeed;
         
-        Enemy = FindObjectsOfType<CharacterStateController>().FirstOrDefault(x=>x != _stateController);
+        enemy = FindObjectsOfType<CharacterStateController>().FirstOrDefault(x=>x != _stateController);
     }
     
     protected virtual void Update()
@@ -54,8 +55,8 @@ public abstract class ControllerBase : MonoBehaviour
     
     private void HandleRotation()
     {
-        if(Enemy == null || _stateController.MovementState == MovementState.Died) return;
-        Vector3 lookAt = (Enemy.transform.position - transform.position);
+        if(enemy == null || _stateController.MovementState == MovementState.Died) return;
+        Vector3 lookAt = (enemy.transform.position - transform.position);
         lookAt.y = 0;
         lookAt.Normalize();
         float rotY = Mathf.Atan2(lookAt.x, lookAt.z) * Mathf.Rad2Deg;

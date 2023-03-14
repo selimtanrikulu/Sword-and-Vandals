@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -65,23 +66,30 @@ public class CharacterStateController : MonoBehaviour
     }
 
     
-
-    private AttackState _attackState;
+    [SerializeField] private float attackStateChangeDelay = 0.1f;
+    private float _attackStateChangeDelayCounter;
+    
     public AttackState AttackState 
     {
-        get { return _attackState; }
+        get => (AttackState)_animator.GetInteger("AttackState");
         set
         {
-            _attackState = value;
-            _animator.SetInteger("AttackState",(int)AttackState);
+            if (_attackStateChangeDelayCounter > 0)
+            {
+                return;
+            }
+
+            _attackStateChangeDelayCounter = attackStateChangeDelay;
+            _animator.SetInteger("AttackState",(int)value);
             
-            Debug.Log("Attack state to : " +_attackState);
+            //Debug.Log("Attack state to : " +value);
             
-            if (_attackState == AttackState.None)
+            if (value == AttackState.None)
             {
                 AttackIntervalState = AttackIntervalState.None;
                 ActiveSkill = null;
-                _animationController.StopWeaponTrail();
+                _animationController.StopWeaponTrail(WeaponHold.Left);
+                _animationController.StopWeaponTrail(WeaponHold.Right);
             }
             else
             {
@@ -89,6 +97,8 @@ public class CharacterStateController : MonoBehaviour
             }
         }
     }
+
+    
 
     public AttackIntervalState AttackIntervalState{ get; set; }
 
@@ -131,4 +141,12 @@ public class CharacterStateController : MonoBehaviour
             MovementState.RollForwardLeft;
     }
 
+    
+    private void Update()
+    {
+        if (_attackStateChangeDelayCounter > 0) _attackStateChangeDelayCounter -= Time.deltaTime;
+        
+        
+    }
+    
 }

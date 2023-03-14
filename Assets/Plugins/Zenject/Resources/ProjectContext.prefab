@@ -75,9 +75,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillPack:
-    skills:
-    - {fileID: 11400000, guid: dd78c2b4f20477f4d8d5cfb592c708c0, type: 2}
-    - {fileID: 11400000, guid: 7ab7027c5ba51234eb7cc67e47cd129b, type: 2}
-    - {fileID: 11400000, guid: d2e1464f2ff060d4badac3b8a0c1ca25, type: 2}
-    - {fileID: 11400000, guid: e827bc22f19277e41ac4c8db7e362f47, type: 2}
-    - {fileID: 11400000, guid: 4fa616a48ee8792438ef5dbca99ad3a8, type: 2}
+    swordShieldSkillSet:
+      basicAttack: {fileID: 11400000, guid: dd78c2b4f20477f4d8d5cfb592c708c0, type: 2}
+      skill1: {fileID: 11400000, guid: d2e1464f2ff060d4badac3b8a0c1ca25, type: 2}
+      skill2: {fileID: 11400000, guid: 7ab7027c5ba51234eb7cc67e47cd129b, type: 2}
+    twoHandedSwordSkillSet:
+      basicAttack: {fileID: 0}
+      skill1: {fileID: 0}
+      skill2: {fileID: 0}
+    archerSkillSet:
+      basicAttack: {fileID: 11400000, guid: 027fac9dfee7144459982d179e4573e5, type: 2}
+      skill1: {fileID: 0}
+      skill2: {fileID: 0}
+  heldItemPack:
+    heldItems:
+    - {fileID: 11400000, guid: b1d3621adeba80d48ad21febe0901d6a, type: 2}
+    - {fileID: 11400000, guid: 00f750af974529748a4e6346e4e83867, type: 2}
+    - {fileID: 11400000, guid: 7d3460c9684e0a748a0c34ca2caa5a8a, type: 2}

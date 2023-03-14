@@ -1,43 +1,51 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 
 public class CharacterAnimationController : MonoBehaviour
 {
-    private Skill _basicSkill;
-    private Skill _skill1;
-    private Skill _skill2;
-
 
 
     private CharacterController _characterController;
     private ControllerBase _controllerBase;
     private CharacterStateController _stateController;
+    private CharacterWearer _characterWearer;
     private Animator _animator;
-
-    [SerializeField] private GameObject rightHandWeaponHitLocation;
-    [SerializeField] private ParticleSystem weaponTrail;
+    
+    
+    
+    
+    
     private AnimatorOverrider _animatorOverrider;
     private ISkillManager _skillManager;
-    
+    private IItemManager _itemManager;
+
     [Inject]
-    private void Inject(ISkillManager skillManager)
+    private void Inject(ISkillManager skillManager,IItemManager itemManager)
     {
+        _itemManager = itemManager;
         _skillManager = skillManager;
     }
 
     
     void Start()
     {
-        _basicSkill = _skillManager.GetSkillByIndex(0);
-        _skill1 = _skillManager.GetSkillByIndex(1);
-        _skill2 = _skillManager.GetSkillByIndex(2);
-
         _characterController = GetComponent<CharacterController>();
         _controllerBase = GetComponent<ControllerBase>();
         _stateController = GetComponent<CharacterStateController>();
         _animatorOverrider = GetComponent<AnimatorOverrider>();
         _animator = GetComponent<Animator>();
+        _characterWearer = GetComponent<CharacterWearer>();
+
+
+        
+
+            //_weaponTrail = _characterWearer.leftHandWeaponGameObject.GetComponentInChildren<ParticleSystem>();
+            //_leftHandWeaponHitLocation = _characterWearer.leftHandWeaponGameObject.transform.Find("HitLocation").gameObject;
+            
+            
+
     }
 
     void Update()
@@ -62,24 +70,45 @@ public class CharacterAnimationController : MonoBehaviour
     }
 
     // notifier calls
-    public void StartWeaponTrail()
+    public void StartWeaponTrail(WeaponHold weaponHold)
     {
-        weaponTrail.Play();
+        _characterWearer.GetWeaponTrail(weaponHold)?.Play();
     }
     // notifier calls
-    public void StopWeaponTrail()
+    public void StopWeaponTrail(WeaponHold weaponHold)
     {
-        weaponTrail.Stop();
+        _characterWearer.GetWeaponTrail(weaponHold)?.Stop();
     }
 
-    // notifier calls
-    private void AttackOccurred()
-    {
-        if(rightHandWeaponHitLocation == null || _stateController.ActiveSkill == null) return;
 
+    
+    
+    
+    // notifier calls
+    private void AttackOccurred(WeaponHold weaponHold)
+    {
+        if(_stateController.ActiveSkill == null) return;
+        
+        
+
+
+        Vector3 hitLocation = _characterWearer.GetHitLocation(weaponHold).transform.position;
+        
+        
+        
+        
+        GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),hitLocation, transform.rotation);
+        
+        SkillImpact skillImpact = skillImpactGameObject.GetComponent<SkillImpact>();
+        skillImpact.creator = _controllerBase;
+
+        if (skillImpact is Projectile projectile)
+        {
+            projectile.dir = (_controllerBase.enemy.transform.position - transform.position).normalized;
+        }
+        
+        
         _stateController.AttackIntervalState = AttackIntervalState.Occured;
-        GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),rightHandWeaponHitLocation.transform.position,Quaternion.identity);
-        skillImpactGameObject.GetComponent<SkillImpact>().creator = _controllerBase;
     }
 
 
@@ -229,33 +258,37 @@ public class CharacterAnimationController : MonoBehaviour
 
         if (_controllerBase.BasicAttackInput)
         {
-            SkillInputArrived(_basicSkill);
+            SkillInputArrived(_skillManager.GetSkill(SkillType.Basic));
         }
         else if (_controllerBase.Skill1Input)
         {
-            SkillInputArrived(_skill1);   
+            SkillInputArrived(_skillManager.GetSkill(SkillType.Skill1));   
         }
         else if (_controllerBase.Skill2Input)
         {
-            SkillInputArrived(_skill2);
+            SkillInputArrived(_skillManager.GetSkill(SkillType.Skill2));
         }
 
 
-        if (_controllerBase.BlockInput)
+        if (_itemManager.GetCombatClass() == CombatClass.OneHandShield)
         {
-            if (_stateController.MovementState == MovementState.Move &&
-                _stateController.AttackState == AttackState.None)
+            if (_controllerBase.BlockInput)
             {
-                _stateController.AttackState = AttackState.Block;
+                if (_stateController.MovementState == MovementState.Move &&
+                    _stateController.AttackState == AttackState.None)
+                {
+                    _stateController.AttackState = AttackState.Block;
+                }
+            }
+            else
+            {
+                if (_stateController.AttackState == AttackState.Block)
+                {
+                    _stateController.AttackState = AttackState.None;
+                }
             }
         }
-        else
-        {
-            if (_stateController.AttackState == AttackState.Block)
-            {
-                _stateController.AttackState = AttackState.None;
-            }
-        }
+        
     }
 
     private void HandleJumpAnimation()
