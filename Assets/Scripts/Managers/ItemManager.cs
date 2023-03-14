@@ -1,9 +1,10 @@
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public enum WeaponHold
+public enum HeldItemHold
 {
     Right,
     Left,
@@ -12,37 +13,29 @@ public enum WeaponHold
 
 public enum CombatClass
 {
-    OneHandShield,
-    TwoHandedSword,
-    Archer,
-    DualWield,
+    Warrior,
+    Berserker,
     BattleMage,
-    Cleric,
-    
-    Crossbow,
+    BattlePriest,
+    Duelist,
+    Assassin,
+    Crossbowman,
+    Archer,
     Mage,
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    Priest,
     Error
 }
 
 
 public interface IItemManager
 {
-    HeldItem GetWearedLeftHandWeapon();
-    HeldItem GetWearedRightHandWeapon();
-    
-    void SetWearedLeftHandItem(HeldItem heldItem);
-    void SetWearedRightHandItem(HeldItem heldItem);
+    void SetWearedHeldItem(HeldItem heldItem, HeldItemHold heldItemHold);
 
+    void ResetWearedHeldItem(HeldItemHold heldItemHold);
+    
+    HeldItem GetWearedHeldItem(HeldItemHold heldItemHold);
     CombatClass GetCombatClass();
+
 }
 
 public class ItemManager : IItemManager
@@ -55,93 +48,69 @@ public class ItemManager : IItemManager
     ItemManager(HeldItemPack heldItemPack)
     {
         _heldItemPack = heldItemPack;
-        SetWearedLeftHandItem(heldItemPack.heldItems[0]);
-        //SetWearedRightHandItem(heldItemPack.heldItems[1]);
+        SetWearedHeldItem(_heldItemPack.heldItems[0],HeldItemHold.Right);
     }
 
-
-    public HeldItem GetWearedLeftHandWeapon()
+    public void SetWearedHeldItem(HeldItem heldItem, HeldItemHold heldItemHold)
     {
-        return _wearedLeftHandHeldItem;
-    }
-
-    public HeldItem GetWearedRightHandWeapon()
-    {
-        return _wearedRightHandHeldItem;
-    }
-
-    public void SetWearedLeftHandItem(HeldItem heldItem)
-    {
-        if (heldItem is OneHandWeapon || heldItem is Bow ||heldItem is OffHand)
+        switch (heldItemHold)
         {
-            _wearedLeftHandHeldItem = heldItem;
-        }
-        else
-        {
-            Debug.LogError("Cannot hold weapon");
+            case HeldItemHold.Left:
+                _wearedLeftHandHeldItem = heldItem;
+                break;
+            
+            
+            case HeldItemHold.Right:
+                _wearedRightHandHeldItem = heldItem;
+                break;
         }
     }
 
-    public void SetWearedRightHandItem(HeldItem heldItem)
+    public void ResetWearedHeldItem(HeldItemHold heldItemHold)
     {
+        switch (heldItemHold)
+        {
+            case HeldItemHold.Left:
+                _wearedLeftHandHeldItem = null;
+                break;
+            
+            case HeldItemHold.Right:
+                _wearedRightHandHeldItem = null;
+                break;
+            
+        }
+    }
 
-        if (heldItem is OneHandWeapon || heldItem is TwoHandSword)
+    public HeldItem GetWearedHeldItem(HeldItemHold heldItemHold)
+    {
+        switch (heldItemHold)
         {
-            _wearedRightHandHeldItem = heldItem;
+            case HeldItemHold.Left:
+                return _wearedLeftHandHeldItem;
+
+            case HeldItemHold.Right:
+                return _wearedRightHandHeldItem;
+            
         }
-        else
-        {
-            Debug.LogError("Cannot hold weapon");
-        }
+
         
-        
+        Debug.LogError("Unknow HeldItemHold");
+        return null;
     }
 
     public CombatClass GetCombatClass()
     {
-        if (_wearedRightHandHeldItem is OneHandWeapon)
-        {
-            if (_wearedLeftHandHeldItem is OneHandWeapon)
-            {
-                return CombatClass.DualWield;
-            }
-            if (_wearedLeftHandHeldItem == null || _wearedLeftHandHeldItem is Shield)
-            {
-                return CombatClass.OneHandShield;
-            }
-
-            if (_wearedLeftHandHeldItem is SpellBook)
-            {
-                return CombatClass.BattleMage;
-            }
-
-            if (_wearedLeftHandHeldItem is HolySymbol)
-            {
-                return CombatClass.Cleric;
-            }
-
-            return CombatClass.Error;
-        }
-        
-        if (_wearedRightHandHeldItem is null)
-        {
-            if (_wearedLeftHandHeldItem is Bow)
-            {
-                return CombatClass.Archer;
-            }
-            return CombatClass.Error;
-        }
-
-        if (_wearedRightHandHeldItem is TwoHandSword)
-        {
-            if (_wearedLeftHandHeldItem == null)
-            {
-                return CombatClass.TwoHandedSword;
-            }
-
-            return CombatClass.Error;
-        }
-
+        if (_wearedLeftHandHeldItem is OneHanded && _wearedRightHandHeldItem is OneHanded) return CombatClass.Duelist;
+        if (_wearedLeftHandHeldItem is null && _wearedRightHandHeldItem is TwoHanded) return CombatClass.Berserker;
+        if (_wearedLeftHandHeldItem is Shield or null && _wearedRightHandHeldItem is OneHanded) return CombatClass.Warrior;
+        if (_wearedLeftHandHeldItem is Dagger && _wearedRightHandHeldItem is Dagger) return CombatClass.Assassin;
+        if (_wearedLeftHandHeldItem is Crossbow && _wearedRightHandHeldItem is null) return CombatClass.Crossbowman;
+        if (_wearedLeftHandHeldItem is SpellBook && _wearedRightHandHeldItem is OneHanded) return CombatClass.BattleMage;
+        if (_wearedLeftHandHeldItem is HolySymbol && _wearedRightHandHeldItem is OneHanded) return CombatClass.Priest;
+        if (_wearedLeftHandHeldItem is Bow && _wearedRightHandHeldItem is null) return CombatClass.Archer;
+        if (_wearedLeftHandHeldItem is Wand && _wearedRightHandHeldItem is SpellBook or null) return CombatClass.Mage;
+        if (_wearedLeftHandHeldItem is Wand && _wearedRightHandHeldItem is HolySymbol) return CombatClass.Priest;
+      
         return CombatClass.Error;
 
     }

@@ -12,10 +12,7 @@ public enum SkillType
 
 public interface ISkillManager
 {
-
-
     Skill GetSkill(SkillType skillType);
-
 }
 
 
@@ -39,15 +36,41 @@ public class SkillManager : ISkillManager
     {
         switch (_itemManager.GetCombatClass())
          {
-             case CombatClass.OneHandShield:
-                 return GetSkillBySkillType(_skillPack.swordShieldSkillSet, skillType);
+             case CombatClass.Warrior:
+                 return GetSkillBySkillType(_skillPack.warriorSkillSet, skillType);
  
-             case CombatClass.TwoHandedSword:
-                 return GetSkillBySkillType(_skillPack.twoHandedSwordSkillSet, skillType);
+             case CombatClass.Berserker:
+                 return GetSkillBySkillType(_skillPack.berserkerSkillSet, skillType);
              
+             case CombatClass.BattleMage:
+                 return GetSkillBySkillType(_skillPack.battleMageSkillSet, skillType);
+             
+             case CombatClass.BattlePriest:
+                 return GetSkillBySkillType(_skillPack.battlePriestSkillSet, skillType);
+             
+             case CombatClass.Duelist:
+                 return GetSkillBySkillType(_skillPack.duelistSkillSet, skillType);
+             
+             case CombatClass.Assassin:
+                 return GetSkillBySkillType(_skillPack.assassinSkillSet, skillType);
+             
+             case CombatClass.Crossbowman:
+                 return GetSkillBySkillType(_skillPack.crossbowmanSkillSet, skillType);
+
              case CombatClass.Archer:
                  return GetSkillBySkillType(_skillPack.archerSkillSet, skillType);
+             
+             case CombatClass.Mage:
+                 return GetSkillBySkillType(_skillPack.mageSkillSet, skillType);
+             
+             case CombatClass.Priest:
+                 return GetSkillBySkillType(_skillPack.priestSkillSet, skillType);
  
+             
+             case CombatClass.Error:
+                 Debug.LogError("Combat class is not valid !");
+                 return null;
+             
              default:
                  Debug.LogError("Unknown weapon type !");
                  return null;

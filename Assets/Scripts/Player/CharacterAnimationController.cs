@@ -70,14 +70,14 @@ public class CharacterAnimationController : MonoBehaviour
     }
 
     // notifier calls
-    public void StartWeaponTrail(WeaponHold weaponHold)
+    public void StartWeaponTrail(HeldItemHold heldItemHold)
     {
-        _characterWearer.GetWeaponTrail(weaponHold)?.Play();
+        _characterWearer.GetWeaponTrail(heldItemHold)?.Play();
     }
     // notifier calls
-    public void StopWeaponTrail(WeaponHold weaponHold)
+    public void StopWeaponTrail(HeldItemHold heldItemHold)
     {
-        _characterWearer.GetWeaponTrail(weaponHold)?.Stop();
+        _characterWearer.GetWeaponTrail(heldItemHold)?.Stop();
     }
 
 
@@ -85,14 +85,14 @@ public class CharacterAnimationController : MonoBehaviour
     
     
     // notifier calls
-    private void AttackOccurred(WeaponHold weaponHold)
+    private void AttackOccurred(HeldItemHold heldItemHold)
     {
         if(_stateController.ActiveSkill == null) return;
         
         
 
 
-        Vector3 hitLocation = _characterWearer.GetHitLocation(weaponHold).transform.position;
+        Vector3 hitLocation = _characterWearer.GetHitLocation(heldItemHold).transform.position;
         
         
         
@@ -270,7 +270,7 @@ public class CharacterAnimationController : MonoBehaviour
         }
 
 
-        if (_itemManager.GetCombatClass() == CombatClass.OneHandShield)
+        if (_itemManager.GetCombatClass() == CombatClass.Warrior)
         {
             if (_controllerBase.BlockInput)
             {
@@ -300,7 +300,7 @@ public class CharacterAnimationController : MonoBehaviour
 
             if (_controllerBase.JumpInput)
             {
-                if (_stateController.AttackState == AttackState.None &&
+                if (//_stateController.AttackState == AttackState.None &&
                     _stateController.MovementState == MovementState.Move)
                 {
                     _stateController.JumpState = JumpState.JumpStart;

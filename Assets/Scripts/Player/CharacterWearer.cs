@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 
@@ -39,11 +38,11 @@ public class CharacterWearer : MonoBehaviour
         
     }
 
-    public GameObject GetHitLocation(WeaponHold weaponHold)
+    public GameObject GetHitLocation(HeldItemHold heldItemHold)
     {
-        switch (weaponHold)
+        switch (heldItemHold)
         {
-            case WeaponHold.Left:
+            case HeldItemHold.Left:
                 if (leftHandHeldItemGameObject)
                 {
                     return leftHandHeldItemGameObject.transform.Find("HitLocation").gameObject;
@@ -51,7 +50,7 @@ public class CharacterWearer : MonoBehaviour
                 Debug.LogError("Held Item not exists");
                 break;
             
-            case WeaponHold.Right:
+            case HeldItemHold.Right:
                 if (rightHandHeldItemGameObject)
                 {
                     return rightHandHeldItemGameObject.transform.Find("HitLocation").gameObject;
@@ -63,18 +62,18 @@ public class CharacterWearer : MonoBehaviour
 
     }
 
-    public ParticleSystem GetWeaponTrail(WeaponHold weaponHold)
+    public ParticleSystem GetWeaponTrail(HeldItemHold heldItemHold)
     {
-        switch (weaponHold)
+        switch (heldItemHold)
         {
-            case WeaponHold.Left:
+            case HeldItemHold.Left:
                 if (leftHandHeldItemGameObject)
                 {
                     return leftHandHeldItemGameObject.GetComponentInChildren<ParticleSystem>();
                 }
                 break;
             
-            case WeaponHold.Right:
+            case HeldItemHold.Right:
                 if (rightHandHeldItemGameObject)
                 {
                     return rightHandHeldItemGameObject.GetComponentInChildren<ParticleSystem>();
@@ -87,16 +86,16 @@ public class CharacterWearer : MonoBehaviour
 
     private void WearWearings()
     {
-        HeldItem leftHeldItem = _itemManager.GetWearedLeftHandWeapon();
-        HeldItem rightHeldItem = _itemManager.GetWearedRightHandWeapon();
+        HeldItem leftHeldItem = _itemManager.GetWearedHeldItem(HeldItemHold.Left);
+        HeldItem rightHeldItem = _itemManager.GetWearedHeldItem(HeldItemHold.Right);
         
         if (rightHeldItem != null)
         {
-            rightHandHeldItemGameObject = Instantiate(_itemManager.GetWearedRightHandWeapon().heldItemPrefab, characterWearings.rightHandWeaponSocket.transform);
+            rightHandHeldItemGameObject = Instantiate(rightHeldItem.heldItemPrefab, characterWearings.rightHandWeaponSocket.transform);
         }
         if( leftHeldItem != null)
         {
-            leftHandHeldItemGameObject = Instantiate(_itemManager.GetWearedLeftHandWeapon().heldItemPrefab, characterWearings.leftHandWeaponSocket.transform);
+            leftHandHeldItemGameObject = Instantiate(leftHeldItem.heldItemPrefab, characterWearings.leftHandWeaponSocket.transform);
         }
         
     }

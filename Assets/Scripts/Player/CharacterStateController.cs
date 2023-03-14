@@ -88,8 +88,8 @@ public class CharacterStateController : MonoBehaviour
             {
                 AttackIntervalState = AttackIntervalState.None;
                 ActiveSkill = null;
-                _animationController.StopWeaponTrail(WeaponHold.Left);
-                _animationController.StopWeaponTrail(WeaponHold.Right);
+                _animationController.StopWeaponTrail(HeldItemHold.Left);
+                _animationController.StopWeaponTrail(HeldItemHold.Right);
             }
             else
             {
