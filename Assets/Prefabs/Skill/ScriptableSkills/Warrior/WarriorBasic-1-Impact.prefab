@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creator: {fileID: 0}
-  lifeTime: 0.3
+  lifeTime: 0.05
   collisionHitEffect: {fileID: 7793865869615940917}
   baseDamage: 10
 --- !u!135 &5421769267452951215

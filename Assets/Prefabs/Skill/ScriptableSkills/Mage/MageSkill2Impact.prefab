@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2289710122111943451}
   m_LocalRotation: {x: -0, y: 0.7071066, z: -0, w: -0.70710707}
-  m_LocalPosition: {x: -0.033, y: 0, z: -0.34}
+  m_LocalPosition: {x: -0.033, y: 0, z: -0.367}
   m_LocalScale: {x: 0.64645, y: 0.64645, z: 0.64645}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4883,9 +4883,9 @@ GameObject:
   - component: {fileID: 5421769267452951215}
   - component: {fileID: 429291408940310794}
   - component: {fileID: 8894924461838142341}
-  - component: {fileID: 2063121577719371027}
+  - component: {fileID: 8138122758073868033}
   m_Layer: 0
-  m_Name: MageBasicImpact
+  m_Name: MageSkill2Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4973,7 +4973,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5421769267452951212}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2063121577719371027
+--- !u!114 &8138122758073868033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4982,15 +4982,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5421769267452951212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9ac40799c35a504aae45aa52a24481e, type: 3}
+  m_Script: {fileID: 11500000, guid: c73bd19803f4ff94ea13cfcaa154f83e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   creator: {fileID: 0}
-  lifeTime: 0.3
+  lifeTime: 2
   collisionHitEffect: {fileID: 2121028131008398071}
   baseDamage: 3
   targetPosition: {x: 0, y: 0, z: 0}
-  projectileSpeed: 30
+  projectileSpeed: 10
 --- !u!1 &5770875359131783781
 GameObject:
   m_ObjectHideFlags: 0
@@ -9931,7 +9931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2965222256817593503, guid: a164e676dbbd6e54587237e619372c98, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2988904399259556545, guid: a164e676dbbd6e54587237e619372c98, type: 3}
       propertyPath: playOnAwake
@@ -9940,6 +9940,18 @@ PrefabInstance:
     - target: {fileID: 4033287822461114141, guid: a164e676dbbd6e54587237e619372c98, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4033287822461114141, guid: a164e676dbbd6e54587237e619372c98, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.15686274
+      objectReference: {fileID: 0}
+    - target: {fileID: 4033287822461114141, guid: a164e676dbbd6e54587237e619372c98, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.7211099
+      objectReference: {fileID: 0}
+    - target: {fileID: 4033287822461114141, guid: a164e676dbbd6e54587237e619372c98, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6985151058703206228, guid: a164e676dbbd6e54587237e619372c98, type: 3}
       propertyPath: playOnAwake
@@ -10050,7 +10062,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6469354921825657977, guid: 4d9a3b35b3bc07649b697df7fb497b6d, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6469354921825657977, guid: 4d9a3b35b3bc07649b697df7fb497b6d, type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
@@ -10058,7 +10070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6469354921825657977, guid: 4d9a3b35b3bc07649b697df7fb497b6d, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
-      value: 1
+      value: 0.06669772
       objectReference: {fileID: 0}
     - target: {fileID: 6469354921825657977, guid: 4d9a3b35b3bc07649b697df7fb497b6d, type: 3}
       propertyPath: EmissionModule.rateOverDistance.scalar

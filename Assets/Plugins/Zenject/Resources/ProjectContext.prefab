@@ -106,7 +106,7 @@ MonoBehaviour:
     archerSkillSet:
       basicAttack: {fileID: 11400000, guid: 027fac9dfee7144459982d179e4573e5, type: 2}
       skill1: {fileID: 11400000, guid: 666bf11212fefbe4c92cd434688011b1, type: 2}
-      skill2: {fileID: 0}
+      skill2: {fileID: 11400000, guid: e45c99ebaacb74249b18088b34641579, type: 2}
     mageSkillSet:
       basicAttack: {fileID: 11400000, guid: 78e661dcdff7605458f92cf764ccfa3e, type: 2}
       skill1: {fileID: 11400000, guid: 10971f09845b235488cd09c481e95f42, type: 2}

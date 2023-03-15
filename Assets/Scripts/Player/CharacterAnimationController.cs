@@ -91,13 +91,7 @@ public class CharacterAnimationController : MonoBehaviour
     {
         if(_stateController.ActiveSkill == null) return;
         
-        
-
-
         Vector3 hitLocation = _characterWearer.GetHitLocation(heldItemHold).transform.position;
-        
-        
-        
         
         GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),hitLocation, transform.rotation);
         
