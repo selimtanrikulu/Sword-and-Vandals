@@ -43,32 +43,14 @@ public class CharacterHitController : MonoBehaviour
                 }
                 else
                 {
-                    HandleCameraShake(skillImpact);
-                    skillImpact.collisionHitEffect.gameObject.SetActive(true);
-                    skillImpact.collisionHitEffect.Play();
+                    skillImpact.HitOccurred();
                     _animationController.PlayImpactAnimation();
-                    _stateController.ChangeHp(-skillImpact.baseDamage);
+                    _stateController.ImpactReceived(skillImpact);
                 }
             }
         }
     }
 
-
-    private void HandleCameraShake(SkillImpact skillImpact)
-    {
-        if (skillImpact.collisionHitEffect.TryGetComponent(out CFXR_Effect effect))
-        {
-            if (skillImpact.creator is AIController)
-            {
-                effect.cameraShake.enabled = false;
-            }
-            else if(skillImpact.creator is PlayerControl)
-            {
-                effect.cameraShake.enabled = true;
-            }
-        }
-    }
-    
 
     
 }

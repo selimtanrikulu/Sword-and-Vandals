@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2213241039062393122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 526578523626226601}
+  m_Layer: 0
+  m_Name: SkillEffectContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &526578523626226601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213241039062393122}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.0830089, y: 0.2945075, z: -0.74267}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5466815879222940426}
+  - {fileID: 8056443638283694300}
+  m_Father: {fileID: 5421769267452951214}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2289710122111943451
 GameObject:
   m_ObjectHideFlags: 0
@@ -26,12 +59,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2289710122111943451}
   m_LocalRotation: {x: -0, y: 0.7071066, z: -0, w: -0.70710707}
-  m_LocalPosition: {x: -0.033, y: 0, z: -0.367}
-  m_LocalScale: {x: 0.64645, y: 0.64645, z: 0.64645}
+  m_LocalPosition: {x: 1.0500089, y: -0.2945075, z: 0.37566996}
+  m_LocalScale: {x: 0.6464499, y: 0.64645, z: 0.6464499}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5421769267452951214}
-  m_RootOrder: 2
+  m_Father: {fileID: 526578523626226601}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!198 &5735782610350703766
 ParticleSystem:
@@ -223,7 +256,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.89047825, g: 1, b: 0, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4904,8 +4937,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7793865869615940875}
-  - {fileID: 8056443638283694300}
-  - {fileID: 5466815879222940426}
+  - {fileID: 526578523626226601}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4985,9 +5017,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creator: {fileID: 0}
-  lifeTime: 2
+  startLifeTime: 2
   collisionHitEffect: {fileID: 7793865869615940917}
   baseDamage: 3
+  lifeTimeAfterHit: 0.3
+  Effects:
+  - effectType: 0
+    duration: 1
+  skillEffectContainer: {fileID: 2213241039062393122}
   targetPosition: {x: 0, y: 0, z: 0}
   projectileSpeed: 10
 --- !u!1001 &2810493099287776909
@@ -4995,7 +5032,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5421769267452951214}
+    m_TransformParent: {fileID: 526578523626226601}
     m_Modifications:
     - target: {fileID: 4865309214770636011, guid: 45804eb2722b83845adbcf2d72da12dd, type: 3}
       propertyPath: m_Name
@@ -5019,15 +5056,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5246372888971771473, guid: 45804eb2722b83845adbcf2d72da12dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000006631017
+      value: 1.0830096
       objectReference: {fileID: 0}
     - target: {fileID: 5246372888971771473, guid: 45804eb2722b83845adbcf2d72da12dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.2945075
       objectReference: {fileID: 0}
     - target: {fileID: 5246372888971771473, guid: 45804eb2722b83845adbcf2d72da12dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.24200028
+      value: 0.5006697
       objectReference: {fileID: 0}
     - target: {fileID: 5246372888971771473, guid: 45804eb2722b83845adbcf2d72da12dd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5121,15 +5158,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4021103657954561942, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4021103657954561942, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4021103657954561942, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.3
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4021103657954561942, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
       propertyPath: m_LocalPosition.x

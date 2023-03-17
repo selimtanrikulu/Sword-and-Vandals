@@ -2,13 +2,8 @@ using UnityEngine;
 
 public class Projectile : SkillImpact
 {
-    
-
-
-    
-
     [HideInInspector] public Vector3 targetPosition;
-    [SerializeField] private float projectileSpeed;
+    [SerializeField] public float projectileSpeed;
     
     new void Update()
     {
@@ -20,6 +15,5 @@ public class Projectile : SkillImpact
         pos += dir * (Time.deltaTime * projectileSpeed);
         myTransform.position = pos;
     }
-    
-    
+
 }

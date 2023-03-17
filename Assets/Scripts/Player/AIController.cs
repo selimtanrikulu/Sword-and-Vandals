@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AIController : ControllerBase
 {
-    [SerializeField] private float decisionDelay;
+    private float _decisionDelay = 1f;
 
     private float _decisionDelayCounter;
     public void GetInputs()
@@ -16,7 +16,7 @@ public class AIController : ControllerBase
         if (_decisionDelayCounter < 0)
         {
             Decide();
-            _decisionDelayCounter = decisionDelay;
+            _decisionDelayCounter = _decisionDelay;
         }
         else
         {

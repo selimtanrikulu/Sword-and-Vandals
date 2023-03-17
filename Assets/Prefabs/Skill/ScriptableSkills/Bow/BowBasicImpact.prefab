@@ -26,12 +26,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2289710122111943451}
   m_LocalRotation: {x: -0, y: 0.7071066, z: -0, w: -0.70710707}
-  m_LocalPosition: {x: -0.033, y: 0, z: -0.367}
-  m_LocalScale: {x: 0.64645, y: 0.64645, z: 0.64645}
+  m_LocalPosition: {x: -0.033, y: 0, z: -0.36700004}
+  m_LocalScale: {x: 0.6464499, y: 0.64645, z: 0.6464499}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5421769267452951214}
-  m_RootOrder: 2
+  m_Father: {fileID: 1924561839363150498}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!198 &5735782610350703766
 ParticleSystem:
@@ -4871,6 +4871,39 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &3074887262520536393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1924561839363150498}
+  m_Layer: 0
+  m_Name: SkillEffectContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1924561839363150498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3074887262520536393}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5466815879222940426}
+  - {fileID: 8056443638283694300}
+  m_Father: {fileID: 5421769267452951214}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5421769267452951212
 GameObject:
   m_ObjectHideFlags: 0
@@ -4904,8 +4937,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7793865869615940875}
-  - {fileID: 8056443638283694300}
-  - {fileID: 5466815879222940426}
+  - {fileID: 1924561839363150498}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4985,9 +5017,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creator: {fileID: 0}
-  lifeTime: 0.3
+  startLifeTime: 1
   collisionHitEffect: {fileID: 7793865869615940917}
   baseDamage: 1
+  lifeTimeAfterHit: 0.3
+  skillEffectContainer: {fileID: 3074887262520536393}
   targetPosition: {x: 0, y: 0, z: 0}
   projectileSpeed: 50
 --- !u!1001 &2810493099287776909
@@ -4995,7 +5029,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5421769267452951214}
+    m_TransformParent: {fileID: 1924561839363150498}
     m_Modifications:
     - target: {fileID: 4865309214770636011, guid: 45804eb2722b83845adbcf2d72da12dd, type: 3}
       propertyPath: m_Name
@@ -5019,7 +5053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5246372888971771473, guid: 45804eb2722b83845adbcf2d72da12dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000006631017
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5246372888971771473, guid: 45804eb2722b83845adbcf2d72da12dd, type: 3}
       propertyPath: m_LocalPosition.y

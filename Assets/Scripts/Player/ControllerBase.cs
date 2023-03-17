@@ -1,6 +1,5 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public abstract class ControllerBase : MonoBehaviour
 {
@@ -38,7 +37,7 @@ public abstract class ControllerBase : MonoBehaviour
     [HideInInspector] public CharacterStateController enemy;
     private float _userRotation;
 
-    private void Start()
+    protected virtual void Start()
     {
         _characterController = GetComponent<CharacterController>();
         _stateController = GetComponent<CharacterStateController>();

@@ -48,7 +48,7 @@ public class ItemManager : IItemManager
     ItemManager(HeldItemPack heldItemPack)
     {
         _heldItemPack = heldItemPack;
-        SetWearedHeldItem(_heldItemPack.heldItems[0],HeldItemHold.Right);
+        SetWearedHeldItem(_heldItemPack.heldItems[3],HeldItemHold.Right);
     }
 
     public void SetWearedHeldItem(HeldItem heldItem, HeldItemHold heldItemHold)
@@ -106,7 +106,7 @@ public class ItemManager : IItemManager
         if (_wearedLeftHandHeldItem is Dagger && _wearedRightHandHeldItem is Dagger) return CombatClass.Assassin;
         if (_wearedLeftHandHeldItem is Crossbow && _wearedRightHandHeldItem is null) return CombatClass.Crossbowman;
         if (_wearedLeftHandHeldItem is SpellBook && _wearedRightHandHeldItem is OneHanded) return CombatClass.BattleMage;
-        if (_wearedLeftHandHeldItem is HolySymbol && _wearedRightHandHeldItem is OneHanded) return CombatClass.Priest;
+        if (_wearedLeftHandHeldItem is HolySymbol && _wearedRightHandHeldItem is OneHanded) return CombatClass.BattlePriest;
         if (_wearedLeftHandHeldItem is Bow && _wearedRightHandHeldItem is null) return CombatClass.Archer;
         if (_wearedLeftHandHeldItem is SpellBook or null && _wearedRightHandHeldItem is Wand) return CombatClass.Mage;
         if (_wearedLeftHandHeldItem is HolySymbol && _wearedRightHandHeldItem is Wand) return CombatClass.Priest;

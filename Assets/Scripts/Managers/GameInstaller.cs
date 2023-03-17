@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 
@@ -35,19 +36,36 @@ public struct HeldItemPack
     public List<HeldItem> heldItems;
 }
 
+
+[Serializable]
+public struct PrefabPack
+{
+    public List<GamePrefab> prefabs;
+}
+
+
+[Serializable]
+public struct GamePrefab
+{
+    public PrefabType prefabType;
+    public GameObject prefab;
+}
+
 public class GameInstaller : MonoInstaller
 {
 
     [SerializeField] private SkillPack skillPack;
     [SerializeField] private HeldItemPack heldItemPack;
+    [SerializeField] private PrefabPack prefabPack;
     public override void InstallBindings()
     {
         Container.BindInstance(skillPack);
         Container.BindInstance(heldItemPack);
-        
+        Container.BindInstance(prefabPack);
         
         Container.Bind<ITestManager>().To<TestManager>().AsSingle();
         Container.Bind<IItemManager>().To<ItemManager>().AsSingle();
         Container.Bind<ISkillManager>().To<SkillManager>().AsSingle();
+        Container.Bind<IPrefabCreator>().To<PrefabCreator>().AsSingle();
     }
 }

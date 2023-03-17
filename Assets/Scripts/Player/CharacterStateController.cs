@@ -117,6 +117,9 @@ public class CharacterStateController : MonoBehaviour
 
     private FillBar _hpBar;
 
+
+    private List<SkillEffect> _currentEffects = new List<SkillEffect>();
+
     public void ChangeHp(float amount)
     {
         _hp = Mathf.Max(0, _hp + amount);
@@ -147,8 +150,69 @@ public class CharacterStateController : MonoBehaviour
     private void Update()
     {
         if (_attackStateChangeDelayCounter > 0) _attackStateChangeDelayCounter -= Time.deltaTime;
-        
-        
+
+
+        HandleEffects();
+
     }
+
+    
+
+    public void ImpactReceived(SkillImpact skillImpact)
+    {
+
+
+        foreach(SkillEffect skillEffect in skillImpact.Effects)
+        {
+            SkillEffect copy = skillEffect.GetCopy();
+            ApplyEffect(copy);
+        }
+        
+        ChangeHp(-skillImpact.baseDamage);
+    }
+    
+
+
+
+    private void ApplyEffect(SkillEffect skillEffect)
+    {
+        _currentEffects.RemoveAll(x => x.effectType ==skillEffect.effectType);
+        _currentEffects.Add(skillEffect);
+    }
+
+    private void HandleEffects()
+    {
+        foreach (SkillEffect skillEffect in _currentEffects)
+        {
+            skillEffect.duration -= Time.deltaTime;
+            switch (skillEffect.effectType)
+            {
+                case EffectType.Stun:
+                    if (skillEffect.duration <= 0)
+                    {
+                        MovementState = MovementState.Move;
+                    }
+                    else
+                    {
+                        MovementState = MovementState.Stunned;
+                        AttackState = AttackState.None;
+                    }
+                    break;
+            }
+        }
+
+
+        _currentEffects.RemoveAll(x => x.duration <= 0);
+
+    }
+
+
+
+    private void GetStunned2(float duration)
+    {
+        MovementState = MovementState.Stunned;
+        AttackState = AttackState.None;
+    }
+
     
 }

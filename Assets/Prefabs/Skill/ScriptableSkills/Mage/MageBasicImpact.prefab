@@ -4986,9 +4986,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creator: {fileID: 0}
-  lifeTime: 0.3
+  startLifeTime: 2
   collisionHitEffect: {fileID: 2121028131008398071}
   baseDamage: 3
+  lifeTimeAfterHit: 0.3
+  Effects: []
+  skillEffectContainer: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
   projectileSpeed: 30
 --- !u!1 &5770875359131783781

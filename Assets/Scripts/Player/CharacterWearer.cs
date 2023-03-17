@@ -33,10 +33,6 @@ public class CharacterWearer : MonoBehaviour
     void Awake()
     {
         WearWearings();
-    }
-
-    void Start()
-    {
         
     }
 

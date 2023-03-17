@@ -39,15 +39,6 @@ public class CharacterAnimationController : MonoBehaviour
         _animatorOverrider = GetComponent<AnimatorOverrider>();
         _animator = GetComponent<Animator>();
         _characterWearer = GetComponent<CharacterWearer>();
-
-
-        
-
-            //_weaponTrail = _characterWearer.leftHandWeaponGameObject.GetComponentInChildren<ParticleSystem>();
-            //_leftHandWeaponHitLocation = _characterWearer.leftHandWeaponGameObject.transform.Find("HitLocation").gameObject;
-            
-            
-
     }
 
     void Update()
@@ -90,7 +81,7 @@ public class CharacterAnimationController : MonoBehaviour
     private void AttackOccurred(HeldItemHold heldItemHold)
     {
         if(_stateController.ActiveSkill == null) return;
-        
+
         Vector3 hitLocation = _characterWearer.GetHitLocation(heldItemHold).transform.position;
         
         GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),hitLocation, transform.rotation);
@@ -104,7 +95,8 @@ public class CharacterAnimationController : MonoBehaviour
         }
         else if (skillImpact is Arc arc)
         {
-            arc.targetPosition = _controllerBase.enemy.hitTargetLocation.transform.position;
+            //instead of target hit location (not to chest, but to foot)
+            arc.targetPosition = _controllerBase.enemy.transform.position;
         }
 
         
@@ -383,17 +375,6 @@ public class CharacterAnimationController : MonoBehaviour
             _stateController.WaitingAttackState = AttackState.None;
         }
 
-        //for test
-        if (_controllerBase.GetStunInputTest)
-        {
-            GetStunned();
-        }
-
-        if (_controllerBase.BreakStunInputTest)
-        {
-            _stateController.MovementState = MovementState.Move;
-        }
-        //-----
 
         _animator.SetInteger("MovementState", (int)_stateController.MovementState);
         //used for blend tree
@@ -403,14 +384,7 @@ public class CharacterAnimationController : MonoBehaviour
     }
     
 
-    public void GetStunned()
-    {
-        if (_stateController.MovementState is MovementState.RollBackward or MovementState.RollForward
-            or MovementState.RollRight or MovementState.RollLeft) return;
-
-        _stateController.MovementState = MovementState.Stunned;
-        _stateController.AttackState = AttackState.None;
-    }
+    
 
 
 
