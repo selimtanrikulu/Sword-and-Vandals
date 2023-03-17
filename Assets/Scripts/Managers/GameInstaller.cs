@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 
@@ -63,7 +62,6 @@ public class GameInstaller : MonoInstaller
         Container.BindInstance(heldItemPack);
         Container.BindInstance(prefabPack);
         
-        Container.Bind<ITestManager>().To<TestManager>().AsSingle();
         Container.Bind<IItemManager>().To<ItemManager>().AsSingle();
         Container.Bind<ISkillManager>().To<SkillManager>().AsSingle();
         Container.Bind<IPrefabCreator>().To<PrefabCreator>().AsSingle();
