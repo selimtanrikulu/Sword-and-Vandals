@@ -1,11 +1,22 @@
+using Cinemachine;
 using UnityEngine;
-using Zenject;
 
 
 public class PlayerControl : ControllerBase
 {
 
+    private new void Start()
+    {
+        base.Start();
 
+        CinemachineVirtualCamera cam = FindObjectOfType<CinemachineVirtualCamera>();
+        if (cam)
+        {
+            Transform lookTransform = transform.Find("CameraLookAt");
+            cam.Follow = lookTransform;
+            cam.LookAt = lookTransform;
+        }
+    }
     
     
     private new void Update()

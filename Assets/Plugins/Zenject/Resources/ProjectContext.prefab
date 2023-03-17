@@ -124,4 +124,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 5c89480c09a7e204b8207e79cb6676cd, type: 2}
     - {fileID: 11400000, guid: 7d3460c9684e0a748a0c34ca2caa5a8a, type: 2}
   prefabPack:
-    prefabs: []
+    prefabs:
+    - prefabType: 0
+      prefab: {fileID: 2819682127119496752, guid: df894fbb239eb934c8bc996d0a351ae9, type: 3}

@@ -4,7 +4,7 @@ using Zenject;
 
 public enum PrefabType
 {
-
+    Character,
  
 }
 
@@ -28,7 +28,7 @@ public class PrefabCreator : IPrefabCreator
     public GameObject CreatePrefab(PrefabType prefabType)
     {
         GameObject prefab = _prefabPack.prefabs.Find(x => x.prefabType == prefabType).prefab;
-        _diContainer.InstantiatePrefab(prefab);
-        return prefab;
+        GameObject obj = _diContainer.InstantiatePrefab(prefab);
+        return obj;
     }
 }
