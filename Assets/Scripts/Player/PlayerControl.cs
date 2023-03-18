@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerControl : ControllerBase
 {
-
     private new void Start()
     {
         base.Start();
@@ -32,7 +31,7 @@ public class PlayerControl : ControllerBase
         Skill1Input = Input.GetKey(KeyCode.Q);
         Skill2Input = Input.GetKey(KeyCode.E);
         Skill3Input = Input.GetKey(KeyCode.R);
-        JumpInput = Input.GetKeyDown(KeyCode.Space);
+        JumpInput = Input.GetKey(KeyCode.Space);
         GetStunInputTest = Input.GetKeyDown(KeyCode.RightShift);
         BreakStunInputTest = Input.GetKeyDown(KeyCode.Escape);
         BlockInput = Input.GetKey(KeyCode.Mouse1);

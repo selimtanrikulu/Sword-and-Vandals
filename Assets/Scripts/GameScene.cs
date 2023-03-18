@@ -10,10 +10,12 @@ public class GameScene : MonoBehaviour
 
     private IPrefabCreator _prefabCreator;
     private DiContainer _diContainer;
+    private IItemManager _itemManager;
 
     [Inject]
-    void Inject(IPrefabCreator prefabCreator,DiContainer diContainer)
+    void Inject(IPrefabCreator prefabCreator,DiContainer diContainer,IItemManager itemManager)
     {
+        _itemManager = itemManager;
         _diContainer = diContainer;
         _prefabCreator = prefabCreator;
     }
@@ -30,13 +32,19 @@ public class GameScene : MonoBehaviour
         GameObject playerGameObject = _prefabCreator.CreatePrefab(PrefabType.Character);
         _diContainer.InstantiateComponent<PlayerControl>(playerGameObject);
         playerGameObject.GetComponent<Animator>().runtimeAnimatorController = playerAoc;
-        //------
-
+        //Wear player
+        playerGameObject.GetComponent<CharacterWearer>().WearWearings(_itemManager.GetWearedHeldItem(HeldItemHold.Left),_itemManager.GetWearedHeldItem(HeldItemHold.Right));
+        //----------
+        
+        
 
         //Create ai
         GameObject aiGameObject = _prefabCreator.CreatePrefab(PrefabType.Character);
         _diContainer.InstantiateComponent<AIController>(aiGameObject);
         playerGameObject.GetComponent<Animator>().runtimeAnimatorController = aiAoc;
-        //--------
+        //Wear ai
+        aiGameObject.GetComponent<CharacterWearer>().WearWearings(_itemManager.GetItemByIndex(0),null);
+        //---------
+        
     }
 }

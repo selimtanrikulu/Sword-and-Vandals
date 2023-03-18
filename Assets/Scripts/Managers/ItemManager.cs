@@ -34,7 +34,11 @@ public interface IItemManager
     void ResetWearedHeldItem(HeldItemHold heldItemHold);
     
     HeldItem GetWearedHeldItem(HeldItemHold heldItemHold);
-    CombatClass GetCombatClass();
+    CombatClass GetCombatClass(HeldItem left,HeldItem right);
+
+
+    //usually for testing
+    HeldItem GetItemByIndex(int index);
 
 }
 
@@ -98,20 +102,25 @@ public class ItemManager : IItemManager
         return null;
     }
 
-    public CombatClass GetCombatClass()
+    public CombatClass GetCombatClass(HeldItem left,HeldItem right)
     {
-        if (_wearedLeftHandHeldItem is OneHanded && _wearedRightHandHeldItem is OneHanded) return CombatClass.Duelist;
-        if (_wearedLeftHandHeldItem is null && _wearedRightHandHeldItem is TwoHanded) return CombatClass.Berserker;
-        if (_wearedLeftHandHeldItem is Shield or null && _wearedRightHandHeldItem is OneHanded) return CombatClass.Warrior;
-        if (_wearedLeftHandHeldItem is Dagger && _wearedRightHandHeldItem is Dagger) return CombatClass.Assassin;
-        if (_wearedLeftHandHeldItem is Crossbow && _wearedRightHandHeldItem is null) return CombatClass.Crossbowman;
-        if (_wearedLeftHandHeldItem is SpellBook && _wearedRightHandHeldItem is OneHanded) return CombatClass.BattleMage;
-        if (_wearedLeftHandHeldItem is HolySymbol && _wearedRightHandHeldItem is OneHanded) return CombatClass.BattlePriest;
-        if (_wearedLeftHandHeldItem is Bow && _wearedRightHandHeldItem is null) return CombatClass.Archer;
-        if (_wearedLeftHandHeldItem is SpellBook or null && _wearedRightHandHeldItem is Wand) return CombatClass.Mage;
-        if (_wearedLeftHandHeldItem is HolySymbol && _wearedRightHandHeldItem is Wand) return CombatClass.Priest;
+        if (left is OneHanded && right is OneHanded) return CombatClass.Duelist;
+        if (left is null && right is TwoHanded) return CombatClass.Berserker;
+        if (left is Shield or null && right is OneHanded) return CombatClass.Warrior;
+        if (left is Dagger && right is Dagger) return CombatClass.Assassin;
+        if (left is Crossbow && right is null) return CombatClass.Crossbowman;
+        if (left is SpellBook && right is OneHanded) return CombatClass.BattleMage;
+        if (left is HolySymbol && right is OneHanded) return CombatClass.BattlePriest;
+        if (left is Bow && right is null) return CombatClass.Archer;
+        if (left is SpellBook or null && right is Wand) return CombatClass.Mage;
+        if (left is HolySymbol && right is Wand) return CombatClass.Priest;
       
         return CombatClass.Error;
 
+    }
+
+    public HeldItem GetItemByIndex(int index)
+    {
+        return _heldItemPack.heldItems.Count > index - 1 ? _heldItemPack.heldItems[index] : null;
     }
 }

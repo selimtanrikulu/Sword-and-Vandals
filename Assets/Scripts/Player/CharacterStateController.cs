@@ -67,8 +67,8 @@ public class CharacterStateController : MonoBehaviour
         _hpBar.UpdateBar(_hp,_maxHp);
     }
 
-    
-    [SerializeField] private float attackStateChangeDelay = 0.1f;
+
+    private const float AttackStateChangeDelay = 0.1f;
     private float _attackStateChangeDelayCounter;
     
     public AttackState AttackState 
@@ -81,7 +81,7 @@ public class CharacterStateController : MonoBehaviour
                 return;
             }
 
-            _attackStateChangeDelayCounter = attackStateChangeDelay;
+            _attackStateChangeDelayCounter = AttackStateChangeDelay;
             _animator.SetInteger("AttackState",(int)value);
             
             //Debug.Log("Attack state to : " +value);
@@ -206,13 +206,4 @@ public class CharacterStateController : MonoBehaviour
 
     }
 
-
-
-    private void GetStunned2(float duration)
-    {
-        MovementState = MovementState.Stunned;
-        AttackState = AttackState.None;
-    }
-
-    
 }
