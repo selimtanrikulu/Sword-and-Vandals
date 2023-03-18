@@ -22,9 +22,9 @@ public class CoolDownPack : MonoBehaviour
     {
         _characterWearer = GetComponentInParent<CharacterWearer>();
         
-        basicAttackImage.sprite = _skillManager.GetSkill(SkillType.Basic).skillIcon;
-        skill1Image.sprite = _skillManager.GetSkill(SkillType.Skill1).skillIcon;
-        skill2Image.sprite = _skillManager.GetSkill(SkillType.Skill2).skillIcon;
+        basicAttackImage.sprite = _skillManager.GetSkill(_characterWearer.leftHeldItem,_characterWearer.rightHeldItem,SkillType.Basic).skillIcon;
+        skill1Image.sprite = _skillManager.GetSkill(_characterWearer.leftHeldItem,_characterWearer.rightHeldItem,SkillType.Skill1).skillIcon;
+        skill2Image.sprite = _skillManager.GetSkill(_characterWearer.leftHeldItem,_characterWearer.rightHeldItem,SkillType.Skill2).skillIcon;
     }
     
 
