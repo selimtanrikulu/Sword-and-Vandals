@@ -117,12 +117,12 @@ MonoBehaviour:
       skill2: {fileID: 0}
   heldItemPack:
     heldItems:
+    - {fileID: 11400000, guid: 7d3460c9684e0a748a0c34ca2caa5a8a, type: 2}
+    - {fileID: 11400000, guid: 5c89480c09a7e204b8207e79cb6676cd, type: 2}
     - {fileID: 11400000, guid: b1d3621adeba80d48ad21febe0901d6a, type: 2}
     - {fileID: 11400000, guid: 00f750af974529748a4e6346e4e83867, type: 2}
     - {fileID: 11400000, guid: 42495379192e7fb489ea6c079a3f59e0, type: 2}
     - {fileID: 11400000, guid: 3fc8ac59d7fbdda459d0553065bfe50a, type: 2}
-    - {fileID: 11400000, guid: 5c89480c09a7e204b8207e79cb6676cd, type: 2}
-    - {fileID: 11400000, guid: 7d3460c9684e0a748a0c34ca2caa5a8a, type: 2}
     - {fileID: 11400000, guid: 2adedf58cba5786409cb147cb34b331a, type: 2}
   prefabPack:
     prefabs:

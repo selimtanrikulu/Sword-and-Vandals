@@ -85,22 +85,24 @@ public class CharacterAnimationController : MonoBehaviour
         Vector3 hitLocation = _characterWearer.GetHitLocation(heldItemHold).transform.position;
         
         GameObject skillImpactGameObject = Instantiate(GetCurrentImpact(),hitLocation, transform.rotation);
-        
-        SkillImpact skillImpact = skillImpactGameObject.GetComponent<SkillImpact>();
-        skillImpact.creator = _controllerBase;
 
-        if (skillImpact is Projectile projectile)
-        {
-            projectile.targetPosition = _controllerBase.enemy.hitTargetLocation.transform.position;
-        }
-        else if (skillImpact is Arc arc)
-        {
-            //instead of target hit location (not to chest, but to foot)
-            arc.targetPosition = _controllerBase.enemy.transform.position;
-        }
 
-        
-        skillImpact.ScaleDamage(_characterWearer.StatsInstance);
+        if (skillImpactGameObject.TryGetComponent(out SkillImpact skillImpact))
+        {
+            skillImpact.creator = _controllerBase;
+
+            if (skillImpact is Projectile projectile)
+            {
+                projectile.targetPosition = _controllerBase.enemy.hitTargetLocation.transform.position;
+            }
+            else if (skillImpact is Arc arc)
+            {
+                //instead of target hit location (not to chest, but to foot)
+                arc.targetPosition = _controllerBase.enemy.transform.position;
+            }
+            skillImpact.ScaleDamage(_characterWearer.StatsInstance);
+        }
+       
         
         _stateController.AttackIntervalState = AttackIntervalState.Occured;
     }

@@ -52,7 +52,8 @@ public class ItemManager : IItemManager
     ItemManager(HeldItemPack heldItemPack)
     {
         _heldItemPack = heldItemPack;
-        SetWearedHeldItem(_heldItemPack.heldItems[3],HeldItemHold.Right);
+        SetWearedHeldItem(_heldItemPack.heldItems[0],HeldItemHold.Left);
+        SetWearedHeldItem(_heldItemPack.heldItems[1],HeldItemHold.Right);
     }
 
     public void SetWearedHeldItem(HeldItem heldItem, HeldItemHold heldItemHold)

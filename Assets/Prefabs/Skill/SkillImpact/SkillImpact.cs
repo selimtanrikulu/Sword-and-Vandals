@@ -152,6 +152,8 @@ public class SkillImpact : MonoBehaviour,ICollider
 
     private void HandleCameraShake()
     {
+        if(collisionHitEffect == null) return;
+        
         if (collisionHitEffect.TryGetComponent(out CFXR_Effect effect))
         {
             if (creator is AIController)
