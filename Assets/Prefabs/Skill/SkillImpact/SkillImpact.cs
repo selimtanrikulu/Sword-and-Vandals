@@ -129,9 +129,9 @@ public class SkillImpact : MonoBehaviour,ICollider
     protected void SelfDestroy()
     {
         if(skillEffectContainer)skillEffectContainer.gameObject.SetActive(false);
-        collisionHitEffect.gameObject.SetActive(true);
+        if(collisionHitEffect) collisionHitEffect.gameObject.SetActive(true);
         HandleCameraShake();
-        collisionHitEffect.Play();
+        if(collisionHitEffect) collisionHitEffect.Play();
         startLifeTime = lifeTimeAfterHit;
 
         if (Collider)
