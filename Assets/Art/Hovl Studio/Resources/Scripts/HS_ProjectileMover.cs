@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HS_ProjectileMover : MonoBehaviour
 {
-    public float speed = 15f;
     public float hitOffset = 0f;
     public bool UseFirePointRotation;
     public Vector3 rotationOffset = new Vector3(0, 0, 0);
@@ -37,25 +37,19 @@ public class HS_ProjectileMover : MonoBehaviour
         Destroy(gameObject,5);
 	}
 
-    void FixedUpdate ()
-    {
-		if (speed != 0)
-        {
-            rb.velocity = transform.forward * speed;
-            //transform.position += transform.forward * (speed * Time.deltaTime);         
-        }
-	}
 
-    //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
+        Vector3 position = transform.position;
+        Vector3 collisionPoint = other.ClosestPoint(position);
+        Vector3 collisionNormal = position - collisionPoint;
+        
+        
         //Lock all axes movement and rotation
         rb.constraints = RigidbodyConstraints.FreezeAll;
-        speed = 0;
-
-        ContactPoint contact = collision.contacts[0];
-        Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-        Vector3 pos = contact.point + contact.normal * hitOffset;
+        
+        Quaternion rot = Quaternion.FromToRotation(Vector3.up, collisionNormal);
+        Vector3 pos = collisionPoint + collisionNormal * hitOffset;
 
         //Spawn hit effect on collision
         if (hit != null)
@@ -63,7 +57,7 @@ public class HS_ProjectileMover : MonoBehaviour
             var hitInstance = Instantiate(hit, pos, rot);
             if (UseFirePointRotation) { hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); }
             else if (rotationOffset != Vector3.zero) { hitInstance.transform.rotation = Quaternion.Euler(rotationOffset); }
-            else { hitInstance.transform.LookAt(contact.point + contact.normal); }
+            else { hitInstance.transform.LookAt(collisionPoint + collisionNormal); }
 
             //Destroy hit effects depending on particle Duration time
             var hitPs = hitInstance.GetComponent<ParticleSystem>();
@@ -89,5 +83,12 @@ public class HS_ProjectileMover : MonoBehaviour
         }
         //Destroy projectile on collision
         Destroy(gameObject);
+    }
+
+
+    //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
+    void OnCollisionEnter(Collision collision)
+    {
+        
     }
 }

@@ -4,16 +4,31 @@ public class Projectile : SkillImpact
 {
     [HideInInspector] public Vector3 targetPosition;
     [SerializeField] public float projectileSpeed;
-    
+
+    private Rigidbody _rb;
+
+    protected override void Start()
+    {
+        base.Start();
+
+
+        _rb = GetComponent<Rigidbody>();
+    }
+
     new void Update()
     {
         base.Update();
-        Transform myTransform = transform;
-        Vector3 pos = myTransform.position;
 
-        Vector3 dir = (targetPosition - pos).normalized;
-        pos += dir * (Time.deltaTime * projectileSpeed);
-        myTransform.position = pos;
+        if (_rb)
+        {
+            
+            
+            Vector3 dir = (targetPosition - transform.position);
+            if (dir.magnitude < 3 && projectileSpeed > 50) projectileSpeed = 25;
+            dir.Normalize();
+            _rb.velocity = dir * projectileSpeed;
+
+        }
     }
 
 }

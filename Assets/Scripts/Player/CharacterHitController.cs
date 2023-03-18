@@ -1,3 +1,4 @@
+using System;
 using CartoonFX;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ public class CharacterHitController : MonoBehaviour
         _animationController = GetComponent<CharacterAnimationController>();
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent(out SkillImpact skillImpact))
@@ -51,6 +53,11 @@ public class CharacterHitController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
 
-    
+
+
 }
