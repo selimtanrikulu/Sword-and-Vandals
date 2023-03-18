@@ -41,7 +41,7 @@ public class AIController : ControllerBase
         }
     }
 
-    private float GetDistanceToPlayer()
+    public float GetDistanceToPlayer()
     {
         Vector3 pos = transform.position;
         Vector3 enemyPos = enemy.transform.position;
