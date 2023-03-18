@@ -65,5 +65,6 @@ public class GameInstaller : MonoInstaller
         Container.Bind<IItemManager>().To<ItemManager>().AsSingle();
         Container.Bind<ISkillManager>().To<SkillManager>().AsSingle();
         Container.Bind<IPrefabCreator>().To<PrefabCreator>().AsSingle();
+        Container.Bind<IGearManager>().To<GearManager>().AsSingle();
     }
 }

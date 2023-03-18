@@ -11,10 +11,12 @@ public class GameScene : MonoBehaviour
     private IPrefabCreator _prefabCreator;
     private DiContainer _diContainer;
     private IItemManager _itemManager;
+    private IGearManager _gearManager;
 
     [Inject]
-    void Inject(IPrefabCreator prefabCreator,DiContainer diContainer,IItemManager itemManager)
+    void Inject(IPrefabCreator prefabCreator,DiContainer diContainer,IItemManager itemManager,IGearManager gearManager)
     {
+        _gearManager = gearManager;
         _itemManager = itemManager;
         _diContainer = diContainer;
         _prefabCreator = prefabCreator;
@@ -32,7 +34,9 @@ public class GameScene : MonoBehaviour
         GameObject playerGameObject = _prefabCreator.CreatePrefab(PrefabType.Character);
         _diContainer.InstantiateComponent<PlayerControl>(playerGameObject);
         playerGameObject.GetComponent<Animator>().runtimeAnimatorController = playerAoc;
-        playerGameObject.GetComponent<CharacterWearer>().WearWearings(_itemManager.GetWearedHeldItem(HeldItemHold.Left),_itemManager.GetWearedHeldItem(HeldItemHold.Right));
+        CharacterWearer playerCharacterWearer = playerGameObject.GetComponent<CharacterWearer>();
+        playerCharacterWearer.StatsInstance = _gearManager.GetPlayerStats();
+        playerCharacterWearer.WearHeldItem(_itemManager.GetWearedHeldItem(HeldItemHold.Left),_itemManager.GetWearedHeldItem(HeldItemHold.Right));
         //------
         
 
@@ -41,7 +45,9 @@ public class GameScene : MonoBehaviour
         GameObject aiGameObject = _prefabCreator.CreatePrefab(PrefabType.Character);
         _diContainer.InstantiateComponent<AIController>(aiGameObject);
         aiGameObject.GetComponent<Animator>().runtimeAnimatorController = aiAoc;
-        aiGameObject.GetComponent<CharacterWearer>().WearWearings(_itemManager.GetHeldItemByIndex(0),null);
+        CharacterWearer aiCharacterWearer = aiGameObject.GetComponent<CharacterWearer>();
+        aiCharacterWearer.StatsInstance = _gearManager.GetPlayerStats();
+        aiCharacterWearer.WearHeldItem(_itemManager.GetHeldItemByIndex(0),null);
         //--------
     }
 }

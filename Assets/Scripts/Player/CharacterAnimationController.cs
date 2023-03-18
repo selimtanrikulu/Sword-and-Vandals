@@ -100,6 +100,8 @@ public class CharacterAnimationController : MonoBehaviour
         }
 
         
+        skillImpact.ScaleDamage(_characterWearer.StatsInstance);
+        
         _stateController.AttackIntervalState = AttackIntervalState.Occured;
     }
 

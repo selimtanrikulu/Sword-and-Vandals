@@ -123,6 +123,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3fc8ac59d7fbdda459d0553065bfe50a, type: 2}
     - {fileID: 11400000, guid: 5c89480c09a7e204b8207e79cb6676cd, type: 2}
     - {fileID: 11400000, guid: 7d3460c9684e0a748a0c34ca2caa5a8a, type: 2}
+    - {fileID: 11400000, guid: 2adedf58cba5786409cb147cb34b331a, type: 2}
   prefabPack:
     prefabs:
     - prefabType: 0
