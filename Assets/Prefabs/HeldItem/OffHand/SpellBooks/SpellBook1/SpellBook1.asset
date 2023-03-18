@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec9bf48a79b3a5441b64b73ab973791f, type: 3}
-  m_Name: Sword1
+  m_Script: {fileID: 11500000, guid: 0596da93e1af6aa4e91c10972f0032ef, type: 3}
+  m_Name: SpellBook1
   m_EditorClassIdentifier: 
-  heldItemPrefab: {fileID: 3418011884731919454, guid: 29b475577bd142043a2ccad80f84455f, type: 3}
-  heldItemStats:
-  - statType: 0
-    amount: 10
-  - statType: 1
-    amount: 30
-  baseDamage: 10
+  heldItemPrefab: {fileID: 213791165854281691, guid: 172590554506d1046b4fdbe0f561127b, type: 3}

@@ -12,6 +12,16 @@ public enum EffectType
 }
 
 
+
+[Serializable]
+public class StatScale
+{
+    public StatType statType;
+    public float scaleFactor;
+}
+
+
+
 [Serializable]
 public class SkillEffect
 {
@@ -39,11 +49,15 @@ public class SkillImpact : MonoBehaviour,ICollider
     [HideInInspector] public ControllerBase creator;
     [SerializeField] private float startLifeTime;
     [SerializeField] private ParticleSystem collisionHitEffect;
-    [SerializeField] public float baseDamage = 3;
+    [SerializeField] private float baseDamage;
     [SerializeField] private float lifeTimeAfterHit;
+    [SerializeField] public List<SkillEffect> effects;
+    [SerializeField] public List<StatScale> statScales;
 
-    
-    [SerializeField] public List<SkillEffect> Effects = new List<SkillEffect>();
+
+
+
+    [HideInInspector] public float scaledDamage;
 
     //can be null
     [SerializeField] private GameObject skillEffectContainer;
@@ -75,6 +89,36 @@ public class SkillImpact : MonoBehaviour,ICollider
     }
 
 
+    public void ScaleDamage(CharacterStats characterStats)
+    {
+
+        scaledDamage = baseDamage;
+        
+        foreach (StatScale statScale in statScales)
+        {
+            switch (statScale.statType)
+            {
+                case StatType.Str:
+                    scaledDamage += statScale.scaleFactor * characterStats.Str; 
+                    break;
+                
+                case StatType.Int:
+                    scaledDamage += statScale.scaleFactor * characterStats.Int; 
+                    break;
+                
+                case StatType.Dex:
+                    scaledDamage += statScale.scaleFactor * characterStats.Dex; 
+                    break;
+                
+                default:
+                    Debug.LogError("Unknown stattype");
+                    break;
+            }
+            
+            
+        }
+        
+    }
 
     public void HitOccurred()
     {

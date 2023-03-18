@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 
 [Serializable]
 public struct CharacterWearings
 {
-    public GameObject rightHandWeaponSocket;
-    public GameObject leftHandWeaponSocket;
+    public GameObject rightHandHeldItemSocket;
+    public GameObject leftHandHeldItemSocket;
+    public GameObject spellBookSocket;
 }
 
 
@@ -23,9 +23,10 @@ public class CharacterWearer : MonoBehaviour
     [HideInInspector]public GameObject leftHandHeldItemGameObject;
 
 
-    public HeldItem leftHeldItem;
-    public HeldItem rightHeldItem;
-    
+    [HideInInspector]public HeldItem leftHeldItem;
+    [HideInInspector]public HeldItem rightHeldItem;
+
+    public CharacterStats StatsInstance;
 
     [Inject]
     void Inject(IItemManager itemManager)
@@ -53,9 +54,7 @@ public class CharacterWearer : MonoBehaviour
                 }
                 break;
         }
-
         return null;
-
     }
 
     public ParticleSystem GetWeaponTrail(HeldItemHold heldItemHold)
@@ -80,21 +79,60 @@ public class CharacterWearer : MonoBehaviour
         return null;
     }
 
-    public void WearWearings(HeldItem left,HeldItem right)
+    public void WearHeldItem(HeldItem left,HeldItem right)
     {
         leftHeldItem = left;
         rightHeldItem = right;
         
         if (right != null)
         {
-            rightHandHeldItemGameObject = Instantiate(right.heldItemPrefab, characterWearings.rightHandWeaponSocket.transform);
+            rightHandHeldItemGameObject = Instantiate(right.heldItemPrefab, characterWearings.rightHandHeldItemSocket.transform);
         }
         if( left != null)
         {
-            leftHandHeldItemGameObject = Instantiate(left.heldItemPrefab, characterWearings.leftHandWeaponSocket.transform);
+            Transform parent = left is SpellBook
+                ? characterWearings.spellBookSocket.transform
+                : characterWearings.leftHandHeldItemSocket.transform;
+            
+            leftHandHeldItemGameObject = Instantiate(left.heldItemPrefab, parent);
+        }
+
+
+        ApplyStats(left);
+        ApplyStats(right);
+    }
+
+
+    private void ApplyStats(HeldItem heldItem)
+    {
+        if(heldItem == null) return;
+
+        foreach (HeldItemStats heldItemStats in heldItem.heldItemStats)
+        {
+            switch (heldItemStats.statType)
+            {
+                case StatType.Int:
+                    StatsInstance.Int += heldItemStats.amount;
+                    break;
+            
+                case StatType.Str:
+                    StatsInstance.Str += heldItemStats.amount;
+                    break;
+            
+                case StatType.Dex:
+                    StatsInstance.Dex += heldItemStats.amount;
+                    break;
+                
+                
+                default:
+                    Debug.LogError("Unknown stat type");
+                    break;
+            }
         }
         
     }
+    
+    
 
 
     

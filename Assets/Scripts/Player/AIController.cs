@@ -2,13 +2,8 @@ using UnityEngine;
 
 public class AIController : ControllerBase
 {
-    private float _decisionDelay = 1f;
-
+    private const float DecisionDelay = 1f;
     private float _decisionDelayCounter;
-    public void GetInputs()
-    {
-        
-    }
     private new void Update()
     {
         base.Update();
@@ -16,7 +11,7 @@ public class AIController : ControllerBase
         if (_decisionDelayCounter < 0)
         {
             Decide();
-            _decisionDelayCounter = _decisionDelay;
+            _decisionDelayCounter = DecisionDelay;
         }
         else
         {
@@ -30,18 +25,18 @@ public class AIController : ControllerBase
         if (GetDistanceToPlayer() > 20)
         {
             Vertical = 0.5f;
-            Skill1Input = false;
+            BasicAttackInput = false;
         }
         else
         {
             Vertical = 0;
             if (enemy.MovementState == MovementState.Died)
             {
-                Skill1Input = false;
+                BasicAttackInput = false;
             }
             else
             {
-                Skill1Input = true;
+                BasicAttackInput = true;
             }
         }
     }

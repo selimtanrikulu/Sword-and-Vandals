@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: Axe1
   m_EditorClassIdentifier: 
   heldItemPrefab: {fileID: 2999748106215116, guid: a9de5a98f016a334c9a1113e07b1a12f, type: 3}
-  baseDamage: 0
+  heldItemStats:
+  - statType: 1
+    amount: 20
+  baseDamage: 5
