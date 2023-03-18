@@ -12,7 +12,7 @@ public enum SkillType
 
 public interface ISkillManager
 {
-    Skill GetSkill(HeldItem left,HeldItem right,SkillType skillType);
+    Skill GetSkill(SkillType skillType);
 }
 
 
@@ -32,9 +32,9 @@ public class SkillManager : ISkillManager
 
 
 
-    public Skill GetSkill(HeldItem left,HeldItem right,SkillType skillType)
+    public Skill GetSkill(SkillType skillType)
     {
-        switch (_itemManager.GetCombatClass(left,right))
+        switch (_itemManager.GetCombatClass())
          {
              case CombatClass.Warrior:
                  return GetSkillBySkillType(_skillPack.warriorSkillSet, skillType);

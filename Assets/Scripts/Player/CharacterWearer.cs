@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 
@@ -22,14 +21,19 @@ public class CharacterWearer : MonoBehaviour
     [HideInInspector]public GameObject rightHandHeldItemGameObject;
     [HideInInspector]public GameObject leftHandHeldItemGameObject;
 
-
-    public HeldItem rightHeldItem;
-    public HeldItem leftHeldItem;
+    
 
     [Inject]
     void Inject(IItemManager itemManager)
     {
         _itemManager = itemManager;
+    }
+
+
+    void Awake()
+    {
+        WearWearings();
+        
     }
 
     public GameObject GetHitLocation(HeldItemHold heldItemHold)
@@ -78,19 +82,20 @@ public class CharacterWearer : MonoBehaviour
         return null;
     }
 
-    public void WearWearings(HeldItem left,HeldItem right)
+    private void WearWearings()
     {
-        leftHeldItem = left;
-        rightHeldItem = right;
+        HeldItem leftHeldItem = _itemManager.GetWearedHeldItem(HeldItemHold.Left);
+        HeldItem rightHeldItem = _itemManager.GetWearedHeldItem(HeldItemHold.Right);
         
-        if (right != null)
+        if (rightHeldItem != null)
         {
-            rightHandHeldItemGameObject = Instantiate(right.heldItemPrefab, characterWearings.rightHandWeaponSocket.transform);
+            rightHandHeldItemGameObject = Instantiate(rightHeldItem.heldItemPrefab, characterWearings.rightHandWeaponSocket.transform);
         }
-        if( left != null)
+        if( leftHeldItem != null)
         {
-            leftHandHeldItemGameObject = Instantiate(left.heldItemPrefab, characterWearings.leftHandWeaponSocket.transform);
+            leftHandHeldItemGameObject = Instantiate(leftHeldItem.heldItemPrefab, characterWearings.leftHandWeaponSocket.transform);
         }
+        
     }
 
 

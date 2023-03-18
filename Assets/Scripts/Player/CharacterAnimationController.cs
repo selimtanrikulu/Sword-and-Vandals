@@ -250,19 +250,19 @@ public class CharacterAnimationController : MonoBehaviour
 
         if (_controllerBase.BasicAttackInput)
         {
-            SkillInputArrived(_skillManager.GetSkill(_characterWearer.leftHeldItem,_characterWearer.rightHeldItem,SkillType.Basic));
+            SkillInputArrived(_skillManager.GetSkill(SkillType.Basic));
         }
         else if (_controllerBase.Skill1Input)
         {
-            SkillInputArrived(_skillManager.GetSkill(_characterWearer.leftHeldItem,_characterWearer.rightHeldItem,SkillType.Skill1));   
+            SkillInputArrived(_skillManager.GetSkill(SkillType.Skill1));   
         }
         else if (_controllerBase.Skill2Input)
         {
-            SkillInputArrived(_skillManager.GetSkill(_characterWearer.leftHeldItem,_characterWearer.rightHeldItem,SkillType.Skill2));
+            SkillInputArrived(_skillManager.GetSkill(SkillType.Skill2));
         }
 
 
-        if (_itemManager.GetCombatClass(_characterWearer.leftHeldItem,_characterWearer.rightHeldItem) == CombatClass.Warrior)
+        if (_itemManager.GetCombatClass() == CombatClass.Warrior)
         {
             if (_controllerBase.BlockInput)
             {
