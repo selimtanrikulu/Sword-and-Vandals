@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Wand1
   m_EditorClassIdentifier: 
   heldItemPrefab: {fileID: 1740108275163239903, guid: e247a845428a1a549b427d0a4b780626, type: 3}
-  baseDamage: 0
+  heldItemStats:
+  - statType: 0
+    amount: 1
+  baseDamage: 5
+  elementalType: 0

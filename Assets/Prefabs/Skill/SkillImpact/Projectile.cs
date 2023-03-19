@@ -12,7 +12,7 @@ public class Projectile : SkillImpact
         base.Start();
 
 
-        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponentInChildren<Rigidbody>();
     }
 
     new void Update()

@@ -1,5 +1,3 @@
-using System;
-using CartoonFX;
 using UnityEngine;
 
 
@@ -30,27 +28,28 @@ public class CharacterHitController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out SkillImpact skillImpact))
+        SkillImpact skillImpact = other.gameObject.GetComponent<SkillImpact>();
+        if(skillImpact == null)return;
+
+        if (skillImpact.creator == null)
         {
-            if (skillImpact.creator == null)
+            Debug.LogError("Creator is not assigned !");
+        }
+        
+        if (skillImpact.creator != null && skillImpact.creator != _controllerBase)
+        {
+            if (_stateController.IsRolling())
             {
-                Debug.LogError("Creator is not assigned !");
+                //player dodged attack
             }
-            
-            if (skillImpact.creator != null && skillImpact.creator != _controllerBase)
+            else
             {
-                if (_stateController.IsRolling())
-                {
-                    //player dodged attack
-                }
-                else
-                {
-                    skillImpact.HitOccurred();
-                    _animationController.PlayImpactAnimation();
-                    _stateController.ImpactReceived(skillImpact);
-                }
+                skillImpact.HitOccurred();
+                _animationController.PlayImpactAnimation();
+                _stateController.ImpactReceived(skillImpact);
             }
         }
+        
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -22,6 +22,7 @@ public class AIController : ControllerBase
 
     private void Decide()
     {
+        return;
         if (GetDistanceToPlayer() > 20)
         {
             Vertical = 0.5f;

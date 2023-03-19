@@ -40,6 +40,16 @@ public class HS_ProjectileMover : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.TryGetComponent(out ControllerBase controllerBase))
+        {
+            if (GetComponentInParent<SkillImpact>().creator == controllerBase)
+            {
+                return;
+            }
+        }
+        
+        
+        
         Vector3 position = transform.position;
         Vector3 collisionPoint = other.ClosestPoint(position);
         Vector3 collisionNormal = position - collisionPoint;

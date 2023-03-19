@@ -1,12 +1,20 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
+
+public enum ElementalType
+{
+    Fire,
+    Ice,
+    Shock,
+    Poison,
+    Void,
+    Arcane,
+    None
+}
 
 
 public abstract class Weapon : HeldItem
 {
     [SerializeField] public float baseDamage;
-    
+    [SerializeField] public ElementalType elementalType;
 }
