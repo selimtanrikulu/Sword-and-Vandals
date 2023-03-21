@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: 6425f6c4af1d8c444b2aa6a013b98f2d, type: 3}
   attackAnimation: {fileID: 7400000, guid: 2434c0f3a43a51a4e83060fddb882c62, type: 2}
-  skillImpact: {fileID: 5421769267452951212, guid: f2040a44b0cef044d8742e9b15256ff8, type: 3}
+  skillImpact: {fileID: 8221539205868770893, guid: cb4f4d36b4e80d940b28369b5c4a1b39, type: 3}

@@ -47,7 +47,7 @@ public class GameScene : MonoBehaviour
         aiGameObject.GetComponent<Animator>().runtimeAnimatorController = aiAoc;
         CharacterWearer aiCharacterWearer = aiGameObject.GetComponent<CharacterWearer>();
         aiCharacterWearer.StatsInstance = _gearManager.GetPlayerStats();
-        aiCharacterWearer.WearHeldItem(_itemManager.GetHeldItemByIndex(0),null);
+        aiCharacterWearer.WearHeldItem(null,_itemManager.GetHeldItemByIndex(5));
         //--------
     }
 }

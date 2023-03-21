@@ -92,7 +92,6 @@ GameObject:
   - component: {fileID: 428464416}
   - component: {fileID: 428464419}
   - component: {fileID: 428464418}
-  - component: {fileID: 428464417}
   m_Layer: 0
   m_Name: BasicAttackCoolDown
   m_TagString: Untagged
@@ -166,19 +165,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &428464417
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428464415}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &869470331
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +406,6 @@ GameObject:
   - component: {fileID: 1308192947}
   - component: {fileID: 1308192950}
   - component: {fileID: 1308192949}
-  - component: {fileID: 1308192948}
   m_Layer: 0
   m_Name: Skill1CoolDown
   m_TagString: Untagged
@@ -494,19 +479,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1308192948
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308192946}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1425009973
 GameObject:
   m_ObjectHideFlags: 0
@@ -5389,7 +5361,6 @@ GameObject:
   - component: {fileID: 1708819990}
   - component: {fileID: 1708819993}
   - component: {fileID: 1708819992}
-  - component: {fileID: 1708819991}
   m_Layer: 0
   m_Name: Skill2CoolDown
   m_TagString: Untagged
@@ -5463,19 +5434,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1708819991
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1708819989}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1850893862
 GameObject:
   m_ObjectHideFlags: 0

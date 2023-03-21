@@ -144,14 +144,12 @@ public class SkillImpact : MonoBehaviour,ICollider
             projectile.projectileSpeed = 0;
         }
 
-        if (this is Arc arc)
-        {
-            arc.projectileSpeed = 0;
-        }
     }
 
     private void HandleCameraShake()
     {
+        if(collisionHitEffect == null) return;
+        
         if (collisionHitEffect.TryGetComponent(out CFXR_Effect effect))
         {
             if (creator is AIController)
