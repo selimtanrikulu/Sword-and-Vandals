@@ -144,10 +144,6 @@ public class SkillImpact : MonoBehaviour,ICollider
             projectile.projectileSpeed = 0;
         }
 
-        if (this is Arc arc)
-        {
-            arc.projectileSpeed = 0;
-        }
     }
 
     private void HandleCameraShake()

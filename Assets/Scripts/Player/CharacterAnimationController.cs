@@ -95,11 +95,7 @@ public class CharacterAnimationController : MonoBehaviour
             {
                 projectile.targetPosition = _controllerBase.enemy.hitTargetLocation.transform.position;
             }
-            else if (skillImpact is Arc arc)
-            {
-                //instead of target hit location (not to chest, but to foot)
-                arc.targetPosition = _controllerBase.enemy.transform.position;
-            }
+
             skillImpact.ScaleDamage(_characterWearer.StatsInstance);
         }
        
